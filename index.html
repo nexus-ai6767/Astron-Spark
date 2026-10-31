@@ -2,4423 +2,528 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js')</script>
 
-<title>ASTRON // Personal AI System</title>
+<title>ASTRON — Voice-first personal AI that runs on your machine</title>
+<meta name="description" content="ASTRON is a personal AI system for voice, vision, automation and local intelligence — designed to run privately on your own machine.">
+<meta name="theme-color" content="#040913">
 
-<meta name="description"
-content="ASTRON — a futuristic personal AI assistant with voice, vision, automation and local intelligence.">
-
-<meta property="og:title" content="ASTRON // Personal AI System">
-<meta property="og:description" content="A futuristic personal AI assistant with voice, vision, automation and local intelligence — running on your own machine.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="jarvis-mobile-coming-soon.webp">
+<meta property="og:title" content="ASTRON — Personal AI, running on your machine">
+<meta property="og:description" content="Voice, vision, memory and automation with local intelligence. Private by design.">
+<meta property="og:image" content="og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ASTRON // Personal AI System">
-<meta name="twitter:description" content="A futuristic personal AI assistant with voice, vision, automation and local intelligence.">
-<meta name="theme-color" content="#030303">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://your-domain-here.com/"> <!-- TODO: replace with your real domain once deployed -->
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="astron-intro.css">
-<script src="astron-intro.js"></script>
+<!-- TODO: set your real domain once deployed -->
+<link rel="canonical" href="https://your-domain-here.com/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-:root{
-    --bg:#030303;
-    --panel:#080808;
-    --panel2:#0d0d0d;
-    --orange:#168cff;
-    --orange2:#63d7ff;
-    --text:#f4f4f4;
-    --muted:#888;
-    --line:rgba(22,140,255,.18);
-    --glow:rgba(22,140,255,.25);
-    --font-display:'Space Grotesk',Inter,Arial,sans-serif;
-    --font-body:'Inter',Arial,Helvetica,sans-serif;
-    --font-mono:'JetBrains Mono',Consolas,Monaco,monospace;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-::selection{
-    background:rgba(22,140,255,.32);
-    color:#fff;
-}
-
-::-webkit-scrollbar{
-    width:10px;
-}
-
-::-webkit-scrollbar-track{
-    background:#030303;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#241a10;
-    border:2px solid #030303;
-    border-radius:20px;
-}
-
-::-webkit-scrollbar-thumb:hover{
-    background:var(--orange);
-}
-
-:focus-visible{
-    outline:2px solid var(--orange);
-    outline-offset:3px;
-}
-
-body{
-    background:
-        radial-gradient(circle at 50% 20%,rgba(22,140,255,.08),transparent 30%),
-        #030303;
-    color:var(--text);
-    font-family:var(--font-body);
-    overflow-x:hidden;
-}
-
-body:before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    opacity:.12;
-    background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-    background-size:60px 60px;
-    mask-image:linear-gradient(to bottom,black,transparent);
-}
-
-h1,h2,h3,.logo,.price{
-    font-family:var(--font-display);
-}
-
-.eyebrow,.section-label,.card-number,.node small,
-.price-card small,.ticker,.navlinks a,.navbtn,
-.primary,.secondary,.badge,.mobile-coming-label{
-    font-family:var(--font-mono);
-}
-
-/* ================= SCROLL PROGRESS ================= */
-
-#scroll-progress{
-    position:fixed;
-    top:0;
-    left:0;
-    height:2px;
-    width:0%;
-    background:linear-gradient(90deg,var(--orange),var(--orange2));
-    box-shadow:0 0 12px rgba(22,140,255,.6);
-    z-index:10001;
-    transition:width .08s linear;
-}
-
-/* ================= NAV ================= */
-
-.nav{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    z-index:1000;
-    height:72px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 6%;
-    background:rgba(3,3,3,.72);
-    backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(255,255,255,.06);
-    transition:height .3s ease, background .3s ease, border-color .3s ease;
-}
-
-.nav.scrolled{
-    height:60px;
-    background:rgba(3,3,3,.92);
-    border-bottom-color:rgba(22,140,255,.16);
-}
-
-.logo{
-    font-size:20px;
-    font-weight:700;
-    letter-spacing:5px;
-}
-
-.logo span{
-    color:var(--orange);
-}
-
-.navlinks{
-    display:flex;
-    gap:30px;
-}
-
-.navlinks a{
-    position:relative;
-    color:#aaa;
-    text-decoration:none;
-    font-size:11px;
-    letter-spacing:2px;
-    transition:color .3s;
-    padding-bottom:4px;
-}
-
-.navlinks a:after{
-    content:"";
-    position:absolute;
-    left:0;
-    bottom:0;
-    width:0%;
-    height:1px;
-    background:var(--orange);
-    transition:width .3s ease;
-}
-
-.navlinks a:hover{
-    color:var(--orange);
-}
-
-.navlinks a:hover:after{
-    width:100%;
-}
-
-.navbtn{
-    position:relative;
-    overflow:hidden;
-    text-decoration:none;
-    color:white;
-    border:1px solid var(--orange);
-    padding:11px 18px;
-    font-size:11px;
-    letter-spacing:2px;
-    transition:.3s;
-}
-
-.navbtn:hover{
-    background:var(--orange);
-    color:#000;
-    box-shadow:0 0 30px var(--glow);
-}
-
-/* ================= HERO ================= */
-
-.hero{
-    min-height:100vh;
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:118px 6% 88px;
-    overflow:hidden;
-    isolation:isolate;
-    background:
-        radial-gradient(circle at 30% 50%,rgba(22,140,255,.13),transparent 34%),
-        radial-gradient(circle at 80% 35%,rgba(32,185,255,.12),transparent 28%),
-        #020202;
-}
-
-.hero-backdrop{
-    position:absolute;
-    inset:-2%;
-    z-index:-4;
-    background:
-        linear-gradient(90deg,rgba(2,2,2,.96) 0%,rgba(2,2,2,.72) 36%,rgba(2,2,2,.2) 68%,rgba(2,2,2,.76) 100%),
-        linear-gradient(180deg,rgba(2,2,2,.55),transparent 28%,rgba(2,2,2,.84) 100%),
-        url('jarvis-pro-launch-bg.png') center/cover no-repeat;
-    filter:saturate(.92) contrast(1.05);
-    transform:scale(1.04);
-}
-
-.hero-grid-glow{
-    position:absolute;
-    inset:-20%;
-    z-index:-3;
-    background:
-        repeating-linear-gradient(90deg,transparent 0,transparent 8%,rgba(255,255,255,.012) 8.05%,transparent 8.1%),
-        repeating-linear-gradient(0deg,transparent 0,transparent 12%,rgba(255,255,255,.01) 12.05%,transparent 12.1%);
-    mask-image:radial-gradient(circle at center,black 16%,transparent 72%);
-    opacity:.35;
-}
-
-.hero-inner{
-    position:relative;
-    z-index:4;
-    width:100%;
-    max-width:1360px;
-    margin:0 auto;
-    display:grid;
-    grid-template-columns:minmax(0,1.08fr) minmax(360px,.72fr);
-    gap:42px;
-    align-items:center;
-}
-
-.hero-content{
-    position:relative;
-    max-width:760px;
-    padding:38px 0 20px;
-    text-shadow:0 6px 30px rgba(0,0,0,.5);
-}
-
-.hero-kicker{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    color:#d7d7d7;
-    font-family:var(--font-mono);
-    font-size:10px;
-    letter-spacing:3.8px;
-    margin-bottom:18px;
-    text-transform:uppercase;
-}
-
-.hero-kicker span{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:#63e6ff;
-    box-shadow:0 0 14px rgba(99,230,255,.9),0 0 28px rgba(99,230,255,.36);
-    animation:jdot 1.4s infinite;
-}
-
-.hero h1{
-    margin:0;
-    font-size:clamp(46px,6.4vw,92px);
-    line-height:.94;
-    letter-spacing:-4px;
-    font-weight:800;
-    text-transform:uppercase;
-}
-
-.hero h1 span{
-    color:#67e8ff;
-    text-shadow:0 0 34px rgba(71,216,255,.28);
-}
-
-.hero h1 em{
-    font-style:normal;
-    color:#fff;
-}
-
-.hero p{
-    max-width:600px;
-    margin:26px 0 24px;
-    color:#b8b8b8;
-    line-height:1.78;
-    font-size:15px;
-}
-
-.hero-actions{
-    display:flex;
-    gap:14px;
-    flex-wrap:wrap;
-}
-
-.primary{
-    position:relative;
-    overflow:hidden;
-    background:linear-gradient(135deg,#ff8b2b,#ff6710);
-    color:#050505;
-    padding:15px 28px;
-    text-decoration:none;
-    font-weight:800;
-    font-size:11px;
-    letter-spacing:2.2px;
-    transition:.3s;
-    display:inline-block;
-    box-shadow:0 14px 40px rgba(255,104,16,.18);
-}
-
-.primary:before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-120%;
-    width:62%;
-    height:100%;
-    background:linear-gradient(115deg,transparent,rgba(255,255,255,.58),transparent);
-    transform:skewX(-20deg);
-    transition:left .55s ease;
-}
-
-.primary:hover:before{
-    left:130%;
-}
-
-.primary:hover{
-    transform:translateY(-3px);
-    box-shadow:0 18px 50px rgba(22,140,255,.32);
-}
-
-.secondary{
-    border:1px solid rgba(103,232,255,.35);
-    color:white;
-    padding:15px 28px;
-    text-decoration:none;
-    font-size:11px;
-    letter-spacing:2.2px;
-    transition:.3s;
-    display:inline-block;
-    background:rgba(0,0,0,.16);
-    backdrop-filter:blur(8px);
-}
-
-.secondary:hover{
-    border-color:#67e8ff;
-    background:rgba(103,232,255,.07);
-    transform:translateY(-3px);
-}
-
-.hero-microline{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-top:24px;
-    color:#777;
-    font:600 9px/1 var(--font-mono);
-    letter-spacing:2px;
-}
-
-.hero-microline i{
-    width:3px;
-    height:3px;
-    border-radius:50%;
-    background:#168cff;
-    box-shadow:0 0 8px rgba(22,140,255,.7);
-}
-
-.hero-panel{
-    position:relative;
-    background:linear-gradient(145deg,rgba(10,11,12,.48),rgba(3,3,3,.7));
-    border:1px solid rgba(255,255,255,.13);
-    backdrop-filter:blur(16px) saturate(120%);
-    padding:24px;
-    box-shadow:0 30px 100px rgba(0,0,0,.52),0 0 50px rgba(69,221,255,.06);
-    transform-style:preserve-3d;
-    transition:transform .15s ease;
-}
-
-.hero-panel:after{
-    content:"";
-    position:absolute;
-    inset:-1px;
-    border-radius:inherit;
-    background:
-        linear-gradient(135deg,rgba(103,232,255,.26),transparent 30%),
-        linear-gradient(315deg,rgba(22,140,255,.22),transparent 38%);
-    pointer-events:none;
-    mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    mask-composite:exclude;
-    padding:1px;
-}
-
-.hero-panel-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding-bottom:15px;
-    margin-bottom:14px;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    font-family:var(--font-mono);
-    font-size:9px;
-    letter-spacing:2px;
-    color:#777;
-}
-
-.hero-panel-top b{
-    color:#63ff9a;
-    font-weight:600;
-}
-
-.hero-stat{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    padding:12px 0;
-    border-bottom:1px solid rgba(255,255,255,.055);
-}
-
-.hero-stat:last-of-type{
-    border-bottom:none;
-}
-
-.hero-stat-label{
-    font-size:9px;
-    letter-spacing:1.6px;
-    color:#858585;
-    font-family:var(--font-mono);
-}
-
-.hero-stat-value{
-    font-family:var(--font-display);
-    font-size:21px;
-    font-weight:700;
-    color:var(--text);
-}
-
-.hero-stat-value span{
-    color:#67e8ff;
-    font-size:12px;
-    margin-left:2px;
-}
-
-.hero-bar-track{
-    width:100%;
-    height:3px;
-    background:rgba(255,255,255,.06);
-    margin-top:14px;
-    overflow:hidden;
-}
-
-.hero-bar-fill{
-    height:100%;
-    width:0%;
-    background:linear-gradient(90deg,#168cff,#67e8ff);
-    box-shadow:0 0 12px rgba(22,140,255,.55);
-    transition:width 1.4s cubic-bezier(.2,.8,.2,1);
-}
-
-.hero-bottom-status{
-    position:absolute;
-    left:6%;
-    right:6%;
-    bottom:23px;
-    z-index:5;
-    display:flex;
-    justify-content:space-between;
-    gap:16px;
-    color:#606060;
-    font:600 8px/1 var(--font-mono);
-    letter-spacing:2.3px;
-    text-transform:uppercase;
-    border-top:1px solid rgba(255,255,255,.07);
-    padding-top:11px;
-}
-
-.hero-bottom-status span:nth-child(2){
-    color:#888;
-}
-
-@media(max-width:980px){
-    .hero{
-        padding:116px 6% 86px;
-        align-items:flex-end;
-    }
-
-    .hero-backdrop{
-        background:
-            linear-gradient(180deg,rgba(2,2,2,.54),rgba(2,2,2,.45) 34%,rgba(2,2,2,.94) 78%),
-            url('jarvis-pro-launch-bg.png') center/cover no-repeat;
-    }
-
-    .hero-inner{
-        grid-template-columns:1fr;
-        gap:18px;
-    }
-
-    .hero-content{
-        text-align:center;
-        padding-top:40px;
-        margin:0 auto;
-    }
-
-    .hero-kicker,
-    .hero-microline,
-    .hero-actions{
-        justify-content:center;
-    }
-
-    .hero p{
-        margin-left:auto;
-        margin-right:auto;
-    }
-
-    .hero-panel{
-        max-width:520px;
-        margin:0 auto;
-        width:100%;
-    }
-
-    .hero-bottom-status{
-        left:6%;
-        right:6%;
-        flex-wrap:wrap;
-        justify-content:center;
-        bottom:16px;
-        line-height:1.5;
-    }
-}
-
-/* ================= REACTOR ================= */
-
-.reactor{
-    position:absolute;
-    left:3%;
-    top:50%;
-    width:min(620px,55vw);
-    height:min(620px,55vw);
-    border-radius:50%;
-    transform:translateY(-50%);
-    pointer-events:none;
-    z-index:1;
-    opacity:.9;
-    perspective:900px;
-    filter:drop-shadow(0 0 36px rgba(255,103,16,.08));
-}
-
-.reactor:before{
-    content:"";
-    position:absolute;
-    inset:16%;
-    border-radius:50%;
-    background:
-        radial-gradient(circle at 50% 48%,rgba(255,235,210,.22) 0 10%,rgba(22,140,255,.12) 26%,transparent 57%),
-        repeating-radial-gradient(circle,rgba(255,255,255,.05) 0 1px,transparent 1px 9px);
-    mix-blend-mode:screen;
-    animation:reactor-breathe 3.2s ease-in-out infinite;
-}
-
-.reactor:after{
-    content:"";
-    position:absolute;
-    inset:8%;
-    border-radius:50%;
-    border:1px solid rgba(103,232,255,.13);
-    box-shadow:inset 0 0 80px rgba(103,232,255,.04),0 0 60px rgba(103,232,255,.04);
-    animation:reactor-frame 9s linear infinite reverse;
-}
-
-.reactor-ghost{
-    position:absolute;
-    inset:22%;
-    border-radius:50%;
-    border:1px solid rgba(22,140,255,.12);
-    box-shadow:0 0 70px rgba(22,140,255,.14);
-    transform:rotateX(66deg) rotateY(-12deg);
-    animation:ghost-orbit 8s ease-in-out infinite;
-}
-
-.reactor-core{
-    position:absolute;
-    inset:34%;
-    border-radius:50%;
-    background:
-        radial-gradient(circle,
-            #fff 0%,
-            #fff5e5 5%,
-            #ffd2a6 11%,
-            #ff9d47 19%,
-            #ff6e12 31%,
-            rgba(255,91,0,.76) 46%,
-            rgba(255,91,0,.25) 67%,
-            transparent 79%);
-    box-shadow:
-        0 0 22px rgba(255,247,233,.88),
-        0 0 48px rgba(22,140,255,.85),
-        0 0 100px rgba(255,104,16,.5),
-        0 0 170px rgba(255,72,0,.19);
-    animation:pulse 2.15s infinite ease-in-out;
-}
-
-.core-inner{
-    position:absolute;
-    inset:17%;
-    border-radius:50%;
-    background:
-        conic-gradient(from 30deg,rgba(255,255,255,.95),rgba(22,140,255,.35),rgba(255,255,255,.03),rgba(22,140,255,.52),rgba(255,255,255,.95));
-    filter:blur(1px);
-    opacity:.75;
-    animation:core-spin 2.8s linear infinite;
-}
-
-.core-highlight{
-    position:absolute;
-    inset:7%;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.62);
-    box-shadow:inset 0 0 16px rgba(255,255,255,.18);
-    opacity:.65;
-}
-
-.ring{
-    position:absolute;
-    inset:6%;
-    border:1px solid rgba(255,124,31,.24);
-    border-radius:50%;
-    transform:rotateX(66deg) rotateZ(0deg);
-    animation:orbit-a 11s linear infinite;
-}
-
-.ring:nth-child(3){
-    inset:18%;
-    border-color:rgba(103,232,255,.28);
-    transform:rotateX(74deg) rotateY(14deg) rotateZ(24deg);
-    animation:orbit-b 8.4s linear infinite reverse;
-}
-
-.ring:nth-child(4){
-    inset:0%;
-    border-color:rgba(255,255,255,.12);
-    border-style:dashed;
-    transform:rotateX(72deg) rotateY(-10deg);
-    animation:orbit-c 18s linear infinite;
-}
-
-.ring:before,
-.ring:after{
-    content:"";
-    position:absolute;
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:#ff9c4c;
-    box-shadow:0 0 15px #168cff,0 0 26px rgba(103,232,255,.32);
-}
-
-.ring:before{
-    top:8%;
-    left:50%;
-}
-
-.ring:after{
-    bottom:12%;
-    right:18%;
-    background:#67e8ff;
-    box-shadow:0 0 15px #67e8ff;
-}
-
-.energy{
-    position:absolute;
-    inset:23%;
-    border-radius:50%;
-    border:1px solid rgba(255,190,115,.48);
-    filter:blur(.25px);
-    transform:rotateX(67deg) rotateZ(28deg) scaleX(1.78);
-    animation:energy 4.2s infinite ease-in-out;
-}
-
-.energy:nth-child(6){
-    transform:rotateX(70deg) rotateZ(-32deg) scaleX(1.82);
-    border-color:rgba(103,232,255,.3);
-    animation-delay:-1.1s;
-}
-
-@keyframes spin{
-    to{transform:rotate(360deg)}
-}
-
-@keyframes pulse{
-    0%,100%{transform:scale(.93);opacity:.82}
-    50%{transform:scale(1.08);opacity:1}
-}
-
-@keyframes energy{
-    0%,100%{transform:rotateX(67deg) rotateZ(0deg) scaleX(1.7)}
-    50%{transform:rotateX(67deg) rotateZ(180deg) scaleX(.82)}
-}
-
-@keyframes orbit-a{
-    to{transform:rotateX(66deg) rotateZ(360deg)}
-}
-
-@keyframes orbit-b{
-    to{transform:rotateX(74deg) rotateY(14deg) rotateZ(-336deg)}
-}
-
-@keyframes orbit-c{
-    to{transform:rotateX(72deg) rotateY(-10deg) rotateZ(360deg)}
-}
-
-@keyframes core-spin{
-    to{transform:rotate(360deg)}
-}
-
-@keyframes ghost-orbit{
-    0%,100%{transform:rotateX(66deg) rotateY(-12deg) rotateZ(0deg) scale(.98)}
-    50%{transform:rotateX(66deg) rotateY(-12deg) rotateZ(180deg) scale(1.04)}
-}
-
-@keyframes reactor-breathe{
-    0%,100%{transform:scale(.98);opacity:.62}
-    50%{transform:scale(1.03);opacity:1}
-}
-
-@keyframes reactor-frame{
-    to{transform:rotate(360deg)}
-}
-
-@media(max-width:980px){
-    .reactor{
-        left:50%;
-        top:37%;
-        width:min(520px,86vw);
-        height:min(520px,86vw);
-        transform:translate(-50%,-50%);
-        opacity:.46;
-    }
-}
-
-@media(max-width:620px){
-    .hero{
-        min-height:92vh;
-        padding-top:120px;
-    }
-
-    .hero h1{
-        font-size:clamp(38px,12vw,56px);
-        letter-spacing:-2.2px;
-    }
-
-    .hero p{
-        font-size:13px;
-    }
-
-    .hero-actions a{
-        width:100%;
-        text-align:center;
-    }
-
-    .hero-microline{
-        flex-wrap:wrap;
-        row-gap:9px;
-    }
-
-    .hero-panel{
-        padding:18px;
-    }
-
-    .hero-stat-value{
-        font-size:18px;
-    }
-
-    .hero-bottom-status{
-        font-size:7px;
-        letter-spacing:1.5px;
-    }
-}
-
-
-/* ================= TICKER ================= */
-
-.ticker{
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    padding:13px 0;
-    overflow:hidden;
-    color:#777;
-    font-size:10px;
-    letter-spacing:3px;
-    white-space:nowrap;
-}
-
-.ticker-track{
-    display:inline-block;
-    animation:ticker 25s linear infinite;
-}
-
-@keyframes ticker{
-    to{transform:translateX(-50%)}
-}
-
-/* ================= SECTIONS ================= */
-
-section{
-    padding:120px 7%;
-    position:relative;
-}
-
-.section-head{
-    max-width:700px;
-    margin-bottom:60px;
-}
-
-.section-label{
-    color:var(--orange);
-    font-size:10px;
-    letter-spacing:4px;
-    margin-bottom:15px;
-}
-
-.section-head h2{
-    font-size:clamp(34px,5vw,60px);
-    letter-spacing:-2px;
-}
-
-.section-head p{
-    color:#777;
-    margin-top:18px;
-    line-height:1.8;
-}
-
-/* ================= CAPABILITIES ================= */
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-.card{
-    background:linear-gradient(145deg,#0c0c0c,#050505);
-    border:1px solid rgba(255,255,255,.07);
-    padding:32px;
-    min-height:220px;
-    transition:.4s;
-    position:relative;
-    overflow:hidden;
-}
-
-.card:before{
-    content:"";
-    position:absolute;
-    width:120px;
-    height:120px;
-    right:-60px;
-    top:-60px;
-    background:var(--orange);
-    filter:blur(70px);
-    opacity:.08;
-    transition:opacity .4s;
-}
-
-.card:after{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    height:2px;
-    background:linear-gradient(90deg,transparent,var(--orange),transparent);
-    opacity:0;
-    transition:opacity .4s;
-}
-
-.card:hover{
-    transform:translateY(-7px);
-    border-color:rgba(22,140,255,.35);
-    box-shadow:0 20px 70px rgba(0,0,0,.5);
-}
-
-.card:hover:before{
-    opacity:.16;
-}
-
-.card:hover:after{
-    opacity:1;
-}
-
-.card-icon{
-    width:44px;
-    height:44px;
-    border:1px solid rgba(22,140,255,.3);
-    background:rgba(22,140,255,.06);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:20px;
-    transition:.4s;
-}
-
-.card-icon svg{
-    width:20px;
-    height:20px;
-    stroke:var(--orange);
-    fill:none;
-    stroke-width:1.6;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-}
-
-.card:hover .card-icon{
-    background:rgba(22,140,255,.14);
-    box-shadow:0 0 22px rgba(22,140,255,.18);
-}
-
-.card-number{
-    color:var(--orange);
-    font-size:11px;
-    letter-spacing:3px;
-}
-
-.card h3{
-    margin:16px 0 12px;
-    font-size:20px;
-    font-weight:600;
-}
-
-.card p{
-    color:#777;
-    line-height:1.7;
-    font-size:14px;
-}
-
-/* ================= ARCHITECTURE ================= */
-
-.architecture{
-    background:#050505;
-}
-
-.pipeline{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-    position:relative;
-}
-
-.node{
-    border:1px solid var(--line);
-    background:#080808;
-    padding:40px;
-    position:relative;
-}
-
-.node:after{
-    content:"→";
-    position:absolute;
-    right:-18px;
-    top:50%;
-    color:var(--orange);
-    font-size:25px;
-}
-
-.node:last-child:after{
-    display:none;
-}
-
-.pipe-pulse{
-    position:absolute;
-    top:50%;
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:var(--orange);
-    box-shadow:0 0 12px var(--orange),0 0 24px rgba(22,140,255,.5);
-    transform:translateY(-50%);
-    animation:pipeTravel 2.4s ease-in-out infinite;
-}
-
-.pipe-pulse.p2{
-    animation-name:pipeTravel2;
-    animation-delay:0s;
-}
-
-@keyframes pipeTravel{
-    0%{left:2%;opacity:0}
-    8%{opacity:1}
-    30%{left:31%;opacity:1}
-    36%{opacity:0}
-    100%{left:31%;opacity:0}
-}
-
-@keyframes pipeTravel2{
-    0%{left:35%;opacity:0}
-    8%{opacity:1}
-    30%{left:64.5%;opacity:1}
-    36%{opacity:0}
-    100%{left:64.5%;opacity:0}
-}
-
-@media(max-width:850px){
-    .pipe-pulse{
-        display:none;
-    }
-}
-
-.node small{
-    color:var(--orange);
-    letter-spacing:3px;
-}
-
-.node h3{
-    margin:20px 0 10px;
-}
-
-.node p{
-    color:#777;
-    line-height:1.7;
-}
-
-/* ================= DEMO ================= */
-
-.demo{
-    display:grid;
-    grid-template-columns:1fr 1.2fr;
-    gap:60px;
-    align-items:center;
-}
-
-.console{
-    background:#050505;
-    border:1px solid #222;
-    box-shadow:0 0 60px rgba(22,140,255,.06);
-}
-
-.console-top{
-    padding:14px 18px;
-    border-bottom:1px solid #1d1d1d;
-    display:flex;
-    justify-content:space-between;
-    font-size:10px;
-    color:#777;
-    letter-spacing:2px;
-}
-
-.status{
-    color:#63ff9a;
-}
-
-.terminal{
-    min-height:330px;
-    padding:25px;
-    font-family:monospace;
-    font-size:13px;
-    line-height:2;
-    color:#aaa;
-}
-
-.terminal .orange{
-    color:var(--orange);
-}
-
-.cursor{
-    display:inline-block;
-    width:7px;
-    height:14px;
-    background:var(--orange);
-    animation:blink 1s infinite;
-}
-
-@keyframes blink{
-    50%{opacity:0}
-}
-
-/* ================= PRICING ================= */
-
-.pricing{
-    background:
-        radial-gradient(circle at 50% 0%,rgba(22,140,255,.06),transparent 40%),
-        #030303;
-}
-
-.pricing-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:18px;
-}
-
-.price-card{
-    border:1px solid #1d1d1d;
-    padding:40px 30px;
-    background:linear-gradient(160deg,#0a0a0a,#050505);
-    position:relative;
-    transition:.4s;
-}
-
-.price-card:hover{
-    transform:translateY(-8px);
-    border-color:rgba(22,140,255,.4);
-    box-shadow:0 25px 60px rgba(0,0,0,.5);
-}
-
-.price-card.featured{
-    border-color:var(--orange);
-    box-shadow:0 0 50px rgba(22,140,255,.1);
-}
-
-.price-card.featured:before{
-    content:"";
-    position:absolute;
-    inset:0;
-    padding:1px;
-    background:linear-gradient(160deg,var(--orange),transparent 45%,transparent 65%,var(--orange2));
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;
-    mask-composite:exclude;
-    pointer-events:none;
-    opacity:.7;
-}
-
-.badge{
-    position:absolute;
-    top:18px;
-    right:18px;
-    font-size:9px;
-    letter-spacing:2px;
-    color:#000;
-    background:var(--orange);
-    padding:7px 10px;
-}
-
-.price-card small{
-    color:var(--orange);
-    letter-spacing:3px;
-}
-
-.price{
-    font-size:45px;
-    font-weight:800;
-    margin:20px 0 5px;
-}
-
-.price span{
-    font-size:13px;
-    color:#777;
-}
-
-.price-card p{
-    color:#777;
-    line-height:1.7;
-    margin:20px 0;
-}
-
-.features{
-    list-style:none;
-    margin:25px 0;
-}
-
-.features li{
-    color:#aaa;
-    padding:9px 0;
-    font-size:13px;
-    border-bottom:1px solid #111;
-}
-
-.features li:before{
-    content:"✓";
-    color:var(--orange);
-    margin-right:10px;
-}
-
-/* ================= CUSTOM ================= */
-
-.custom{
-    background:#060606;
-}
-
-.custom-wrap{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:70px;
-    align-items:center;
-}
-
-.form{
-    background:#080808;
-    border:1px solid #1b1b1b;
-    padding:35px;
-}
-
-.form input,
-.form textarea{
-    width:100%;
-    background:#030303;
-    color:white;
-    border:1px solid #222;
-    padding:15px;
-    margin-bottom:13px;
-    outline:none;
-    font-family:inherit;
-}
-
-.form input:focus,
-.form textarea:focus{
-    border-color:var(--orange);
-}
-
-.form textarea{
-    min-height:130px;
-    resize:vertical;
-}
-
-.form button{
-    width:100%;
-    border:0;
-    background:var(--orange);
-    padding:15px;
-    font-weight:800;
-    cursor:pointer;
-    letter-spacing:2px;
-}
-
-/* ================= DOWNLOAD ================= */
-
-.download{
-    text-align:center;
-    padding:150px 20px;
-}
-
-.download h2{
-    font-size:clamp(40px,7vw,80px);
-    letter-spacing:-4px;
-}
-
-.download p{
-    color:#777;
-    max-width:600px;
-    margin:20px auto 35px;
-    line-height:1.8;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-    position:relative;
-    border-top:1px solid #151515;
-    padding:70px 7% 30px;
-    color:#666;
-}
-
-footer:before{
-    content:"";
-    position:absolute;
-    top:-1px;
-    left:50%;
-    transform:translateX(-50%);
-    width:140px;
-    height:1px;
-    background:linear-gradient(90deg,transparent,var(--orange),transparent);
-    box-shadow:0 0 16px rgba(22,140,255,.5);
-}
-
-.footer-top{
-    display:grid;
-    grid-template-columns:1.4fr repeat(3,1fr);
-    gap:40px;
-    padding-bottom:50px;
-}
-
-.footer-brand .logo{
-    display:block;
-    margin-bottom:14px;
-}
-
-.footer-brand p{
-    font-size:13px;
-    line-height:1.8;
-    color:#666;
-    max-width:280px;
-}
-
-.footer-col h4{
-    font-family:var(--font-mono);
-    font-size:11px;
-    letter-spacing:2px;
-    color:#999;
-    margin-bottom:16px;
-    font-weight:500;
-}
-
-.footer-col ul{
-    list-style:none;
-}
-
-.footer-col li{
-    margin-bottom:11px;
-}
-
-.footer-col a{
-    color:#666;
-    text-decoration:none;
-    font-size:13px;
-    transition:.25s;
-}
-
-.footer-col a:hover{
-    color:var(--orange);
-}
-
-.footer-bottom{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:14px;
-    padding-top:26px;
-    border-top:1px solid #141414;
-    font-size:11px;
-    letter-spacing:1.5px;
-    color:#555;
-    font-family:var(--font-mono);
-}
-
-.footer-status{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    color:#63ff9a;
-}
-
-.footer-status span{
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:#63ff9a;
-    box-shadow:0 0 8px #63ff9a;
-    animation:jdot 1.4s infinite;
-}
-
-@media(max-width:850px){
-    .footer-top{
-        grid-template-columns:1fr 1fr;
-        gap:34px;
-    }
-}
-
-@media(max-width:560px){
-    .footer-top{
-        grid-template-columns:1fr;
-    }
-
-    .footer-bottom{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-}
-
-/* ================= REVEAL ================= */
-
-.reveal{
-    opacity:0;
-    transform:translateY(35px);
-    transition:1s ease;
-}
-
-.reveal.visible{
-    opacity:1;
-    transform:none;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:850px){
-
-    .navlinks{
-        display:none;
-    }
-
-    .hero h1{
-        letter-spacing:-3px;
-    }
-
-    .grid,
-    .pipeline,
-    .pricing-grid,
-    .demo,
-    .custom-wrap{
-        grid-template-columns:1fr;
-    }
-
-    .node:after{
-        display:none;
-    }
-
-    section{
-        padding:85px 6%;
-    }
-
-    .reactor{
-        width:min(520px,88vw);
-        height:min(520px,88vw);
-        opacity:.32;
-    }
-
-    footer{
-        flex-direction:column;
-        gap:15px;
-    }
-}
-
-/* ================= ASTRON MOBILE FUTURISTIC BANNER ================= */
-
-.mobile-coming-banner{
-    position:relative;
-    z-index:5;
-    width:100%;
-    padding:42px 3% 70px;
-    background:
-        radial-gradient(circle at 50% 35%, rgba(22,140,255,.10), transparent 46%),
-        linear-gradient(180deg, #030303 0%, #050302 100%);
-    overflow:hidden;
-}
-
-.mobile-coming-banner::before{
-    content:"";
-    position:absolute;
-    left:3%;
-    right:3%;
-    top:20px;
-    height:1px;
-    background:linear-gradient(90deg, transparent, rgba(22,140,255,.55), transparent);
-    box-shadow:0 0 18px rgba(22,140,255,.22);
-}
-
-.mobile-coming-label{
-    width:min(1800px,94vw);
-    margin:0 auto 18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-    color:#777;
-    font-size:10px;
-    letter-spacing:4px;
-    text-transform:uppercase;
-}
-
-.mobile-coming-label span:last-child{
-    color:var(--orange);
-}
-
-.mobile-banner-frame{
-    width:min(1800px,94vw);
-    margin:0 auto;
-    position:relative;
-    overflow:hidden;
-    background:#000;
-    border:1px solid rgba(22,140,255,.30);
-    box-shadow:
-        0 0 70px rgba(22,140,255,.08),
-        0 0 16px rgba(22,140,255,.10),
-        inset 0 0 45px rgba(22,140,255,.04);
-}
-
-.mobile-banner-frame::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    border:1px solid rgba(255,255,255,.035);
-}
-
-.mobile-banner-image{
-    display:block;
-    width:100%;
-    height:auto;
-    max-width:100%;
-    object-fit:contain;
-}
-
-.pro-banner-frame{
-    padding:70px 6% 60px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:60px;
-    flex-wrap:wrap;
-}
-
-.pro-banner-copy{
-    max-width:480px;
-}
-
-.pro-banner-kicker{
-    font-family:var(--font-mono);
-    font-size:10px;
-    letter-spacing:4px;
-    color:#777;
-    margin-bottom:14px;
-}
-
-.pro-banner-title{
-    font-family:var(--font-display);
-    font-size:clamp(40px,6vw,72px);
-    letter-spacing:-2px;
-    line-height:1;
-    margin-bottom:20px;
-    color:var(--text);
-}
-
-.pro-banner-title span{
-    color:var(--orange);
-    text-shadow:0 0 40px rgba(22,140,255,.35);
-}
-
-.pro-banner-tag{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    border:1px solid rgba(22,140,255,.4);
-    padding:10px 18px;
-    font-family:var(--font-mono);
-    font-size:12px;
-    letter-spacing:3px;
-    color:var(--orange);
-    margin-bottom:22px;
-}
-
-.pro-dot{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:var(--orange);
-    box-shadow:0 0 10px var(--orange);
-    display:inline-block;
-    animation:blink 1.4s infinite ease-in-out;
-}
-
-.pro-banner-sub{
-    color:#888;
-    line-height:1.7;
-    font-size:14px;
-}
-
-.pro-feature-list{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    min-width:260px;
-}
-
-.pro-feature{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    font-family:var(--font-mono);
-    font-size:11px;
-    letter-spacing:1.5px;
-    color:#ccc;
-    border-left:2px solid rgba(22,140,255,.3);
-    padding:10px 0 10px 16px;
-}
-
-.pro-feature b{
-    color:var(--orange);
-    font-size:10px;
-}
-
-.pro-windows-download{
-    flex:1 1 320px;
-    max-width:390px;
-    border:1px solid rgba(22,140,255,.28);
-    padding:24px;
-    background:rgba(255,255,255,.015);
-    box-shadow:0 0 28px rgba(22,140,255,.05);
-}
-.pro-download-kicker{
-    font-family:var(--font-mono);
-    font-size:9px;
-    letter-spacing:2.5px;
-    color:var(--orange);
-    margin-bottom:10px;
-}
-.pro-windows-download h4{
-    font-family:var(--font-display);
-    font-size:24px;
-    letter-spacing:-.5px;
-    color:var(--text);
-    margin:0 0 12px;
-}
-.pro-windows-download p{
-    color:#888;
-    line-height:1.65;
-    font-size:12px;
-    margin:0 0 20px;
-}
-.pro-download-button{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    min-height:46px;
-    box-sizing:border-box;
-    border:1px solid var(--orange);
-    background:rgba(22,140,255,.08);
-    color:var(--orange);
-    font-family:var(--font-mono);
-    font-size:10px;
-    letter-spacing:1.8px;
-    text-decoration:none;
-    transition:background .2s ease,color .2s ease,box-shadow .2s ease,transform .2s ease;
-}
-.pro-download-button:hover{
-    background:var(--orange);
-    color:#080808;
-    box-shadow:0 0 24px rgba(22,140,255,.25);
-    transform:translateY(-1px);
-}
-.pro-download-button:focus-visible{
-    outline:2px solid var(--orange);
-    outline-offset:3px;
-}
-@media(max-width:900px){
-    .pro-windows-download{
-        width:100%;
-        max-width:none;
-    }
-}
-
-@media(max-width:900px){
-    .pro-banner-frame{
-        flex-direction:column;
-        align-items:flex-start;
-        padding:50px 6%;
-    }
-
-    .pro-feature-list{
-        width:100%;
-    }
-}
-
-.waitlist-form{
-    width:min(560px,92vw);
-    margin:34px auto 0;
-    text-align:center;
-}
-
-.waitlist-label{
-    font-family:var(--font-mono);
-    font-size:10px;
-    letter-spacing:3px;
-    color:#777;
-    margin-bottom:14px;
-}
-
-.waitlist-row{
-    display:flex;
-    gap:10px;
-}
-
-.waitlist-row input{
-    flex:1;
-    background:#050505;
-    border:1px solid #222;
-    color:#fff;
-    padding:14px 16px;
-    font-family:var(--font-body);
-    font-size:13px;
-    outline:none;
-    transition:.3s;
-}
-
-.waitlist-row input:focus{
-    border-color:var(--orange);
-}
-
-.waitlist-row button{
-    border:0;
-    background:var(--orange);
-    color:#000;
-    padding:14px 20px;
-    font-family:var(--font-mono);
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:1.5px;
-    cursor:pointer;
-    transition:.3s;
-    white-space:nowrap;
-}
-
-.waitlist-row button:hover{
-    background:var(--orange2);
-}
-
-.waitlist-note{
-    margin-top:12px;
-    font-size:12px;
-    color:#63ff9a;
-    min-height:16px;
-}
-
-@media(max-width:560px){
-    .waitlist-row{
-        flex-direction:column;
-    }
-}
-
-@media (max-width:700px){
-    .mobile-coming-banner{
-        padding:32px 0 50px;
-    }
-
-    .mobile-coming-label{
-        width:92vw;
-        font-size:8px;
-        letter-spacing:2.5px;
-        margin-bottom:12px;
-    }
-
-    .mobile-banner-frame{
-        width:92vw;
-    }
-}
-
-
-/* ASTRON PHASE 1 — LIVE COMMAND DEMO */
-.jarvis-live-demo{position:relative;width:min(1100px,92vw);margin:70px auto 90px;padding:1px;background:linear-gradient(120deg,rgba(22,140,255,.45),rgba(22,140,255,.06),rgba(22,140,255,.35));box-shadow:0 0 60px rgba(22,140,255,.08)}
-.jarvis-live-inner{background:linear-gradient(145deg,#070707,#020202);border:1px solid rgba(22,140,255,.14);padding:28px;position:relative;overflow:hidden}
-.jarvis-live-inner:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.012) 4px);pointer-events:none}
-.jarvis-live-top{display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:18px}
-.jarvis-live-title{font-size:clamp(15px,2vw,22px);letter-spacing:.16em;font-weight:800}
-.jarvis-live-status{font-size:9px;letter-spacing:.16em;color:#ff8a3d;display:flex;align-items:center;gap:8px}
-.jarvis-live-dot{width:7px;height:7px;border-radius:50%;background:#168cff;box-shadow:0 0 14px #168cff;animation:jdot 1s infinite}
-.jarvis-terminal{margin-top:22px;background:#010101;border:1px solid rgba(22,140,255,.12);min-height:300px;padding:22px;font-family:Consolas,Monaco,monospace;font-size:13px;line-height:1.8;box-shadow:inset 0 0 35px rgba(22,140,255,.025)}
-.jarvis-terminal-line{min-height:25px}
-.jarvis-terminal .prompt{color:#168cff}.jarvis-terminal .ok{color:#aaa}.jarvis-terminal .muted{color:#555}
-.jarvis-live-controls{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-.jarvis-live-btn{cursor:pointer;background:#080808;color:#ddd;border:1px solid rgba(22,140,255,.35);padding:10px 15px;font:inherit;font-size:10px;letter-spacing:.12em;text-transform:uppercase;transition:.2s}
-.jarvis-live-btn:hover{border-color:#168cff;box-shadow:0 0 18px rgba(22,140,255,.14);color:#ff9a58}
-@keyframes jdot{50%{opacity:.35;transform:scale(.75)}}
-
-.as-assistant-voice{margin-left:auto;flex:0 0 auto;background:rgba(22,140,255,.12);border:1px solid rgba(99,215,255,.35);border-radius:7px;color:#aeeaff;font-size:9px;font-weight:800;letter-spacing:.08em;padding:8px;cursor:pointer}.as-assistant-voice[aria-pressed="false"]{color:#8b9eaa;border-color:rgba(180,220,240,.18);background:rgba(255,255,255,.03)}.as-assistant-head .as-assistant-close{margin-left:0}.as-assistant-mic{flex:0 0 39px!important;padding:0!important;font-size:17px!important;background:rgba(22,140,255,.1)!important}.as-assistant-mic.listening{background:rgba(255,65,90,.22)!important;border-color:#ff6478!important;box-shadow:0 0 15px rgba(255,65,90,.25)}.as-assistant-mic:disabled{opacity:.5;cursor:not-allowed}
-
-@media(max-width:600px){.jarvis-live-inner{padding:18px}.jarvis-terminal{font-size:11px;min-height:270px;padding:15px}.jarvis-live-top{align-items:flex-start;flex-direction:column}}
-
-/* Old boot-intro CSS removed. Keyframes below are still used by #jarvis-badge. */
-@keyframes introPulse{
-    0%,100%{transform:scale(.86);opacity:.85}
-    50%{transform:scale(1.14);opacity:1}
-}
-
-/* ================= HUMAN/ROBOT BADGE ================= */
-
-#jarvis-badge{
-    position:fixed;
-    top:18px;
-    right:18px;
-    width:52px;
-    height:52px;
-    z-index:9000;
-    cursor:pointer;
-    border-radius:50%;
-    background:radial-gradient(circle at 50% 50%,#111 0%,#050505 70%);
-    box-shadow:
-        0 0 0 1px rgba(22,140,255,.35),
-        0 0 18px rgba(22,140,255,.25);
-    animation:badgeFloat 4s ease-in-out infinite;
-    transition:transform .25s ease, box-shadow .25s ease;
-}
-
-#jarvis-badge:hover{
-    transform:scale(1.08);
-    box-shadow:
-        0 0 0 1px rgba(22,140,255,.7),
-        0 0 28px rgba(22,140,255,.45);
-}
-
-#jarvis-badge svg{
-    width:100%;
-    height:100%;
-    display:block;
-}
-
-#jarvis-badge .badge-ring{
-    animation:spin 14s linear infinite;
-    transform-origin:50% 50%;
-}
-
-#jarvis-badge .badge-eye-robot{
-    animation:introPulse 1.8s ease-in-out infinite;
-    transform-origin:center;
-}
-
-@keyframes badgeFloat{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-3px)}
-}
-
-.jarvis-badge-tip{
-    position:absolute;
-    top:64px;
-    right:0;
-    font-family:Consolas,Monaco,monospace;
-    font-size:9px;
-    letter-spacing:.15em;
-    color:var(--orange2);
-    background:rgba(5,5,5,.9);
-    border:1px solid var(--line);
-    padding:5px 9px;
-    white-space:nowrap;
-    opacity:0;
-    transform:translateY(-4px);
-    transition:.25s ease;
-    pointer-events:none;
-}
-
-#jarvis-badge:hover + .jarvis-badge-tip{
-    opacity:1;
-    transform:translateY(0);
-}
-
-@media(max-width:600px){
-    #jarvis-badge{
-        width:42px;
-        height:42px;
-        top:12px;
-        right:12px;
-    }
-    .jarvis-badge-tip{
-        display:none;
-    }
-}
-
-@media(prefers-reduced-motion: reduce){
-    #jarvis-badge, #jarvis-badge .badge-ring, #jarvis-badge .badge-eye-robot{
-        animation:none !important;
-    }
-}
-
-/* ================= HOW IT WORKS ================= */
-
-.steps{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:0;
-    position:relative;
-}
-
-.steps:before{
-    content:"";
-    position:absolute;
-    top:23px;
-    left:6%;
-    right:6%;
-    height:1px;
-    background:linear-gradient(90deg,transparent,rgba(22,140,255,.35),rgba(22,140,255,.35),transparent);
-}
-
-.step{
-    position:relative;
-    padding:0 22px;
-}
-
-.step-dot{
-    width:46px;
-    height:46px;
-    border:1px solid var(--orange);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#050505;
-    font-family:var(--font-display);
-    font-weight:700;
-    font-size:15px;
-    color:var(--orange);
-    position:relative;
-    z-index:2;
-    margin-bottom:22px;
-}
-
-.step h3{
-    font-size:17px;
-    font-weight:600;
-    margin-bottom:9px;
-}
-
-.step p{
-    color:#777;
-    font-size:13px;
-    line-height:1.7;
-}
-
-@media(max-width:850px){
-    .steps{
-        grid-template-columns:1fr;
-        gap:34px;
-    }
-
-    .steps:before{
-        display:none;
-    }
-}
-
-/* ================= TESTIMONIALS ================= */
-
-.testimonial-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.testimonial{
-    background:#070707;
-    border:1px solid #1a1a1a;
-    padding:30px;
-    transition:.3s;
-}
-
-.testimonial:hover{
-    border-color:rgba(22,140,255,.3);
-    transform:translateY(-4px);
-}
-
-.testimonial-quote{
-    color:#ccc;
-    font-size:14px;
-    line-height:1.8;
-    margin-bottom:22px;
-}
-
-.testimonial-quote:before{
-    content:"“";
-    color:var(--orange);
-    font-family:var(--font-display);
-    font-size:28px;
-    display:block;
-    line-height:.6;
-    margin-bottom:10px;
-}
-
-.testimonial-who{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.testimonial-avatar{
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#1a1a1a,#0a0a0a);
-    border:1px solid rgba(22,140,255,.3);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:var(--font-display);
-    font-size:12px;
-    color:var(--orange);
-    font-weight:700;
-}
-
-.testimonial-name{
-    font-size:13px;
-    color:#eee;
-}
-
-.testimonial-role{
-    font-size:11px;
-    color:#666;
-}
-
-@media(max-width:850px){
-    .testimonial-grid{
-        grid-template-columns:1fr;
-    }
-}
-
-/* ================= FAQ ================= */
-
-.faq-list{
-    max-width:800px;
-}
-
-.faq-item{
-    border-bottom:1px solid #1a1a1a;
-    padding:22px 0;
-}
-
-.faq-item summary{
-    list-style:none;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-    font-size:16px;
-    font-weight:600;
-    color:var(--text);
-    font-family:var(--font-display);
-}
-
-.faq-item summary::-webkit-details-marker{
-    display:none;
-}
-
-.faq-icon{
-    flex-shrink:0;
-    width:26px;
-    height:26px;
-    border:1px solid #333;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--orange);
-    font-size:15px;
-    transition:.3s;
-}
-
-.faq-item[open] .faq-icon{
-    transform:rotate(45deg);
-    border-color:var(--orange);
-}
-
-.faq-answer{
-    color:#888;
-    font-size:14px;
-    line-height:1.8;
-    margin-top:16px;
-    max-width:640px;
-}
-
-/* ================= CHANGELOG ================= */
-
-.changelog{
-    background:#050505;
-}
-
-.changelog-list{
-    max-width:760px;
-    font-family:var(--font-mono);
-}
-
-.changelog-entry{
-    display:grid;
-    grid-template-columns:110px 70px 1fr;
-    gap:20px;
-    padding:18px 0;
-    border-bottom:1px solid #161616;
-    align-items:baseline;
-}
-
-.changelog-date{
-    color:#666;
-    font-size:11px;
-    letter-spacing:1px;
-}
-
-.changelog-version{
-    color:var(--orange);
-    font-size:12px;
-    font-weight:600;
-}
-
-.changelog-desc{
-    color:#aaa;
-    font-size:13px;
-    line-height:1.6;
-    font-family:var(--font-body);
-}
-
-@media(max-width:600px){
-    .changelog-entry{
-        grid-template-columns:1fr;
-        gap:6px;
-    }
-}
-
-</style>
-
-
-<style id="jarvis-cinematic-ambient-bg">
-/* ================= GLOBAL CINEMATIC AMBIENT BACKGROUND ================= */
-body::before{
-    opacity:.09;
-    background-image:
-        linear-gradient(rgba(70,190,255,.032) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(22,140,255,.024) 1px,transparent 1px);
-    background-size:72px 72px;
-    mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.75) 42%,transparent 92%);
-}
-
-html,body{
-    background-color:#02050a;
-}
-
-body{
-    background:
-        radial-gradient(circle at 18% 16%,rgba(255,102,26,.10),transparent 28%),
-        radial-gradient(circle at 79% 20%,rgba(30,189,255,.10),transparent 26%),
-        radial-gradient(circle at 51% 76%,rgba(0,118,210,.075),transparent 31%),
-        radial-gradient(circle at 93% 72%,rgba(255,126,24,.055),transparent 22%),
-        linear-gradient(180deg,#02050a 0%,#03060b 34%,#020409 70%,#010308 100%);
-    background-attachment:fixed;
-}
-
-body::after{
-    content:"";
-    position:fixed;
-    inset:-18%;
-    pointer-events:none;
-    z-index:-1;
-    opacity:.72;
-    background:
-        radial-gradient(ellipse at 50% 12%,rgba(60,170,255,.055),transparent 36%),
-        radial-gradient(ellipse at 20% 46%,rgba(255,105,20,.055),transparent 28%),
-        radial-gradient(ellipse at 84% 62%,rgba(0,154,255,.045),transparent 30%),
-        repeating-linear-gradient(90deg,transparent 0 11.8%,rgba(74,192,255,.018) 11.85%,transparent 11.95%),
-        repeating-linear-gradient(0deg,transparent 0 13.5%,rgba(22,140,255,.015) 13.55%,transparent 13.7%);
-    filter:blur(.2px);
-    animation:jarvisAmbientDrift 18s ease-in-out infinite alternate;
-}
-
-body > section:not(.hero),
-body > footer{
-    background-color:rgba(2,5,9,.80);
-    background-blend-mode:normal;
-}
-
-body > section:not(.hero)::after{
-    content:"";
-    position:absolute;
-    left:7%;
-    right:7%;
-    bottom:0;
-    height:1px;
-    pointer-events:none;
-    background:linear-gradient(90deg,transparent 0%,rgba(40,196,255,.10) 25%,rgba(22,140,255,.16) 50%,rgba(40,196,255,.10) 75%,transparent 100%);
-    box-shadow:0 0 18px rgba(28,159,255,.055);
-}
-
-@keyframes jarvisAmbientDrift{
-    0%{transform:translate3d(-1.5%,0,0) scale(1);}
-    50%{transform:translate3d(1%,1.2%,0) scale(1.015);}
-    100%{transform:translate3d(-.7%,-.8%,0) scale(1.01);}
-}
-
-@media(max-width:850px){
-    body::after{opacity:.48;}
-    body > section:not(.hero){background-color:rgba(2,5,9,.86);}
-}
-
-@media(prefers-reduced-motion:reduce){
-    body::after{animation:none;}
-}
-</style>
-
-<style id="starter-preview-css">
-#starter-preview-banner{
-  position:fixed;left:18px;bottom:18px;z-index:999999;
-  padding:8px 12px;border:1px solid rgba(22,140,255,.65);
-  background:rgba(8,8,8,.92);color:#168cff;
-  font:700 11px/1.2 Arial,sans-serif;letter-spacing:1.5px;
-  border-radius:6px;box-shadow:0 0 22px rgba(255,110,20,.18);
-}
-</style>
-
-
-<style id="jarvis-global-cinematic-environment">
-/* ================= GLOBAL ASTRON CINEMATIC ENVIRONMENT ================= */
-html, body{background:#02050a !important;}
-body{position:relative;}
-body::after{
-    content:"";
-    position:fixed;
-    inset:-8%;
-    z-index:-20;
-    pointer-events:none;
-    background:
-        radial-gradient(circle at 18% 18%, rgba(22,140,255,.16) 0, rgba(22,140,255,.07) 10%, transparent 28%),
-        radial-gradient(circle at 82% 14%, rgba(45,196,255,.15) 0, rgba(45,196,255,.06) 11%, transparent 28%),
-        radial-gradient(circle at 52% 55%, rgba(255,102,0,.08), transparent 27%),
-        radial-gradient(circle at 14% 78%, rgba(18,134,255,.09), transparent 24%),
-        radial-gradient(circle at 88% 78%, rgba(255,92,0,.08), transparent 25%),
-        linear-gradient(180deg,#010307 0%,#02060b 38%,#030407 100%);
-    filter:saturate(1.05);
-    animation:jarvisAmbientDrift 18s ease-in-out infinite alternate;
-}
-body::before{
-    z-index:-10 !important;
-    opacity:.16 !important;
-    background-image:
-        linear-gradient(rgba(77,202,255,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(22,140,255,.028) 1px,transparent 1px),
-        linear-gradient(180deg,transparent 0 49.8%,rgba(91,204,255,.025) 50%,transparent 50.2%);
-    background-size:72px 72px,72px 72px,100% 120px !important;
-    mask-image:linear-gradient(to bottom,black 0%,black 72%,transparent 100%) !important;
-}
-@keyframes jarvisAmbientDrift{
-    0%{transform:translate3d(-1.5%,0,0) scale(1.02);}
-    50%{transform:translate3d(1%,1%,0) scale(1.045);}
-    100%{transform:translate3d(-.5%,2%,0) scale(1.03);}
-}
-/* Dark transparent section surfaces so the same environment flows through the whole site. */
-section,
-footer,
-.architecture,
-.custom,
-.pricing,
-.mobile-coming-banner,
-.pro-payment-section{
-    background-color:transparent !important;
-}
-section::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    z-index:-1;
-    background:
-        linear-gradient(180deg,rgba(1,5,9,.10),rgba(1,3,6,.28)),
-        radial-gradient(circle at 50% 0,rgba(22,140,255,.025),transparent 48%);
-}
-/* Cinematic section separators. */
-section + section{border-top:1px solid rgba(77,202,255,.045);}
-section + section::before{
-    content:"";
-    position:absolute;
-    top:-1px;
-    left:8%;
-    right:8%;
-    height:1px;
-    background:linear-gradient(90deg,transparent,rgba(66,203,255,.22),rgba(22,140,255,.18),transparent);
-    box-shadow:0 0 18px rgba(50,190,255,.06);
-    pointer-events:none;
-}
-/* Subtle HUD light columns at the page edges. */
-body .jarvis-page-atmosphere{display:block;}
-@media(max-width:720px){
-    body::after{filter:saturate(.95);animation-duration:24s;}
-    body::before{background-size:52px 52px,52px 52px,100% 96px !important;opacity:.11 !important;}
-    section + section::before{left:5%;right:5%;}
-}
-@media(prefers-reduced-motion:reduce){
-    body::after{animation:none;}
-}
-<style id="jarvis-tech-global-background">
-/* ================= GLOBAL TECH BACKGROUND // USER REFERENCE ================= */
-html, body{
-    background-color:#05052a !important;
-}
-body::after{
-    background-image:
-        linear-gradient(180deg,rgba(2,3,28,.12),rgba(2,3,28,.24)),
-        linear-gradient(90deg,rgba(0,0,0,.06),rgba(0,0,0,0),rgba(0,0,0,.10)),
-        url("jarvis-tech-global-bg.png") !important;
-    background-size:cover,cover,cover !important;
-    background-position:center,center,center !important;
-    background-repeat:no-repeat !important;
-    background-attachment:fixed !important;
-    opacity:.96 !important;
-    filter:saturate(1.08) contrast(1.04) !important;
-    animation:jarvisTechBgDrift 26s ease-in-out infinite alternate !important;
-}
-body::before{
-    opacity:.12 !important;
-    background-image:
-        linear-gradient(rgba(80,170,255,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(120,80,255,.028) 1px,transparent 1px) !important;
-    background-size:64px 64px !important;
-}
-section, footer, .architecture, .custom, .pricing, .mobile-coming-banner, .pro-payment-section{
-    background-color:rgba(3,3,28,.09) !important;
-    background-image:linear-gradient(180deg,rgba(2,3,28,.04),rgba(2,3,28,.14)) !important;
-}
-@keyframes jarvisTechBgDrift{
-    0%{background-position:center,center,center center;transform:scale(1.01);}
-    50%{background-position:center,center,51% 49%;transform:scale(1.025);}
-    100%{background-position:center,center,49% 51%;transform:scale(1.01);}
-}
-@media(max-width:720px){
-    body::after{
-        background-position:center,center,42% center !important;
-        background-size:cover,cover,auto 100% !important;
-        opacity:.94 !important;
-        animation:none !important;
-    }
-    section, footer, .architecture, .custom, .pricing, .mobile-coming-banner, .pro-payment-section{
-        background-color:rgba(3,3,28,.16) !important;
-        background-image:linear-gradient(180deg,rgba(2,3,28,.06),rgba(2,3,28,.18)) !important;
-    }
-}
-@media(prefers-reduced-motion:reduce){
-    body::after{animation:none !important;}
-}
-</style>
-
-</style>
-
-<style id="jarvis-pro-payment-css">
-.jarvis-pro-payment{padding:90px 6vw;border-top:1px solid rgba(255,255,255,.08)}
-.jarvis-pro-payment .section-head{max-width:900px}
-.jarvis-pro-payment .section-head h2 span{color:#8fdcff}
-.pro-payment-grid{max-width:1100px;margin:42px auto 0;display:grid;grid-template-columns:minmax(280px,390px) 1fr;gap:42px;align-items:center}
-.pro-payment-card,.pro-payment-steps{border:1px solid rgba(120,210,255,.22);background:rgba(5,12,24,.72);box-shadow:0 0 35px rgba(40,150,255,.08);padding:28px}
-.pro-payment-card{text-align:center}
-.pro-payment-kicker{font-size:11px;letter-spacing:.18em;opacity:.72;margin-bottom:18px}
-.pro-payment-qr{display:block;width:250px;height:250px;margin:0 auto 18px;background:#fff;padding:10px;box-sizing:border-box}
-.pro-payment-amount{font-size:30px;font-weight:800;letter-spacing:.04em}
-.pro-payment-upi{margin:8px 0 18px;opacity:.78;font-family:monospace}
-.pro-copy-upi{border:1px solid rgba(120,210,255,.4);background:transparent;color:inherit;padding:11px 18px;cursor:pointer;letter-spacing:.12em;font-size:11px}
-.pro-copy-upi:hover{background:rgba(120,210,255,.1)}
-.pro-step{display:grid;grid-template-columns:45px 1fr;gap:14px;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.08);line-height:1.55}
-.pro-step b{color:#8fdcff;letter-spacing:.1em}
-.pro-payment-note{margin-top:20px;font-size:12px;line-height:1.6;opacity:.62}
-@media(max-width:760px){.pro-payment-grid{grid-template-columns:1fr}.pro-payment-qr{width:220px;height:220px}.jarvis-pro-payment{padding:70px 5vw}}
-</style>
-
-<style id="astron-android-download-css">
-.astron-android-download{padding:88px 6vw;border-top:1px solid rgba(255,255,255,.07);background:radial-gradient(circle at 50% 0%,rgba(22,140,255,.08),transparent 48%),#030303}
-.astron-android-download .section-head{max-width:900px}
-.astron-android-download .section-head h2 span{color:var(--orange)}
-.astron-android-card{max-width:1050px;margin:36px auto 0;display:grid;grid-template-columns:180px minmax(0,1fr);gap:32px;align-items:center;padding:clamp(22px,4vw,42px);border:1px solid rgba(22,140,255,.28);background:linear-gradient(145deg,rgba(12,12,12,.96),rgba(4,4,4,.98));box-shadow:0 0 45px rgba(22,140,255,.07)}
-.astron-android-icon{width:150px;height:150px;display:grid;place-items:center;border:1px solid rgba(22,140,255,.42);border-radius:32px;font-family:var(--font-display);font-weight:800;font-size:76px;color:#f4f4f4;background:radial-gradient(circle,rgba(22,140,255,.15),transparent 70%);box-shadow:inset 0 0 30px rgba(22,140,255,.07),0 0 28px rgba(22,140,255,.07)}
-.astron-android-icon span{color:var(--orange);font-size:28px;margin-left:-8px}
-.astron-android-kicker,.astron-android-meta{font-family:var(--font-mono);font-size:10px;letter-spacing:2.5px;color:var(--orange)}
-.astron-android-copy h3{font-size:clamp(27px,4vw,40px);margin:10px 0 12px}
-.astron-android-copy p{color:#aaa;line-height:1.75;max-width:720px}
-.astron-android-note{font-size:12px;margin-top:12px;color:#858585!important}
-.astron-android-button{display:inline-flex;align-items:center;gap:20px;margin-top:22px;padding:15px 20px;border:1px solid var(--orange);color:#fff;text-decoration:none;font-family:var(--font-mono);font-size:11px;letter-spacing:1.5px;transition:background .2s,color .2s,box-shadow .2s}
-.astron-android-button:hover{background:var(--orange);color:#080808;box-shadow:0 0 24px rgba(22,140,255,.2)}
-.astron-android-meta{margin-top:14px;color:#777;font-size:9px}
-@media(max-width:650px){.astron-android-download{padding:70px 6vw}.astron-android-card{grid-template-columns:1fr;gap:22px}.astron-android-icon{width:96px;height:96px;border-radius:24px;font-size:52px}.astron-android-icon span{font-size:19px}.astron-android-button{width:100%;justify-content:space-between;box-sizing:border-box}}
-</style>
-
-
-<style id="astron-responsive-polish">
-:root{--bg:#050b16;--panel:#091426;--panel2:#0d1b30;--orange:#168cff;--orange2:#63d7ff;--text:#f3f7ff;--muted:#a6b5ca;--line:rgba(22,140,255,.24);--glow:rgba(22,140,255,.22)}
-::selection{background:rgba(22,140,255,.35);color:#fff}
-:focus-visible{outline-color:#63d7ff}
-body{background-color:#050b16}
-.nav{gap:clamp(8px,1.2vw,20px);padding-inline:clamp(16px,4vw,64px);}
-.navlinks{gap:clamp(9px,1.25vw,22px);flex:1;justify-content:center;min-width:0}
-.navlinks a{font-size:clamp(8px,.68vw,10px);letter-spacing:clamp(.4px,.08vw,1.3px);white-space:nowrap}
-.navbtn{white-space:nowrap;letter-spacing:1px;padding:10px 12px;font-size:10px}
-.nav-toggle{display:none;background:transparent;border:1px solid rgba(99,215,255,.45);border-radius:8px;width:42px;height:40px;align-items:center;justify-content:center;flex-direction:column;gap:5px;color:#fff;cursor:pointer}
-.nav-toggle span{display:block;width:18px;height:2px;background:#63d7ff;border-radius:2px;transition:transform .2s,opacity .2s}
-.mobile-nav-panel{display:none}
-.mobile-nav-panel a{color:#dbe8ff;text-decoration:none;padding:13px 14px;border:1px solid rgba(99,215,255,.13);border-radius:8px;font-size:13px;letter-spacing:.02em}
-.mobile-nav-panel a:hover{background:rgba(22,140,255,.12);border-color:rgba(99,215,255,.45)}
-.mobile-nav-panel .mobile-nav-cta{background:#168cff;color:#04101e;font-weight:800;text-align:center;border-color:#168cff}
-.hero-stat-value{overflow-wrap:anywhere}
-.section-lead,.faq-answer,.requirements-card p{color:#b2c0d4}
-.faq-item{border-bottom-color:rgba(99,215,255,.16)}
-.compat-panel,.compat-score,.requirements-card{border-color:rgba(99,215,255,.22)}
-@media(max-width:1100px){.navlinks{gap:9px}.navlinks a{font-size:8px;letter-spacing:.3px}.navbtn{padding:9px 8px;font-size:9px;letter-spacing:.3px}}
-@media(max-width:900px){.nav{height:66px;padding:0 18px;gap:12px}.navlinks{display:none}.nav .nav-download{display:none}.nav .navbtn:not(.nav-download){margin-left:auto;padding:10px 12px;font-size:10px;letter-spacing:.6px}.nav-toggle{display:flex;flex-shrink:0}.mobile-nav-panel:not([hidden]){position:fixed;display:grid;grid-template-columns:1fr 1fr;gap:9px;top:66px;left:0;right:0;z-index:999;padding:14px 18px 18px;background:rgba(5,11,22,.98);border-bottom:1px solid rgba(99,215,255,.22);box-shadow:0 18px 36px rgba(0,0,0,.35);backdrop-filter:blur(18px)}.nav.menu-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}.nav.menu-open .nav-toggle span:nth-child(2){opacity:0}.nav.menu-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}body.mobile-menu-open{overflow:hidden}}
-@media(max-width:520px){.nav{padding-inline:14px}.logo{font-size:17px;letter-spacing:3px}.nav .navbtn:not(.nav-download){padding:9px 10px}.mobile-nav-panel:not([hidden]){grid-template-columns:1fr 1fr;padding:12px}.mobile-nav-panel a{font-size:12px;padding:12px 10px}.hero-stat-value{font-size:clamp(14px,4vw,22px)}.hero-panel{max-width:100%}.compat-grid{grid-template-columns:1fr}.hero-actions{display:flex;flex-wrap:wrap;gap:10px}.hero-actions .primary,.hero-actions .secondary{margin:0}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-</style>
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="preload" as="image" href="assets/astron-robot.webp" type="image/webp">
 </head>
 
 <body>
-
-
-<!-- ================= ASTRON PRO LAUNCH LOCK ================= -->
-<div id="pro-launch-lock" class="pro-launch-lock" aria-label="ASTRON PRO pre-launch lock">
-  <div class="pro-lock-grid"></div>
-  <div class="pro-lock-scan"></div>
-  <div class="pro-lock-face" aria-hidden="true">
-    <div class="face-halo"></div>
-    <svg viewBox="0 0 520 720" role="presentation">
-      <defs>
-        <linearGradient id="hfSkin" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#f3c7a0"/>
-          <stop offset="1" stop-color="#9d5d38"/>
-        </linearGradient>
-        <linearGradient id="hfMetal" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#1e3440"/>
-          <stop offset=".55" stop-color="#071117"/>
-          <stop offset="1" stop-color="#030609"/>
-        </linearGradient>
-        <linearGradient id="hfGlow" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#43cfff" stop-opacity="0"/>
-          <stop offset=".5" stop-color="#43cfff"/>
-          <stop offset="1" stop-color="#168cff" stop-opacity="0"/>
-        </linearGradient>
-        <filter id="hfBlur"><feGaussianBlur stdDeviation="18"/></filter>
-        <clipPath id="hfClip"><path d="M260 28 C150 28 78 112 78 238v176c0 137 83 248 182 248s182-111 182-248V238C442 112 370 28 260 28Z"/></clipPath>
-      </defs>
-      <g clip-path="url(#hfClip)">
-        <rect width="520" height="720" fill="#020508"/>
-        <path d="M0 0H260V720H0Z" fill="url(#hfSkin)"/>
-        <path d="M260 0H520V720H260Z" fill="url(#hfMetal)"/>
-        <ellipse cx="260" cy="350" rx="205" ry="270" fill="#42cfff" opacity=".06" filter="url(#hfBlur)"/>
-        <path d="M108 225 Q170 160 258 182 L258 235 Q170 214 110 282Z" fill="#17100d" opacity=".9"/>
-        <path d="M305 182 L410 125 L452 206 L415 260 L452 330 L415 400 L452 482 L390 545 L312 505Z" fill="#10212a" stroke="#4bd6ff" stroke-opacity=".35" stroke-width="4"/>
-        <path d="M264 58V650" stroke="#70ddff" stroke-opacity=".55" stroke-width="3"/>
-        <path d="M287 82 L420 150 L390 190 L445 248 L390 298 L442 355 L386 414 L438 472 L374 540" fill="none" stroke="#168cff" stroke-opacity=".45" stroke-width="6"/>
-        <path d="M292 108 L388 150 M292 158 L414 210 M292 220 L405 275 M292 294 L418 350 M292 370 L408 430 M292 448 L392 500" stroke="#47d5ff" stroke-opacity=".35" stroke-width="3"/>
-        <path d="M120 330 Q175 300 230 330" stroke="#351d14" stroke-width="8" fill="none" stroke-linecap="round"/>
-        <ellipse cx="177" cy="350" rx="25" ry="18" fill="#19100b"/>
-        <circle cx="184" cy="347" r="6" fill="#fff" opacity=".8"/>
-        <path d="M295 333 L398 333 L386 370 L305 370Z" fill="#02070a" stroke="#48d8ff" stroke-width="5"/>
-        <path d="M318 348 H378" stroke="#fff" stroke-width="5" opacity=".9"/>
-        <circle cx="350" cy="348" r="18" fill="#39d9ff" opacity=".18"/>
-        <path d="M160 470 Q205 505 242 475" stroke="#783c29" stroke-width="8" fill="none" stroke-linecap="round"/>
-        <path d="M308 475 H405 M320 500 H390" stroke="#168cff" stroke-width="5" opacity=".7" stroke-linecap="round"/>
-        <path d="M0 610 Q130 550 260 600 T520 610 V720 H0Z" fill="#020406" opacity=".7"/>
-        <path d="M40 635 H480" stroke="url(#hfGlow)" stroke-width="3"/>
-      </g>
-      <path d="M260 28 C150 28 78 112 78 238v176c0 137 83 248 182 248s182-111 182-248V238C442 112 370 28 260 28Z" fill="none" stroke="#65dfff" stroke-opacity=".35" stroke-width="3"/>
-    </svg>
-    <div class="face-vignette"></div>
-  </div>
-  <div class="pro-lock-corner tl"></div>
-  <div class="pro-lock-corner tr"></div>
-  <div class="pro-lock-corner bl"></div>
-  <div class="pro-lock-corner br"></div>
-
-  <div class="pro-lock-panel">
-    <div class="pro-lock-topline">
-      <span><i></i> ASTRON PRO // SECURE LAUNCH</span>
-      <span id="pro-lock-clock">PRE-LAUNCH</span>
-    </div>
-
-    <div class="pro-lock-reactor" aria-hidden="true">
-      <div class="pro-lock-ring r1"></div>
-      <div class="pro-lock-ring r2"></div>
-      <div class="pro-lock-ring r3"></div>
-      <div class="pro-lock-core"></div>
-      <div class="pro-lock-cross h"></div>
-      <div class="pro-lock-cross v"></div>
-    </div>
-
-    <div class="pro-lock-status">ACCESS <strong>LOCKED</strong></div>
-    <h1>ASTRON <span>PRO</span></h1>
-    <p class="pro-lock-sub">SYSTEM SEALED UNTIL LAUNCH</p>
-    <p class="pro-lock-date">19 OCTOBER 2026 // 00:00 IST</p>
-
-    <div class="pro-lock-countdown">
-      <div><strong id="launch-months">00</strong><small>MONTHS</small></div>
-      <div><strong id="launch-days">00</strong><small>DAYS</small></div>
-      <div><strong id="launch-hours">00</strong><small>HOURS</small></div>
-      <div><strong id="launch-minutes">00</strong><small>MINUTES</small></div>
-      <div><strong id="launch-seconds">00</strong><small>SECONDS</small></div>
-    </div>
-
-    <div class="pro-lock-progress"><span id="launch-progress"></span></div>
-    <div class="pro-lock-footer" id="launch-message">LAUNCH SEQUENCE ARMED // STANDBY</div>
-  </div>
-</div>
-
-<div id="scroll-progress"></div>
-
-<!-- ================= HUMAN / ROBOT BADGE ================= -->
-<div id="jarvis-badge" title="ASTRON">
-    <svg viewBox="0 0 100 100">
-        <defs>
-            <clipPath id="badgeCircle"><circle cx="50" cy="50" r="48"/></clipPath>
-            <linearGradient id="skinGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#e8b48c"/>
-                <stop offset="100%" stop-color="#c48b62"/>
-            </linearGradient>
-            <linearGradient id="metalGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#2a2a2a"/>
-                <stop offset="100%" stop-color="#0c0c0c"/>
-            </linearGradient>
-        </defs>
-
-        <g clip-path="url(#badgeCircle)">
-            <rect x="0" y="0" width="100" height="100" fill="#050505"/>
-
-            <!-- ===== LEFT HALF : HUMAN ===== -->
-            <path d="M50,2 A48,48 0 0,0 50,98 Z" fill="url(#skinGrad)"/>
-            <path d="M2,50 A48,48 0 0,0 50,98 L50,50 Z" fill="#000" opacity=".08"/>
-            <path d="M6,18 Q28,4 50,10 L50,26 Q30,18 10,30 Z" fill="#1c130d"/>
-            <path d="M18,42 Q26,36 34,42" stroke="#1c130d" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-            <ellipse cx="30" cy="52" rx="5.5" ry="6.5" fill="#1b1108"/>
-            <circle cx="31.5" cy="49.5" r="1.4" fill="#fff" opacity=".8"/>
-            <path d="M26,72 Q34,80 43,74" stroke="#7a3c26" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-
-            <!-- ===== RIGHT HALF : ROBOT ===== -->
-            <path d="M50,2 A48,48 0 0,1 50,98 Z" fill="url(#metalGrad)"/>
-            <path d="M50,10 L50,90" stroke="#000" stroke-width="0" opacity="0"/>
-            <path d="M56,8 L56,92 M64,4 L64,96 M72,10 L72,90" stroke="rgba(22,140,255,.18)" stroke-width="1"/>
-            <rect x="60" y="42" width="20" height="16" rx="3" fill="#050505" stroke="rgba(22,140,255,.6)" stroke-width="1.2"/>
-            <circle class="badge-eye-robot" cx="70" cy="50" r="5" fill="#168cff"/>
-            <path d="M62,68 L78,68 M64,74 L76,74" stroke="rgba(22,140,255,.5)" stroke-width="1.4" stroke-linecap="round"/>
-            <path d="M58,22 L82,22 L82,30 L58,30 Z" fill="none" stroke="rgba(22,140,255,.35)" stroke-width="1"/>
-            <circle cx="62" cy="26" r="1.3" fill="var(--orange)"/>
-            <circle cx="68" cy="26" r="1.3" fill="rgba(22,140,255,.4)"/>
-            <circle cx="74" cy="26" r="1.3" fill="rgba(22,140,255,.4)"/>
-
-            <!-- center divide glow -->
-            <rect x="49.3" y="2" width="1.4" height="96" fill="#168cff" opacity=".55"/>
-        </g>
-
-        <g class="badge-ring">
-            <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(22,140,255,.5)" stroke-width="1.4" stroke-dasharray="6 10"/>
-        </g>
-    </svg>
-</div>
-<div class="jarvis-badge-tip">HUMAN + AI</div>
-
+<a class="skip" href="#main">Skip to content</a>
+<div id="scroll-progress" aria-hidden="true"></div>
+<div class="bg-fx" aria-hidden="true"><canvas id="stars"></canvas><i class="aurora a1"></i><i class="aurora a2"></i><i class="grid-fade"></i></div>
 
 <!-- ================= NAV ================= -->
-
-<nav class="nav">
-
-    <div class="logo">
-        ASTRON<span>//</span>
-    </div>
-
-    <div class="navlinks">
-        <a href="#capabilities">CAPABILITIES</a>
-        <a href="#architecture">ARCHITECTURE</a>
-        <a href="#demo">DEMO</a>
-      <a href="#gallery">GALLERY</a>
-      <a href="#compatibility">CHECK</a>
-        <a href="#pricing">PRICING</a>
-        <a href="#starter">STARTER</a>
-        <a href="#setup">SETUP</a>
-        <a href="#command-playground">COMMAND LAB</a>
-        <a href="#faq">FAQ</a>
-        <a href="#custom">CUSTOM</a>
-    </div>
-
-    <a href="#download" class="navbtn">
-        GET STARTED
-    </a>
-
-    <a href="JARVIS_PC_RELEASE.zip" class="navbtn nav-download" target="_blank" rel="noopener">
-        DOWNLOAD ASTRON
-    </a>
-
-    <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="astron-mobile-nav">
-        <span></span><span></span><span></span>
-    </button>
-
-</nav>
-<div id="astron-mobile-nav" class="mobile-nav-panel" hidden>
-    <a href="#capabilities">Capabilities</a>
-    <a href="#architecture">Architecture</a>
-    <a href="#demo">Product demo</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#compatibility">System check</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#setup">Setup guide</a>
+<header class="nav" id="nav">
+  <a class="logo" href="#top" aria-label="ASTRON home"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4 4 27h5.2l2.2-4.6h9.2l2.2 4.6H28L16 4Zm0 9.6 3 6.3h-6l3-6.3Z"/></svg></span>ASTRON</a>
+  <nav class="navlinks" aria-label="Primary">
+    <a href="#capabilities">Features</a>
+    <a href="#architecture">How it works</a>
     <a href="#command-playground">Command lab</a>
+    <a href="#setup">Setup</a>
+    <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
-    <a href="#download" class="mobile-nav-cta">Get Started</a>
+    <a href="#custom">Custom build</a>
+  </nav>
+  <a href="JARVIS_PC_RELEASE.zip" class="btn btn-primary btn-sm nav-cta" download>Download</a>
+  <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
+</header>
+<div id="mobile-nav" class="mobile-nav" hidden>
+  <a href="#capabilities">Features</a>
+  <a href="#architecture">How it works</a>
+  <a href="#command-playground">Command lab</a>
+  <a href="#setup">Setup guide</a>
+  <a href="#compatibility">System check</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#faq">FAQ</a>
+  <a href="#custom">Custom build</a>
+  <a href="JARVIS_PC_RELEASE.zip" class="btn btn-primary" download>Download ASTRON</a>
 </div>
 
+<main id="main">
 
 <!-- ================= HERO ================= -->
-
-<header class="hero">
-
-    <div class="hero-backdrop" aria-hidden="true"></div>
-    <div class="hero-grid-glow" aria-hidden="true"></div>
-
-    <div class="reactor" aria-hidden="true">
-        <div class="reactor-ghost"></div>
-        <div class="ring"></div>
-        <div class="ring"></div>
-        <div class="ring"></div>
-        <div class="energy"></div>
-        <div class="energy"></div>
-        <div class="reactor-core">
-            <div class="core-inner"></div>
-            <div class="core-highlight"></div>
-        </div>
-    </div>
-
-    <div class="hero-inner">
-
-        <div class="hero-content reveal">
-            <div class="hero-kicker"><span></span> VOICE-FIRST AI // LOCAL INTELLIGENCE</div>
-
-            <h1>
-                ASTRON <span>SPARK</span><br>
-                VOICE-FIRST AI<br>
-                <em>ASSISTANT.</em>
-            </h1>
-
-            <p>
-                A cinematic personal AI system built for voice, vision,
-                automation, memory and intelligent control — running
-                directly on your machine.
-            </p>
-
-            <div class="hero-actions">
-                <a href="#download" class="primary">
-                    GET ASTRON
-                </a>
-
-                <a href="#demo" class="secondary">
-                    WATCH SYSTEM
-                </a>
-            </div>
-
-            <div class="hero-microline">
-                <span>LOCAL AI</span><i></i><span>VISION</span><i></i><span>VOICE</span><i></i><span>MEMORY</span>
-            </div>
-        </div>
-
-        <div class="hero-panel reveal" id="hero-panel">
-            <div class="hero-panel-top">
-                <span>ASTRON // FEATURE READOUT</span>
-                <span><b>●</b> DEMO</span>
-            </div>
-
-            <div class="hero-stat">
-                <span class="hero-stat-label">LOCAL AI</span>
-                <span class="hero-stat-value">READY</span>
-            </div>
-
-            <div class="hero-stat">
-                <span class="hero-stat-label">VOICE CONTROL</span>
-                <span class="hero-stat-value">AVAILABLE</span>
-            </div>
-
-            <div class="hero-stat">
-                <span class="hero-stat-label">VISION TOOLS</span>
-                <span class="hero-stat-value">MODULE-BASED</span>
-            </div>
-
-            <div class="hero-stat">
-                <span class="hero-stat-label">PERFORMANCE</span>
-                <span class="hero-stat-value">MODEL-DEPENDENT</span>
-            </div>
-
-            <div class="hero-bar-track">
-                <div class="hero-bar-fill" id="hero-bar-fill"></div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="hero-bottom-status" aria-hidden="true">
-        <span>ASTRON CORE // ONLINE</span>
-        <span>AUTHENTICATED</span>
-        <span>READY FOR COMMAND</span>
-    </div>
-
-</header>
-
-<!-- ================= HOW IT WORKS ================= -->
-
-<section id="how-it-works">
-
-<div class="section-head reveal">
-
-    <div class="section-label">
-        // GETTING STARTED
-    </div>
-
-    <h2>
-        FOUR STEPS<br>
-        TO ONLINE.
-    </h2>
-
-    <p>
-        From download to your first spoken command,
-        setting up ASTRON takes minutes, not hours.
-    </p>
-
-</div>
-
-<div class="steps">
-
-    <div class="step reveal">
-        <div class="step-dot">01</div>
-        <h3>Download &amp; install</h3>
-        <p>Grab the current build and run it on your machine — no cloud account required to get started.</p>
-    </div>
-
-    <div class="step reveal">
-        <div class="step-dot">02</div>
-        <h3>Connect a model</h3>
-        <p>Point ASTRON at a local Ollama model, or configure your own, to keep conversations private.</p>
-    </div>
-
-    <div class="step reveal">
-        <div class="step-dot">03</div>
-        <h3>Talk, type or gesture</h3>
-        <p>Use your voice, the keyboard, or hand gestures — ASTRON listens and responds however suits you.</p>
-    </div>
-
-    <div class="step reveal">
-        <div class="step-dot">04</div>
-        <h3>ASTRON takes action</h3>
-        <p>Commands get executed — apps open, tasks run, and useful details are remembered for next time.</p>
-    </div>
-
-</div>
-
-</section>
-
-
-
-<!-- ================= ASTRON PRODUCT PROOF ================= -->
-<section id="setup" class="product-proof-section">
-  <div class="section-head reveal">
-    <div class="section-label">03 // GET RUNNING</div>
-    <h2>FROM ZERO<br><span>TO ASTRON.</span></h2>
-    <p>A simple setup path for the current desktop build. Keep the AI local, connect your model, and start issuing commands.</p>
+<section class="hero" id="top">
+  <div class="hero-art" aria-hidden="true">
+    <div class="hero-glow"></div>
+    <svg class="orbit" viewBox="0 0 600 600" fill="none">
+      <ellipse cx="300" cy="300" rx="285" ry="95" transform="rotate(-24 300 300)"/>
+      <ellipse cx="300" cy="300" rx="235" ry="70" transform="rotate(-24 300 300)" class="dash"/>
+      <circle cx="82" cy="394" r="5" class="dot"/>
+    </svg>
+    <img src="assets/astron-robot.webp" alt="" width="720" height="784" fetchpriority="high">
+    <div class="chip chip-a"><i class="pulse"></i>Voice · listening</div>
+    <div class="chip chip-b"><i class="pulse c"></i>Local AI · Ollama</div>
+    <div class="chip chip-c"><i class="pulse v"></i>Memory · connected</div>
   </div>
 
-  <div class="setup-grid">
-    <div class="setup-card reveal"><div class="setup-num">01</div><h3>DOWNLOAD</h3><p>Get the current ASTRON PC release and extract it to a folder you control.</p><code>ASTRON_PC_RELEASE.zip</code></div>
-    <div class="setup-card reveal"><div class="setup-num">02</div><h3>PYTHON</h3><p>Use a supported Python installation and install the project's required packages.</p><code>pip install -r requirements.txt</code></div>
-    <div class="setup-card reveal"><div class="setup-num">03</div><h3>OLLAMA</h3><p>Install Ollama and pull a local model such as the model configured for your build.</p><code>ollama run &lt;your-model&gt;</code></div>
-    <div class="setup-card reveal"><div class="setup-num">04</div><h3>LAUNCH</h3><p>Start ASTRON, allow the requested microphone/camera permissions, then test a command.</p><code>python main.py</code></div>
-  </div>
-
-  <div class="interface-preview reveal">
-    <div class="preview-top"><span>ASTRON // DESKTOP HUD PREVIEW</span><span class="preview-online">● ONLINE</span></div>
-    <div class="preview-body">
-      <div class="preview-core"><div class="preview-ring r1"></div><div class="preview-ring r2"></div><div class="preview-orb">J</div><small>LOCAL AI CORE</small></div>
-      <div class="preview-console">
-        <div>&gt; ASTRON online. Systems ready.</div>
-        <div>&gt; VOICE ................. READY</div>
-        <div>&gt; VISION ................. READY</div>
-        <div>&gt; GESTURES ............... READY</div>
-        <div>&gt; MEMORY ................. CONNECTED</div>
-        <div class="preview-cursor">&gt; awaiting command<span>_</span></div>
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Voice-first AI · Local intelligence</p>
+      <h1>ASTRON <span class="grad">Spark</span><br>your voice-first AI assistant.</h1>
+      <p class="lead">A cinematic personal AI system for voice, vision, automation and memory — running directly on your own machine, under your control.</p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn btn-primary btn-lg">Get ASTRON <span aria-hidden="true">→</span></a>
+        <a href="#command-playground" class="btn btn-ghost btn-lg"><span class="play" aria-hidden="true">▶</span> Try the command lab</a>
       </div>
-      <div class="preview-stats"><b>LOCAL</b><span>AI ENGINE</span><b>READY</b><span>COMMAND BUS</span><b>ONLINE</b><span>AUTOMATION</span></div>
+      <ul class="hero-points">
+        <li>Runs locally</li><li>Windows &amp; Android</li><li>Free core version</li>
+      </ul>
     </div>
+  </div>
+
+  <div class="container">
+    <dl class="stat-strip" data-stagger>
+      <div class="reveal"><dt>Local AI</dt><dd>Ready</dd></div>
+      <div class="reveal"><dt>Voice control</dt><dd>Available</dd></div>
+      <div class="reveal"><dt>Vision tools</dt><dd>Module-based</dd></div>
+      <div class="reveal"><dt>Performance</dt><dd>Model-dependent</dd></div>
+    </dl>
   </div>
 </section>
 
-<!-- ================= COMMANDS IN MOTION ================= -->
-
-<section id="motion" class="motion-section">
-
-<div class="section-head reveal">
-    <div class="section-label">// LIVE FLOW</div>
-    <h2>COMMANDS<br>IN MOTION.</h2>
-    <p>Watch a ASTRON request move from voice intent to AI reasoning and action execution.</p>
-</div>
-
-<div class="motion-board reveal" data-motion-board>
-    <div class="motion-status"><span class="motion-dot"></span><span id="motionStatus">SIMULATION READY</span><b id="motionTimer">00.00s</b></div>
-    <div class="motion-track">
-        <div class="motion-step" data-step="0"><span>01</span><b>WAKE</b><small>LISTENING</small></div>
-        <div class="motion-arrow">→</div>
-        <div class="motion-step" data-step="1"><span>02</span><b>UNDERSTAND</b><small>INTENT</small></div>
-        <div class="motion-arrow">→</div>
-        <div class="motion-step" data-step="2"><span>03</span><b>THINK</b><small>LOCAL AI</small></div>
-        <div class="motion-arrow">→</div>
-        <div class="motion-step" data-step="3"><span>04</span><b>ACT</b><small>AUTOMATION</small></div>
-        <div class="motion-arrow">→</div>
-        <div class="motion-step" data-step="4"><span>05</span><b>CONFIRM</b><small>READY</small></div>
+<!-- ================= PRODUCT SHOWCASE ================= -->
+<section class="section showcase" id="showcase">
+  <div class="container showcase-grid">
+    <div class="showcase-copy reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>The ASTRON ecosystem</p>
+      <h2>Intelligence.<br><span class="grad">In every dimension.</span></h2>
+      <p class="lead">An AI experience built around voice, vision, memory and action — wrapped in a calm, cinematic desktop interface.</p>
+      <ul class="check-list">
+        <li><b>Voice + vision</b> Talk to it, show it things, let it see the screen.</li>
+        <li><b>Smart memory</b> Notes and preferences stay on your device between sessions.</li>
+        <li><b>Agent mode</b> Open apps, run tasks and chain commands hands-free.</li>
+      </ul>
+      <a href="#capabilities" class="btn btn-ghost">Explore features <span aria-hidden="true">↗</span></a>
     </div>
-    <div class="motion-command"><span>ASTRON //</span><strong id="motionCommand">"Open YouTube and get ready."</strong></div>
-    <div class="motion-actions">
-        <button type="button" data-motion-command="Open YouTube and get ready.">RUN DEMO</button>
-        <button type="button" data-motion-command="Remember that my workspace is ready.">MEMORY FLOW</button>
-        <button type="button" data-motion-command="Show system status.">STATUS FLOW</button>
-    </div>
-</div>
 
-</section>
-
-
-<!-- ================= COMMAND PLAYGROUND ================= -->
-<section id="command-playground" class="command-playground-section">
-  <div class="section-head reveal">
-    <div class="section-label">04 // COMMAND LAB</div>
-    <h2>TRY THE<br><span>COMMAND FLOW.</span></h2>
-    <p>Type a command or choose a preset. The website simulates the same pipeline ASTRON uses: input → intent → action → result.</p>
-  </div>
-
-  <div class="command-lab reveal">
-    <div class="command-input-row">
-      <span class="prompt-mark">&gt;</span>
-      <input id="commandLabInput" type="text" autocomplete="off" placeholder="Try: Open YouTube">
-      <button id="commandLabRun">RUN COMMAND</button>
+    <div class="stage reveal" role="img" aria-label="Illustrative mockup of the ASTRON desktop and mobile interface">
+      <div class="float-card fc-vision">
+        <div class="win-dots"><i></i><i></i><i></i><b>VISION</b></div>
+        <div class="fc-img"><img src="assets/astron-scene.webp" alt="" loading="lazy" width="892" height="303"><span>Scene analysis</span></div>
+        <p><i class="pulse"></i>Visual input ready</p>
+      </div>
+      <div class="laptop">
+        <div class="laptop-screen">
+          <aside class="mock-side">
+            <div class="mock-brand"><span>A</span>ASTRON</div>
+            <p class="on">Home</p><p>Assistant</p><p>Vision</p><p>Memory</p><p>Settings</p>
+            <small><i class="pulse"></i>System ready</small>
+          </aside>
+          <div class="mock-main">
+            <div class="mock-orb"><span>A</span></div>
+            <h3>Hello, I’m ASTRON.</h3>
+            <p>Your intelligent workspace is ready.</p>
+            <div class="mock-prompt">Ask ASTRON anything… <b>↑</b></div>
+            <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="laptop-base"></div>
+      </div>
+      <div class="float-card fc-memory">
+        <div class="win-dots"><i></i><i></i><i></i><b>MEMORY</b></div>
+        <div class="mem-orb">✧</div>
+        <strong>Context retained</strong><small>Personal · Local</small>
+      </div>
+      <div class="phone"><span class="phone-notch"></span><div class="phone-logo">A</div><b>ASTRON</b><small>Your AI, wherever you go.</small></div>
     </div>
-    <div class="command-presets">
-      <button data-command="Open YouTube">OPEN YOUTUBE</button>
-      <button data-command="Search the web for Iron Man">WEB SEARCH</button>
-      <button data-command="Take a note">TAKE NOTE</button>
-      <button data-command="Remember this">MEMORY</button>
-      <button data-command="System status">SYSTEM STATUS</button>
-      <button data-command="Enable gestures">GESTURES</button>
-    </div>
-    <div class="command-pipeline" id="commandPipeline">
-      <div class="pipeline-node active"><span>01</span><b>INPUT</b><small>WAITING</small></div>
-      <div class="pipeline-line"></div>
-      <div class="pipeline-node"><span>02</span><b>BRAIN</b><small>STANDBY</small></div>
-      <div class="pipeline-line"></div>
-      <div class="pipeline-node"><span>03</span><b>ACTION</b><small>STANDBY</small></div>
-      <div class="pipeline-line"></div>
-      <div class="pipeline-node"><span>04</span><b>STATUS</b><small>READY</small></div>
-    </div>
-    <div class="command-output" id="commandLabOutput">ASTRON // COMMAND LAB READY<br><span>Enter a command to start the simulation.</span></div>
   </div>
 </section>
-
-<!-- ================= ASTRON PRO // NEXT TIER ================= -->
-
-<section class="mobile-coming-banner" aria-label="ASTRON Pro coming soon">
-    <div class="mobile-coming-label">
-        <span>NEXT TIER // ASTRON PRO</span>
-        <span>STATUS // IN DEVELOPMENT</span>
-    </div>
-
-    <div class="mobile-banner-frame pro-banner-frame">
-
-        <div class="pro-banner-copy">
-            <div class="pro-banner-kicker">UPGRADE YOUR ASTRON</div>
-            <h3 class="pro-banner-title">ASTRON <span>PRO</span></h3>
-            <div class="pro-banner-tag"><i class="pro-dot"></i>COMING SOON</div>
-            <p class="pro-banner-sub">More compute, more memory, zero limits — the same ASTRON you already run, tuned all the way up.</p>
-        </div>
-
-        <div class="pro-feature-list">
-            <div class="pro-feature"><b>01</b>PRIORITY COMPUTE</div>
-            <div class="pro-feature"><b>02</b>EXTENDED MEMORY</div>
-            <div class="pro-feature"><b>03</b>ADVANCED AUTOMATIONS</div>
-            <div class="pro-feature"><b>04</b>PRO-ONLY INTEGRATIONS</div>
-            <div class="pro-feature"><b>05</b>PRIORITY SUPPORT</div>
-        </div>
-
-        <div class="pro-windows-download">
-            <div class="pro-download-kicker">WINDOWS PC // AVAILABLE NOW</div>
-            <h4>ASTRON PRO — Windows PC</h4>
-            <p>Download the full ASTRON AI PC application with Vision, Voice, Smart Command Engine, Serious Mode, local AI, OCR, and other existing features.</p>
-            <a class="pro-download-button" href="#jarvis-pro-payment">
-                GET ASTRON PRO — ₹950
-            </a>
-        </div>
-
-    </div>
-
-    <form class="waitlist-form" id="waitlistForm">
-        <div class="waitlist-label">GET NOTIFIED AT LAUNCH</div>
-        <div class="waitlist-row">
-            <input type="email" id="waitlistEmail" placeholder="YOUR EMAIL" required>
-            <button type="submit">JOIN WAITLIST</button>
-        </div>
-        <div class="waitlist-note" id="waitlistNote"></div>
-    </form>
-</section>
-
-<!-- ================================================================ -->
-
-<!-- ================= TICKER ================= -->
-
-<div class="ticker">
-
-<div class="ticker-track">
-
-    SYSTEM ONLINE　//　
-    LOCAL AI　//　
-    VOICE ACTIVE　//　
-    COMPUTER VISION　//　
-    AUTOMATION READY　//　
-    MEMORY CORE　//　
-    GESTURE CONTROL　//　
-    SYSTEM ONLINE　//　
-    LOCAL AI　//　
-    VOICE ACTIVE　//　
-    COMPUTER VISION　//　
-    AUTOMATION READY　//　
-    MEMORY CORE　//　
-    GESTURE CONTROL　//　
-
-</div>
-
-</div>
-
 
 <!-- ================= CAPABILITIES ================= -->
+<section class="section" id="capabilities">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Capabilities</p>
+      <h2>More than a chatbot.</h2>
+      <p class="lead">ASTRON pairs local intelligence with real computer interaction, so it behaves like an actual desktop assistant.</p>
+    </div>
 
-
-<section id="gallery" class="site-section gallery-section">
-  <div class="section-kicker">03 // INTERFACE ARCHIVE</div>
-  <h2>ASTRON // <span>VISUALS</span></h2>
-  <p class="section-lead">A cinematic preview of the desktop experience. These panels are interface mockups — replace them with real ASTRON screenshots when you have them.</p>
-  <div class="hud-gallery">
-    <article class="hud-shot hud-shot-main">
-      <div class="hud-shot-bar"><b>ASTRON CORE</b><span>LOCAL // ONLINE</span></div>
-      <div class="hud-reactor"><div class="reactor-ring r1"></div><div class="reactor-ring r2"></div><div class="reactor-core">J</div></div>
-      <div class="hud-readout"><span>CPU 18%</span><span>RAM 42%</span><span>VOICE READY</span></div>
-    </article>
-    <article class="hud-shot">
-      <div class="hud-shot-bar"><b>VOICE INTELLIGENCE</b><span>LISTENING</span></div>
-      <div class="voice-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <p class="shot-command">“OPEN YOUTUBE”</p>
-      <div class="shot-result">INTENT DETECTED // ACTION READY</div>
-    </article>
-    <article class="hud-shot">
-      <div class="hud-shot-bar"><b>GESTURE CONTROL</b><span>CAMERA</span></div>
-      <div class="gesture-hand">✋</div>
-      <div class="gesture-labels"><span>CURSOR</span><span>CLICK</span><span>SCROLL</span><span>STOP</span></div>
-      <div class="shot-result">HAND TRACKING // ACTIVE</div>
-    </article>
+    <div class="grid-3" data-stagger>
+      <article class="card spot reveal">
+        <span class="icon"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9 7V3M15 7V3M9 21v-4M15 21v-4M7 9H3M7 15H3M21 9h-4M21 15h-4"/></svg></span>
+        <h3>Local AI</h3>
+        <p>Connect ASTRON to a local Ollama model for private conversations without sending everything to the cloud.</p>
+      </article>
+      <article class="card spot reveal">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4M9 22h6"/></svg></span>
+        <h3>Voice intelligence</h3>
+        <p>Natural voice commands, wake-word detection and spoken responses for a genuinely hands-free experience.</p>
+      </article>
+      <article class="card spot reveal">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+        <h3>Computer vision</h3>
+        <p>Camera-powered vision enables gesture interaction and screen-understanding capabilities.</p>
+      </article>
+      <article class="card spot reveal">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M8 12V6a2 2 0 1 1 4 0v5M12 11V4a2 2 0 1 1 4 0v7M16 11.5V6a2 2 0 1 1 4 0v8a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3.4L3.6 13a1.8 1.8 0 0 1 2.9-2.1L8 13"/></svg></span>
+        <h3>Gesture control</h3>
+        <p>Control the Windows cursor with hand gestures — movement, clicking and scrolling.</p>
+      </article>
+      <article class="card spot reveal">
+        <span class="icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+        <h3>Persistent memory</h3>
+        <p>Remember useful information, notes and preferences between sessions using local storage.</p>
+      </article>
+      <article class="card spot reveal">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg></span>
+        <h3>Automation</h3>
+        <p>Open applications, control system functions, interact with devices and execute commands.</p>
+      </article>
+    </div>
   </div>
 </section>
-
-<section id="capabilities">
-
-<div class="section-head reveal">
-
-    <div class="section-label">
-        01 // CAPABILITIES
-    </div>
-
-    <h2>
-        MORE THAN<br>
-        A CHATBOT.
-    </h2>
-
-    <p>
-        ASTRON combines local intelligence with real-world
-        computer interaction to become an actual desktop
-        assistant.
-    </p>
-
-</div>
-
-
-<div class="grid">
-
-<div class="card reveal">
-
-    <div class="card-icon">
-        <svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 7V3M15 7V3M9 21v-4M15 21v-4M7 9H3M7 15H3M21 9h-4M21 15h-4"/></svg>
-    </div>
-
-    <div class="card-number">01</div>
-
-    <h3>Local AI</h3>
-
-    <p>
-        Connect ASTRON to a local Ollama model for
-        private AI conversations without sending
-        everything to the cloud.
-    </p>
-
-</div>
-
-
-<div class="card reveal">
-
-    <div class="card-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4M9 22h6"/></svg>
-    </div>
-
-    <div class="card-number">02</div>
-
-    <h3>Voice Intelligence</h3>
-
-    <p>
-        Natural voice commands, wake-word detection
-        and spoken responses create a hands-free
-        assistant experience.
-    </p>
-
-</div>
-
-
-<div class="card reveal">
-
-    <div class="card-icon">
-        <svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-    </div>
-
-    <div class="card-number">03</div>
-
-    <h3>Computer Vision</h3>
-
-    <p>
-        Camera-powered vision enables gesture interaction
-        and future screen-understanding capabilities.
-    </p>
-
-</div>
-
-
-<div class="card reveal">
-
-    <div class="card-icon">
-        <svg viewBox="0 0 24 24"><path d="M8 12V6a2 2 0 1 1 4 0v5M12 11V4a2 2 0 1 1 4 0v7M16 11.5V6a2 2 0 1 1 4 0v8a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3.4L3.6 13a1.8 1.8 0 0 1 2.9-2.1L8 13"/></svg>
-    </div>
-
-    <div class="card-number">04</div>
-
-    <h3>Gesture Control</h3>
-
-    <p>
-        Control the Windows cursor using hand gestures,
-        including movement, clicking and scrolling.
-    </p>
-
-</div>
-
-
-<div class="card reveal">
-
-    <div class="card-icon">
-        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
-    </div>
-
-    <div class="card-number">05</div>
-
-    <h3>Persistent Memory</h3>
-
-    <p>
-        Remember useful information, notes and preferences
-        between sessions using local storage.
-    </p>
-
-</div>
-
-
-<div class="card reveal">
-
-    <div class="card-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg>
-    </div>
-
-    <div class="card-number">06</div>
-
-    <h3>Automation</h3>
-
-    <p>
-        Open applications, control system functions,
-        interact with devices and execute commands.
-    </p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= TESTIMONIALS ================= -->
-
-<section id="testimonials">
-
-<div class="section-head reveal">
-
-    <div class="section-label">
-        // EARLY FEEDBACK
-    </div>
-
-    <h2>
-        FROM PEOPLE<br>
-        RUNNING IT.
-    </h2>
-
-    <p>
-        A few notes from early builders testing ASTRON
-        on their own machines.
-    </p>
-
-</div>
-
-<div class="testimonial-grid">
-
-    <div class="testimonial reveal">
-        <div class="testimonial-quote">Getting a local model wired up took about ten minutes, and the wake-word detection has been solid so far.</div>
-        <div class="testimonial-who">
-            <div class="testimonial-avatar">R</div>
-            <div>
-                <div class="testimonial-name">Early Beta User</div>
-                <div class="testimonial-role">Desktop automation tester</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="testimonial reveal">
-        <div class="testimonial-quote">The gesture cursor control is the feature I didn't know I needed. Genuinely useful during presentations.</div>
-        <div class="testimonial-who">
-            <div class="testimonial-avatar">K</div>
-            <div>
-                <div class="testimonial-name">Early Beta User</div>
-                <div class="testimonial-role">Gesture control tester</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="testimonial reveal">
-        <div class="testimonial-quote">Liked that everything runs locally — no sending conversations off to a server I don't control.</div>
-        <div class="testimonial-who">
-            <div class="testimonial-avatar">S</div>
-            <div>
-                <div class="testimonial-name">Early Beta User</div>
-                <div class="testimonial-role">Privacy-focused tester</div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-</section>
-
 
 <!-- ================= ARCHITECTURE ================= -->
-
-<section id="architecture" class="architecture">
-
-<div class="section-head reveal">
-
-    <div class="section-label">
-        02 // ARCHITECTURE
+<section class="section" id="architecture">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>How it works</p>
+      <h2>Built like a system.</h2>
+      <p class="lead">ASTRON is designed as an extensible assistant rather than a single-purpose chatbot — three layers working together.</p>
     </div>
 
-    <h2>
-        BUILT LIKE<br>
-        A SYSTEM.
-    </h2>
-
-    <p>
-        ASTRON is designed as an extensible assistant rather
-        than a single-purpose chatbot.
-    </p>
-
-</div>
-
-
-<div class="pipeline">
-
-<span class="pipe-pulse p1"></span>
-<span class="pipe-pulse p2"></span>
-
-<div class="node reveal">
-
-    <small>01 // INPUT</small>
-
-    <h3>Human Interface</h3>
-
-    <p>
-        Voice, wake detection, keyboard input,
-        camera and gesture signals.
-    </p>
-
-</div>
-
-
-<div class="node reveal">
-
-    <small>02 // INTELLIGENCE</small>
-
-    <h3>AI Brain</h3>
-
-    <p>
-        Local language model, context, memory,
-        intent recognition and command routing.
-    </p>
-
-</div>
-
-
-<div class="node reveal">
-
-    <small>03 // ACTION</small>
-
-    <h3>Execution Layer</h3>
-
-    <p>
-        Windows control, applications, browser,
-        devices, automation and future integrations.
-    </p>
-
-</div>
-
-</div>
-
+    <div class="flow" data-stagger>
+      <article class="flow-node reveal">
+        <small>01 · Input</small>
+        <h3>Human interface</h3>
+        <p>Voice, wake detection, keyboard input, camera and gesture signals.</p>
+      </article>
+      <span class="flow-arrow" aria-hidden="true"><i></i></span>
+      <article class="flow-node reveal">
+        <small>02 · Intelligence</small>
+        <h3>AI brain</h3>
+        <p>Local language model, context, memory, intent recognition and command routing.</p>
+      </article>
+      <span class="flow-arrow" aria-hidden="true"><i></i></span>
+      <article class="flow-node reveal">
+        <small>03 · Action</small>
+        <h3>Execution layer</h3>
+        <p>Windows control, applications, browser, devices, automation and future integrations.</p>
+      </article>
+    </div>
+  </div>
 </section>
 
-
-<!-- ================= DEMO ================= -->
-
-<section id="demo">
-
-<div class="demo">
-
-<div class="section-head reveal">
-
-    <div class="section-label">
-        03 // LIVE SYSTEM
+<!-- ================= COMMAND LAB ================= -->
+<section class="section" id="command-playground">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Command lab</p>
+      <h2>Try the command flow.</h2>
+      <p class="lead">Type a command or pick a preset. This page simulates the pipeline ASTRON uses — input → intent → action → result. It does not control your PC.</p>
     </div>
 
-    <h2>
-        SEE THE<br>
-        BRAIN WORK.
-    </h2>
-
-    <p>
-        An interactive walkthrough illustrating how an ASTRON command can move from input through intent analysis to an action. This demo simulates the flow; it does not control your PC.
-    </p>
-
-</div>
-
-
-<div class="console reveal">
-
-<div class="console-top">
-
-    <span>ASTRON CORE</span>
-
-    <span class="status">
-        ● ONLINE
-    </span>
-
-</div>
-
-
-<div class="terminal" id="terminal">
-
-    <div>
-        <span class="orange">USER ></span>
-        Wake ASTRON
-    </div>
-
-    <div>
-        <span class="orange">ASTRON ></span>
-        Listening...
-    </div>
-
-    <div>
-        <span class="orange">USER ></span>
-        Open my workspace
-    </div>
-
-    <div>
-        <span class="orange">BRAIN ></span>
-        Intent detected: SYSTEM_AUTOMATION
-    </div>
-
-    <div>
-        <span class="orange">MEMORY ></span>
-        Loading context...
-    </div>
-
-    <div>
-        <span class="orange">ACTION ></span>
-        Executing command...
-    </div>
-
-    <div>
-        <span class="orange">ASTRON ></span>
-        Workspace ready.
-    </div>
-
-    <br>
-
-    <span class="orange">SYSTEM ></span>
-    <span class="cursor"></span>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= ASTRON STARTER ================= -->
-
-<section id="starter" class="starter-section">
-
-<div class="section-head reveal">
-
-    <div class="section-label">
-        04.5 // STARTER EDITION
-    </div>
-
-    <h2>
-        BUILD YOUR<br>
-        FIRST ASTRON.
-    </h2>
-
-    <p>
-        A beginner-friendly edition for anyone who wants to
-        start with voice, local AI, memory and everyday commands.
-    </p>
-
-</div>
-
-<div class="starter-panel reveal">
-    <div class="starter-copy">
-        <span class="starter-badge">BEGINNER EDITION</span>
-        <h3>ASTRON <span>STARTER</span></h3>
-        <p>
-            Learn the foundations of a personal AI assistant without
-            jumping straight into the advanced V2 architecture.
-        </p>
-
-        <div class="starter-features">
-            <div><b>01</b> VOICE ASSISTANT</div>
-            <div><b>02</b> LOCAL AI / OLLAMA</div>
-            <div><b>03</b> NOTES + MEMORY</div>
-            <div><b>04</b> BASIC PC COMMANDS</div>
-            <div><b>05</b> FUTURISTIC DESKTOP HUD</div>
+    <div class="terminal-window command-lab reveal">
+      <div class="term-bar"><span class="win-dots"><i></i><i></i><i></i></span><b>astron — command lab</b><em><i class="pulse"></i>online</em></div>
+      <div class="term-body">
+        <div class="command-input-row">
+          <span class="prompt-mark" aria-hidden="true">›</span>
+          <input id="commandLabInput" type="text" autocomplete="off" placeholder="Try: Open YouTube" aria-label="Command">
+          <button id="commandLabRun" class="btn btn-primary btn-sm" type="button">Run</button>
         </div>
-
-        <a href="./JARVIS_STARTER.zip" class="primary starter-btn" target="_blank" rel="noopener">
-            DOWNLOAD STARTER
-        </a>
-        <span class="starter-note">BEGINNER • LOCAL-FIRST • WINDOWS</span>
+        <div class="command-presets" aria-label="Preset commands">
+          <button type="button" data-command="Open YouTube">Open YouTube</button>
+          <button type="button" data-command="Search the web for Iron Man">Web search</button>
+          <button type="button" data-command="Take a note">Take note</button>
+          <button type="button" data-command="Remember this">Memory</button>
+          <button type="button" data-command="System status">System status</button>
+          <button type="button" data-command="Enable gestures">Gestures</button>
+        </div>
+        <div class="pipeline" id="commandPipeline">
+          <div class="pipeline-node active"><span>01</span><b>Input</b><small>WAITING</small></div>
+          <i class="pipeline-line"></i>
+          <div class="pipeline-node"><span>02</span><b>Brain</b><small>STANDBY</small></div>
+          <i class="pipeline-line"></i>
+          <div class="pipeline-node"><span>03</span><b>Action</b><small>STANDBY</small></div>
+          <i class="pipeline-line"></i>
+          <div class="pipeline-node"><span>04</span><b>Status</b><small>READY</small></div>
+        </div>
+        <div class="command-output" id="commandLabOutput" aria-live="polite">ASTRON // COMMAND LAB READY<br><span>Enter a command to start the simulation.</span></div>
+      </div>
     </div>
-
-    <div class="starter-terminal">
-        <div class="terminal-top"><span></span><span></span><span></span><em>ASTRON STARTER // BOOT</em></div>
-        <div class="terminal-line">&gt; INITIALIZING PERSONAL AI...</div>
-        <div class="terminal-line">&gt; VOICE CORE ........ READY</div>
-        <div class="terminal-line">&gt; MEMORY CORE ....... READY</div>
-        <div class="terminal-line">&gt; LOCAL AI .......... READY</div>
-        <div class="terminal-line">&gt; COMMAND SYSTEM .... READY</div>
-        <div class="terminal-line accent">&gt; STATUS: STARTER ONLINE_</div>
-    </div>
-</div>
-
+  </div>
 </section>
 
+<!-- ================= SETUP ================= -->
+<section class="section" id="setup">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Get running</p>
+      <h2>From zero to ASTRON.</h2>
+      <p class="lead">Four steps from download to your first spoken command. Keep the AI local, connect your model, start issuing commands.</p>
+    </div>
+
+    <ol class="steps" data-stagger>
+      <li class="card reveal"><span class="step-num">01</span><h3>Download</h3><p>Get the current ASTRON PC release and extract it to a folder you control.</p><code>ASTRON_PC_RELEASE.zip</code></li>
+      <li class="card reveal"><span class="step-num">02</span><h3>Python</h3><p>Use a supported Python installation and install the project’s required packages.</p><code>pip install -r requirements.txt</code></li>
+      <li class="card reveal"><span class="step-num">03</span><h3>Ollama</h3><p>Install Ollama and pull the local model configured for your build.</p><code>ollama run &lt;your-model&gt;</code></li>
+      <li class="card reveal"><span class="step-num">04</span><h3>Launch</h3><p>Start ASTRON, allow microphone and camera permissions, then test a command.</p><code>python main.py</code></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= SYSTEM CHECK ================= -->
+<section class="section" id="compatibility">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Pre-flight check</p>
+      <h2>Can your PC run ASTRON?</h2>
+      <p class="lead">A quick browser-side readiness guide — not a hardware benchmark. The bundled release notes remain the source of truth.</p>
+    </div>
+
+    <div class="compat reveal">
+      <div class="compat-panel">
+        <div class="compat-row"><span>Operating system</span><b id="checkOs">Checking…</b></div>
+        <div class="compat-row"><span>CPU / memory</span><b id="checkRam">Checking…</b></div>
+        <div class="compat-row"><span>Microphone</span><b id="checkMic">Checking…</b></div>
+        <div class="compat-row"><span>Browser</span><b id="checkBrowser">Checking…</b></div>
+        <div class="compat-row"><span>Local AI</span><b>Ollama required</b></div>
+      </div>
+      <div class="compat-score">
+        <div class="score-ring" id="scoreRing" style="--p:0"><div><strong id="compatScore">--</strong><span>Readiness</span></div></div>
+        <p id="compatMessage" aria-live="polite">Running pre-flight diagnostics…</p>
+        <button type="button" id="compatRun" class="btn btn-ghost btn-sm">Run check again</button>
+        <div id="compatDebug" class="compat-debug" aria-live="polite"></div>
+      </div>
+      <ul class="req-list">
+        <li><b>Hardware</b><span>Modern 64-bit Windows PC. GPU optional — performance depends on the model and enabled vision features.</span></li>
+        <li><b>Control</b><span>Voice, vision and automation are optional and user-controlled. Review what each module can access.</span></li>
+        <li><b>Release</b><span>Check the release notes bundled with <code>ASTRON_PC_RELEASE</code> for exact install requirements.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <!-- ================= PRICING ================= -->
-
-<section id="pricing" class="pricing">
-
-<div class="section-head reveal">
-
-    <div class="section-label">
-        04 // PRICING
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-head reveal center">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Pricing</p>
+      <h2>Choose your system.</h2>
+      <p class="lead">Start free with the community version, or unlock the full ASTRON Pro Windows application with a one-time purchase.</p>
     </div>
 
-    <h2>
-        CHOOSE YOUR<br>
-        SYSTEM.
-    </h2>
+    <div class="pricing-grid" data-stagger>
+      <article class="price-card reveal">
+        <p class="tier">Core</p>
+        <p class="price">₹0</p>
+        <p class="price-note">Community version for experimenting with your own AI assistant.</p>
+        <ul class="ticks">
+          <li>Local AI integration</li><li>Voice commands</li><li>Basic memory</li><li>Desktop interface</li><li>Community support</li>
+        </ul>
+        <a href="JARVIS_PC_RELEASE.zip" class="btn btn-ghost" download>Start free</a>
+      </article>
 
-    <p>
-        Start with the community version or get a
-        customized ASTRON setup built around your needs.
-    </p>
+      <article class="price-card featured reveal" id="starter">
+        <span class="ribbon">Beginner friendly</span>
+        <p class="tier">Starter</p>
+        <p class="price">₹0</p>
+        <p class="price-note">Learn the foundations of a personal AI assistant before jumping into the advanced architecture.</p>
+        <ul class="ticks">
+          <li>Voice assistant</li><li>Local AI / Ollama</li><li>Notes + memory</li><li>Basic PC commands</li><li>Futuristic desktop HUD</li>
+        </ul>
+        <a href="JARVIS_STARTER.zip" class="btn btn-primary" download>Download Starter</a>
+      </article>
 
-</div>
-
-
-<div class="pricing-grid">
-
-
-<div class="price-card reveal">
-
-    <small>CORE</small>
-
-    <div class="price">
-        ₹0
+      <article class="price-card pro reveal">
+        <p class="tier">ASTRON Pro · Windows PC</p>
+        <p class="price">₹950 <small>one-time</small></p>
+        <p class="price-note">The full application — Vision, Voice, Smart Command Engine, Serious Mode, local AI and OCR.</p>
+        <ul class="ticks">
+          <li>Advanced workflows</li><li>Custom integrations</li><li>Advanced HUD</li><li>Device automation</li><li>Priority configuration</li>
+        </ul>
+        <a href="#jarvis-pro-payment" class="btn btn-ghost">Buy ASTRON Pro</a>
+      </article>
     </div>
 
-    <p>
-        Community version for experimenting
-        with your own AI assistant.
-    </p>
-
-    <ul class="features">
-
-        <li>Local AI integration</li>
-        <li>Voice commands</li>
-        <li>Basic memory</li>
-        <li>Desktop interface</li>
-        <li>Community support</li>
-
-    </ul>
-
-    <a href="#download" class="secondary">
-        START FREE
-    </a>
-
-</div>
-
-
-<div class="price-card reveal">
-
-    <small>ASTRON PRO // WINDOWS PC</small>
-
-    <div class="price">
-        ₹950<span> ONE-TIME</span>
-    </div>
-
-    <p>
-        The full ASTRON AI PC application with Vision, Voice,
-        Smart Command Engine, Serious Mode, local AI and OCR.
-    </p>
-
-    <ul class="features">
-
-        <li>Advanced workflows</li>
-        <li>Custom integrations</li>
-        <li>Advanced HUD</li>
-        <li>Device automation</li>
-        <li>Priority configuration</li>
-
-    </ul>
-
-    <a href="#jarvis-pro-payment" class="primary">
-        BUY ASTRON PRO
-    </a>
-
-</div>
-
-
-</div>
-
-</section>
-
-
-<!-- ================= ASTRON ANDROID APP DOWNLOAD ================= -->
-<section id="astron-android-download" class="astron-android-download" aria-labelledby="astron-android-title">
-  <div class="section-head reveal">
-    <div class="section-label">ASTRON // MOBILE EDITION</div>
-    <h2 id="astron-android-title">TAKE ASTRON<br><span>WITH YOU.</span></h2>
-    <p>Install the ASTRON Android app on your phone. The Windows ASTRON Pro purchase and payment flow below remain separate.</p>
-  </div>
-  <div class="astron-android-card reveal">
-    <div class="astron-android-icon" aria-hidden="true">A<span>//</span></div>
-    <div class="astron-android-copy">
-      <div class="astron-android-kicker">ANDROID // APK PACKAGE</div>
-      <h3>ASTRON for Android</h3>
-      <p>On-device AI app package. Download the APK, open it on your Android phone, and follow Android's installation prompts.</p>
-      <p class="astron-android-note">Build type: debug APK. Android may ask you to allow installation from your browser or file manager. Only install it on a device you control.</p>
-      <a class="astron-android-button" href="https://github.com/nexus-ai6767/jarvis-ai/releases/download/v1.0.0/astron-android.apk" download="ASTRON-Android.apk">DOWNLOAD FOR ANDROID <span aria-hidden="true">↗</span></a>
-      <div class="astron-android-meta">APK FILE · 57 MB · ANDROID</div>
-    </div>
+    <!-- Android -->
+    <article class="android card reveal" id="astron-android-download" aria-labelledby="astron-android-title">
+      <div class="android-icon" aria-hidden="true">A</div>
+      <div class="android-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span>Mobile edition</p>
+        <h3 id="astron-android-title">ASTRON for Android</h3>
+        <p>On-device AI app. Download the APK, open it on your phone and follow Android’s installation prompts. This is a debug build — Android may ask you to allow installs from your browser or file manager, so only install it on a device you control.</p>
+      </div>
+      <div class="android-action">
+        <a class="btn btn-primary" href="https://github.com/nexus-ai6767/jarvis-ai/releases/download/v1.0.0/astron-android.apk" download="ASTRON-Android.apk">Download APK <span aria-hidden="true">↗</span></a>
+        <small>APK · 57 MB · Android</small>
+      </div>
+    </article>
   </div>
 </section>
 
-<!-- ================= ASTRON PRO // PAYMENT ================= -->
-<section id="jarvis-pro-payment" class="jarvis-pro-payment">
-  <div class="section-head reveal">
-    <div class="section-label">04.5 // ASTRON PRO PAYMENT</div>
-    <h2>ACTIVATE <span>ASTRON PRO.</span></h2>
-    <p>One-time purchase — ₹950. Scan the QR with any UPI app to pay.</p>
-  </div>
-
-  <div class="pro-payment-grid reveal">
-    <div class="pro-payment-card">
-      <div class="pro-payment-kicker">UPI // FIXED AMOUNT</div>
-      <img class="pro-payment-qr" src="jarvis-pro-qr.png" alt="UPI QR for ASTRON PRO ₹950">
-      <div class="pro-payment-amount">₹950</div>
-      <div class="pro-payment-upi">7387947607@ibl</div>
-      <button class="pro-copy-upi" type="button" onclick="navigator.clipboard.writeText('7387947607@ibl')">COPY UPI ID</button>
+<!-- ================= PAYMENT ================= -->
+<section class="section" id="jarvis-pro-payment">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>ASTRON Pro checkout</p>
+      <h2>Activate <span class="grad">ASTRON Pro.</span></h2>
+      <p class="lead">One-time purchase of ₹950. Scan the QR code with any UPI app, then submit your reference for manual verification.</p>
     </div>
 
-    <div class="pro-payment-steps">
-      <div class="pro-step"><b>01</b><span>Pay exactly ₹950 to the UPI ID shown. Check the receiver before confirming.</span></div>
-      <div class="pro-step"><b>02</b><span>After payment, submit your email and UPI transaction/reference ID below.</span></div>
-      <div class="pro-step"><b>03</b><span>We manually verify the payment. A screenshot or form submission alone does not unlock the product.</span></div>
-      <div class="pro-step"><b>04</b><span>Use the same email and order reference to check status. Approved orders receive secure download access.</span></div>
-      <form id="proPaymentForm" class="pro-manual-form">
-        <label for="proBuyerName">YOUR NAME</label><input id="proBuyerName" name="buyerName" maxlength="100" required autocomplete="name" placeholder="Full name">
-        <label for="proBuyerEmail">EMAIL FOR DELIVERY</label><input id="proBuyerEmail" name="email" type="email" maxlength="254" required autocomplete="email" placeholder="you@example.com">
-        <label for="proPayerName">NAME ON UPI APP (OPTIONAL)</label><input id="proPayerName" name="payerName" maxlength="100" placeholder="Payer name">
-        <label for="proUtr">UPI TRANSACTION / UTR ID</label><input id="proUtr" name="utr" required minlength="8" maxlength="80" pattern="[A-Za-z0-9-]{8,80}" placeholder="Enter transaction reference">
-        <label class="pro-checkline"><input type="checkbox" name="amountConfirmed" required> I paid ₹950 to the UPI ID shown above.</label>
-        <button class="pro-copy-upi" type="submit">SUBMIT FOR VERIFICATION</button>
-        <p id="proPaymentStatus" class="pro-payment-note" role="status" aria-live="polite">Payment is reviewed manually. Never share your UPI PIN, OTP, or banking password.</p>
-      </form>
-      <form id="proOrderStatusForm" class="pro-manual-form pro-status-form">
-        <div class="pro-payment-kicker">CHECK ORDER / DOWNLOAD STATUS</div>
-        <label for="proOrderId">ORDER REFERENCE</label><input id="proOrderId" name="orderId" required placeholder="Reference returned after submission" maxlength="40">
-        <label for="proStatusEmail">EMAIL USED ABOVE</label><input id="proStatusEmail" name="email" type="email" required placeholder="you@example.com" maxlength="254">
-        <button class="pro-copy-upi" type="submit">CHECK STATUS</button>
-        <p id="proOrderStatus" class="pro-payment-note" role="status" aria-live="polite"></p>
-      </form>
-      <div class="pro-payment-note">Manual review is required. Download remains locked until an administrator verifies and approves the payment.</div>
+    <div class="pay-grid reveal">
+      <div class="pay-card">
+        <p class="tier">UPI · fixed amount</p>
+        <div class="qr"><img src="jarvis-pro-qr.png" alt="UPI QR code for ASTRON Pro, ₹950" width="410" height="410" loading="lazy"></div>
+        <p class="pay-amount">₹950</p>
+        <p class="pay-upi" id="upiId">7387947607@ibl</p>
+        <button class="btn btn-ghost btn-sm" type="button" id="copyUpi">Copy UPI ID</button>
+      </div>
+
+      <div class="pay-side">
+        <ol class="pay-steps">
+          <li><b>1</b><span>Pay exactly ₹950 to the UPI ID shown. Check the receiver before confirming.</span></li>
+          <li><b>2</b><span>After paying, submit your email and UPI transaction / reference ID below.</span></li>
+          <li><b>3</b><span>The payment is verified manually — a screenshot or form submission alone does not unlock the product.</span></li>
+          <li><b>4</b><span>Use the same email and order reference to check status. Approved orders get secure download access.</span></li>
+        </ol>
+
+        <form id="proPaymentForm" class="form-card">
+          <label for="proBuyerName">Your name</label>
+          <input id="proBuyerName" name="buyerName" maxlength="100" required autocomplete="name" placeholder="Full name">
+          <label for="proBuyerEmail">Email for delivery</label>
+          <input id="proBuyerEmail" name="email" type="email" maxlength="254" required autocomplete="email" placeholder="you@example.com">
+          <label for="proPayerName">Name on UPI app <em>(optional)</em></label>
+          <input id="proPayerName" name="payerName" maxlength="100" placeholder="Payer name">
+          <label for="proUtr">UPI transaction / UTR ID</label>
+          <input id="proUtr" name="utr" required minlength="8" maxlength="80" pattern="[A-Za-z0-9\-]{8,80}" placeholder="Enter transaction reference">
+          <label class="checkline"><input type="checkbox" name="amountConfirmed" required> I paid ₹950 to the UPI ID shown above.</label>
+          <button class="btn btn-primary" type="submit">Submit for verification</button>
+          <p id="proPaymentStatus" class="note" role="status" aria-live="polite">Payments are reviewed manually. Never share your UPI PIN, OTP or banking password.</p>
+        </form>
+
+        <form id="proOrderStatusForm" class="form-card">
+          <p class="tier">Check order / download status</p>
+          <label for="proOrderId">Order reference</label>
+          <input id="proOrderId" name="orderId" required maxlength="40" placeholder="Reference returned after submission">
+          <label for="proStatusEmail">Email used above</label>
+          <input id="proStatusEmail" name="email" type="email" required maxlength="254" placeholder="you@example.com">
+          <button class="btn btn-ghost" type="submit">Check status</button>
+          <p id="proOrderStatus" class="note" role="status" aria-live="polite"></p>
+        </form>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ================= FAQ ================= -->
-
-<section id="faq">
-
-<div class="section-head reveal">
-
-    <div class="section-label">
-        // COMMON QUESTIONS
+<section class="section" id="faq">
+  <div class="container narrow">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Common questions</p>
+      <h2>Before you activate.</h2>
     </div>
 
-    <h2>
-        BEFORE YOU<br>
-        ACTIVATE.
-    </h2>
-
-    <p>
-        Answers to what people usually ask before setting
-        up ASTRON for the first time.
-    </p>
-
-</div>
-
-<div class="faq-list reveal">
-
-    <details class="faq-item">
-        <summary>Does ASTRON send my data to the cloud?<span class="faq-icon">+</span></summary>
-        <div class="faq-answer">Not by default. ASTRON is built to run against a local model through Ollama, so conversations and commands stay on your machine unless you choose to connect an external service.</div>
-    </details>
-
-    <details class="faq-item">
-        <summary>What operating systems are supported?<span class="faq-icon">+</span></summary>
-        <div class="faq-answer">The current release targets Windows for gesture control, automation and system-level commands. Voice and local-AI features work more broadly — check the README in the release download for details.</div>
-    </details>
-
-    <details class="faq-item">
-        <summary>Do I need a powerful computer to run it?<span class="faq-icon">+</span></summary>
-        <div class="faq-answer">It depends on which local model you connect. Smaller models run comfortably on modest hardware; larger ones benefit from a dedicated GPU. ASTRON itself is lightweight.</div>
-    </details>
-
-    <details class="faq-item">
-        <summary>What's the difference between Core, Custom and Pro?<span class="faq-icon">+</span></summary>
-        <div class="faq-answer">Core is the free, self-configured community version. Custom and Pro are done-for-you setups — the ASTRON Requirements form on this page sends your request directly so a build can be configured around your workflow.</div>
-    </details>
-
-    <details class="faq-item">
-        <summary>Can I request a feature that isn't listed?<span class="faq-icon">+</span></summary>
-        <div class="faq-answer">Yes — use the custom build request form below and describe what you're trying to do. Most requests are scoped as part of a Custom or Pro build.</div>
-    </details>
-
-</div>
-
-</section>
-
-
-<!-- ================= CUSTOM ================= -->
-
-<section id="custom" class="custom">
-
-<div class="custom-wrap">
-
-
-<div class="section-head reveal">
-
-    <div class="section-label">
-        05 // CUSTOM BUILD
-    </div>
-
-    <h2>
-        BUILD YOUR<br>
-        OWN SYSTEM.
-    </h2>
-
-    <p>
-        Want ASTRON configured specifically for your
-        computer, workflow or project?
-        Send a request and describe what you want.
-    </p>
-
-    <br>
-
-    <p>
-        Examples: custom voice commands, automation,
-        UI customization, integrations, smart workflows
-        and more.
-    </p>
-
-</div>
-
-
-<form class="form reveal" id="contactForm">
-
-    <input
-        type="text"
-        id="name"
-        placeholder="YOUR NAME"
-        required
-    >
-
-    <input
-        type="email"
-        id="email"
-        placeholder="YOUR EMAIL"
-        required
-    >
-
-    <textarea
-        id="message"
-        placeholder="WHAT SHOULD YOUR ASTRON DO?"
-        required
-    ></textarea>
-
-    <button type="submit">
-        SEND REQUEST →
-    </button>
-
-</form>
-
-
-</div>
-
-</section>
-
-
-<!-- ================= TRUST / REQUIREMENTS ================= -->
-
-
-<section id="compatibility" class="site-section compatibility-section">
-  <div class="section-kicker">06 // PRE-FLIGHT CHECK</div>
-  <h2>CAN YOUR PC RUN <span>ASTRON?</span></h2>
-  <p class="section-lead">Run a browser-side checklist before installing. This is a quick readiness guide, not a hardware benchmark.</p>
-  <div class="compat-grid">
-    <div class="compat-panel">
-      <div class="compat-row"><span>OPERATING SYSTEM</span><b id="checkOs">CHECKING</b></div>
-      <div class="compat-row"><span>CPU / MEMORY</span><b id="checkRam">CHECKING</b></div>
-      <div class="compat-row"><span>MICROPHONE</span><b id="checkMic">CHECKING</b></div>
-      <div class="compat-row"><span>BROWSER</span><b id="checkBrowser">CHECKING</b></div>
-      <div class="compat-row"><span>LOCAL AI</span><b>OLLAMA REQUIRED</b></div>
-    </div>
-    <div class="compat-score">
-      <div class="score-ring"><strong id="compatScore">--</strong><span>READINESS</span></div>
-      <p id="compatMessage" aria-live="polite">Running pre-flight diagnostics...</p>
-      <button type="button" id="compatRun" onclick="window.JARVISPreflight && window.JARVISPreflight()">RUN PRE-FLIGHT CHECK</button>
-      <div id="compatDebug" class="compat-debug" aria-live="polite"></div>
+    <div class="faq-list reveal">
+      <details class="faq-item" open>
+        <summary>Does ASTRON send my data to the cloud?<span class="faq-icon" aria-hidden="true"></span></summary>
+        <div class="faq-answer"><p>Not by default. ASTRON is built to run against a local model through Ollama, so conversations and commands stay on your machine unless you choose to connect an external service.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>What operating systems are supported?<span class="faq-icon" aria-hidden="true"></span></summary>
+        <div class="faq-answer"><p>The current release targets Windows for gesture control, automation and system-level commands. Voice and local-AI features work more broadly — check the README in the release download for details.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need a powerful computer?<span class="faq-icon" aria-hidden="true"></span></summary>
+        <div class="faq-answer"><p>It depends on which local model you connect. Smaller models run comfortably on modest hardware; larger ones benefit from a dedicated GPU. ASTRON itself is lightweight.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>What’s the difference between Core, Starter and Pro?<span class="faq-icon" aria-hidden="true"></span></summary>
+        <div class="faq-answer"><p>Core is the free, self-configured community version and Starter is a gentler beginner edition. Pro is the full Windows application with Vision, Voice, the Smart Command Engine, Serious Mode, local AI and OCR. Done-for-you setups are available through the custom build form.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I request a feature that isn’t listed?<span class="faq-icon" aria-hidden="true"></span></summary>
+        <div class="faq-answer"><p>Yes — use the custom build form below and describe what you’re trying to do. Most requests are scoped as part of a custom build.</p></div>
+      </details>
     </div>
   </div>
 </section>
-<script>
-(function(){
-  function runPreflight(){
-    var os=document.getElementById('checkOs'), ram=document.getElementById('checkRam'), mic=document.getElementById('checkMic'), browser=document.getElementById('checkBrowser'), score=document.getElementById('compatScore'), msg=document.getElementById('compatMessage'), btn=document.getElementById('compatRun'), debug=document.getElementById('compatDebug');
-    if(!btn) return;
-    var set=function(el,v){if(el) el.textContent=v;};
-    btn.disabled=true; btn.textContent='CHECKING...';
-    [os,ram,mic,browser].forEach(function(e){set(e,'CHECKING');}); set(msg,'Running ASTRON pre-flight diagnostics...'); set(debug,'');
-    try{
-      var ua=navigator.userAgent||'';
-      var windows=/Windows NT/i.test(ua);
-      var cores=Number(navigator.hardwareConcurrency||0);
-      var memory=Number(navigator.deviceMemory||0);
-      var micApi=!!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-      var secure=window.isSecureContext===true;
-      var browserName=/Edg\//i.test(ua)?'EDGE':/Chrome\//i.test(ua)?'CHROME':/Firefox\//i.test(ua)?'FIREFOX':'BROWSER';
-      set(os,windows?'PASS — WINDOWS':'INFO — NON-WINDOWS');
-      set(ram,(cores?('PASS — '+cores+' CPU THREADS'):'INFO — CPU API LIMITED')+(memory?' · '+memory+' GB HINT':''));
-      set(mic,micApi?(secure?'PASS — MIC API AVAILABLE':'INFO — HTTPS REQUIRED'):'INFO — MIC API UNAVAILABLE');
-      set(browser,'PASS — '+browserName);
-      var points=(windows?30:10)+(cores>=4?20:cores?15:10)+(memory>=4?20:memory?15:10)+(micApi&&secure?20:10)+((browserName==='EDGE'||browserName==='CHROME'||browserName==='FIREFOX')?10:5);
-      set(score,Math.max(0,Math.min(100,points))+'%');
-      set(msg,'PRE-FLIGHT COMPLETE — browser readiness checked. ASTRON still requires the PC release dependencies and Ollama.');
-      set(debug,'LAST CHECK: '+new Date().toLocaleTimeString());
-    }catch(e){
-      set(score,'--'); set(msg,'CHECK ERROR — '+(e&&e.message?e.message:'Please try again.')); set(debug,'Open browser console for details.'); console.error(e);
-      [os,ram,mic,browser].forEach(function(x){set(x,'RETRY');});
-    }finally{btn.disabled=false; btn.textContent='RUN PRE-FLIGHT CHECK';}
-  }
-  window.JARVISPreflight=runPreflight;
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){runPreflight();},{once:true}); else setTimeout(runPreflight,50);
-})();
-</script>
 
-<section id="requirements" class="requirements-section">
-
-<div class="section-head reveal">
-    <div class="section-label">05 // DEPLOYMENT INTEL</div>
-    <h2>KNOW YOUR<br>ASTRON.</h2>
-    <p>A transparent product layer for setup, compatibility and control. Check the release package before installation.</p>
-</div>
-
-<div class="requirements-grid reveal">
-    <article class="requirements-card">
-        <span class="req-tag">HARDWARE</span>
-        <h3>DESKTOP READY</h3>
-        <p>Designed for a modern 64-bit Windows PC. Performance depends on the selected local AI model and enabled vision features.</p>
-        <div class="req-row"><span>OS</span><b>WINDOWS</b></div>
-        <div class="req-row"><span>ARCH</span><b>x64</b></div>
-        <div class="req-row"><span>GPU</span><b>OPTIONAL</b></div>
-    </article>
-    <article class="requirements-card">
-        <span class="req-tag">CONTROL</span>
-        <h3>YOU STAY IN CHARGE</h3>
-        <p>Commands, automation and connected features should be enabled deliberately. Review what each module can access before use.</p>
-        <div class="req-row"><span>VOICE</span><b>OPTIONAL</b></div>
-        <div class="req-row"><span>VISION</span><b>OPTIONAL</b></div>
-        <div class="req-row"><span>AUTOMATION</span><b>USER CONTROLLED</b></div>
-    </article>
-    <article class="requirements-card">
-        <span class="req-tag">RELEASE</span>
-        <h3>VERIFY BEFORE DEPLOY</h3>
-        <p>This website is a product interface. The bundled release notes remain the source of truth for the exact installation requirements and commands.</p>
-        <div class="req-row"><span>PACKAGE</span><b>ASTRON_PC_RELEASE</b></div>
-        <div class="req-row"><span>DOCS</span><b>RELEASE NOTES</b></div>
-        <div class="req-row"><span>STATUS</span><b>CHECK FIRST</b></div>
-    </article>
-</div>
-
+<!-- ================= CUSTOM ================= -->
+<section class="section" id="custom">
+  <div class="container custom-grid">
+    <div class="reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Custom build</p>
+      <h2>Build your own system.</h2>
+      <p class="lead">Want ASTRON configured for your computer, workflow or project? Describe what you need and send a request.</p>
+      <ul class="check-list compact">
+        <li>Custom voice commands</li><li>Automation &amp; smart workflows</li><li>UI customization</li><li>Integrations and more</li>
+      </ul>
+    </div>
+    <form class="form-card reveal" id="contactForm">
+      <label for="name">Your name</label>
+      <input type="text" id="name" required autocomplete="name" placeholder="Full name">
+      <label for="email">Your email</label>
+      <input type="email" id="email" required autocomplete="email" placeholder="you@example.com">
+      <label for="message">What should your ASTRON do?</label>
+      <textarea id="message" required rows="5" placeholder="Describe your workflow, commands or integrations…"></textarea>
+      <button type="submit" class="btn btn-primary">Send request <span aria-hidden="true">→</span></button>
+      <p class="note">Opens your email app with the request pre-filled.</p>
+    </form>
+  </div>
 </section>
 
-
-<!-- ================= DOWNLOAD ================= -->
-
-<section id="download" class="download">
-
-<div class="reveal">
-
-    <div class="section-label">
-        06 // DEPLOYMENT
+<!-- ================= FINAL CTA ================= -->
+<section class="section cta-section" id="download">
+  <div class="container">
+    <div class="cta reveal">
+      <h2>Ready to activate?</h2>
+      <p class="lead">Get the current ASTRON build and start creating your own personal AI system.</p>
+      <div class="hero-actions center">
+        <a href="JARVIS_PC_RELEASE.zip" class="btn btn-primary btn-lg" download>Download ASTRON build</a>
+        <a href="#pricing" class="btn btn-ghost btn-lg">Compare editions</a>
+      </div>
     </div>
-
-    <h2>
-        READY TO<br>
-        ACTIVATE?
-    </h2>
-
-    <p>
-        Get the current ASTRON build and start creating
-        your own personal AI system.
-    </p>
-
-    <!-- CHANGE THIS LINK TO YOUR ACTUAL DOWNLOAD LATER -->
-
-    <a
-        href="JARVIS_PC_RELEASE.zip"
-        target="_blank"
-        class="primary"
-    >
-        DOWNLOAD ASTRON BUILD
-    </a>
-
-</div>
-
+  </div>
 </section>
 
-
-<!-- ================= CHANGELOG ================= -->
-
-<section id="changelog" class="changelog">
-
-<div class="section-head reveal">
-
-    <div class="section-label">
-        // SYSTEM LOG
-    </div>
-
-    <h2>
-        BUILD<br>
-        HISTORY.
-    </h2>
-
-    <p>
-        A running log of what's shipped, straight from
-        the ASTRON release notes.
-    </p>
-
-</div>
-
-<div class="changelog-list reveal">
-
-    <div class="changelog-entry">
-        <div class="changelog-date">2026.08</div>
-        <div class="changelog-version">v1.2</div>
-        <div class="changelog-desc">Added gesture-based cursor control and improved wake-word detection accuracy.</div>
-    </div>
-
-    <div class="changelog-entry">
-        <div class="changelog-date">2026.06</div>
-        <div class="changelog-version">v1.1</div>
-        <div class="changelog-desc">Introduced persistent memory across sessions and a redesigned live command interface.</div>
-    </div>
-
-    <div class="changelog-entry">
-        <div class="changelog-date">2026.03</div>
-        <div class="changelog-version">v1.0</div>
-        <div class="changelog-desc">Initial public release — local AI integration, voice commands and basic automation.</div>
-    </div>
-
-</div>
-
-</section>
-
+</main>
 
 <!-- ================= FOOTER ================= -->
-
-<footer>
-
-<div class="footer-top">
-
+<footer class="footer">
+  <div class="container footer-grid">
     <div class="footer-brand">
-        <div class="logo">ASTRON<span>//</span></div>
-        <p>
-            A personal AI system for voice, vision,
-            automation and local intelligence — built to
-            run on your own machine.
-        </p>
+      <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4 4 27h5.2l2.2-4.6h9.2l2.2 4.6H28L16 4Zm0 9.6 3 6.3h-6l3-6.3Z"/></svg></span>ASTRON</a>
+      <p>A personal AI system for voice, vision, automation and local intelligence — built to run on your own machine.</p>
     </div>
-
-    <div class="footer-col">
-        <h4>PRODUCT</h4>
-        <ul>
-            <li><a href="#capabilities">Capabilities</a></li>
-            <li><a href="#architecture">Architecture</a></li>
-            <li><a href="#demo">Live demo</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-        </ul>
-    </div>
-
-    <div class="footer-col">
-        <h4>GET STARTED</h4>
-        <ul>
-            <li><a href="#custom">Custom build</a></li>
-            <li><a href="#download">Download</a></li>
-            <li><a href="#setup">Setup</a></li>
-            <li><a href="#command-playground">Command Lab</a></li>
-            <li><a href="JARVIS_PC_RELEASE.zip" target="_blank" rel="noopener">Latest release</a></li>
-        </ul>
-    </div>
-
-    <div class="footer-col">
-        <h4>SYSTEM</h4>
-        <ul>
-            <li><a href="#demo">Voice engine</a></li>
-            <li><a href="#capabilities">Vision module</a></li>
-            <li><a href="#capabilities">Automation grid</a></li>
-        </ul>
-    </div>
-
-</div>
-
-<div class="footer-bottom">
-    <div>ASTRON // PERSONAL AI SYSTEM</div>
-    <div class="footer-status"><span></span>ALL SYSTEMS ONLINE</div>
-    <div>BUILT FOR THE FUTURE</div>
-</div>
-
+    <nav aria-label="Product"><h4>Product</h4><a href="#capabilities">Features</a><a href="#architecture">How it works</a><a href="#command-playground">Command lab</a><a href="#pricing">Pricing</a></nav>
+    <nav aria-label="Get started"><h4>Get started</h4><a href="#setup">Setup guide</a><a href="#compatibility">System check</a><a href="JARVIS_PC_RELEASE.zip" download>Latest release</a><a href="#custom">Custom build</a></nav>
+  </div>
+  <div class="container footer-bottom"><span>© <span id="year">2026</span> ASTRON · Personal AI system</span><span class="footer-status"><i class="pulse"></i>All systems online</span></div>
 </footer>
 
-
-<script>
-
-/* ================= SCROLL REVEAL ================= */
-
-const observer = new IntersectionObserver(
-    entries => {
-
-        entries.forEach(entry => {
-
-            if(entry.isIntersecting){
-
-                entry.target.classList.add("visible");
-
-            }
-
-        });
-
-    },
-    {
-        threshold:.12
-    }
-);
-
-document
-.querySelectorAll(".reveal")
-.forEach(el => observer.observe(el));
-
-
-/* ================= TERMINAL EFFECT ================= */
-
-const terminal = document.getElementById("terminal");
-
-let terminalLines = [
-    "SYSTEM CHECK ............ OK",
-    "VOICE ENGINE ............ READY",
-    "MEMORY CORE ............. READY",
-    "AI BRAIN ................ ONLINE",
-    "AUTOMATION .............. ARMED"
-];
-
-let lineIndex = 0;
-
-setInterval(() => {
-
-    const statusLine = terminal.querySelector(".orange");
-
-    if(!statusLine) return;
-
-    lineIndex++;
-
-    if(lineIndex >= terminalLines.length){
-        lineIndex = 0;
-    }
-
-},3000);
-
-
-/* ================= CUSTOM FORM ================= */
-/*
-    NOTE: This still opens the visitor's email client (mailto:) —
-    Claude doesn't have credentials to wire this to a real backend.
-    To make it submit silently without opening Mail, sign up for a
-    free form service like Formspree (formspree.io) or EmailJS
-    (emailjs.com), then swap the code below for their submit snippet.
-*/
-
-document
-.getElementById("contactForm")
-.addEventListener("submit",function(e){
-
-    e.preventDefault();
-
-    const name =
-        document.getElementById("name").value;
-
-    const email =
-        document.getElementById("email").value;
-
-    const message =
-        document.getElementById("message").value;
-
-    /*
-        IMPORTANT:
-        Replace YOUR_EMAIL@example.com
-        with the email where you want
-        to receive customer requests.
-    */
-
-    const destination =
-        "jyotipatil9476@gmail.com";
-
-    const subject =
-        encodeURIComponent(
-            "ASTRON Custom Build Request"
-        );
-
-    const body =
-        encodeURIComponent(
-`Name: ${name}
-
-Email: ${email}
-
-ASTRON Requirements:
-${message}`
-        );
-
-    window.location.href =
-        `mailto:${destination}?subject=${subject}&body=${body}`;
-
-});
-
-
-/* ================= ASTRON PRO WAITLIST FORM ================= */
-/*
-    Same note as above: no backend is wired up, so this opens
-    the visitor's email client with a pre-filled message. Swap
-    for Formspree/EmailJS/Mailchimp etc. when you have one.
-*/
-
-const waitlistForm = document.getElementById("waitlistForm");
-
-if(waitlistForm){
-
-    waitlistForm.addEventListener("submit", function(e){
-
-        e.preventDefault();
-
-        const email = document.getElementById("waitlistEmail").value;
-        const note = document.getElementById("waitlistNote");
-
-        const destination = "jyotipatil9476@gmail.com";
-        const subject = encodeURIComponent("ASTRON Pro — Waitlist Signup");
-        const body = encodeURIComponent(`Please add this email to the ASTRON Pro waitlist:\n\n${email}`);
-
-        window.location.href = `mailto:${destination}?subject=${subject}&body=${body}`;
-
-        if(note){
-            note.textContent = "Opening your email client to confirm...";
-        }
-
-        waitlistForm.reset();
-
-    });
-
-}
-
-
-/* ================= CURSOR GLOW ================= */
-
-const glow = document.createElement("div");
-
-glow.style.position="fixed";
-glow.style.width="280px";
-glow.style.height="280px";
-glow.style.borderRadius="50%";
-glow.style.pointerEvents="none";
-glow.style.background=
-"radial-gradient(circle,rgba(255,110,20,.07),transparent 70%)";
-glow.style.transform="translate(-50%,-50%)";
-glow.style.zIndex="0";
-
-document.body.appendChild(glow);
-
-document.addEventListener("mousemove",e=>{
-
-    glow.style.left=e.clientX+"px";
-    glow.style.top=e.clientY+"px";
-
-});
-
-
-/* ================= ACTIVE NAV ================= */
-
-const sections =
-document.querySelectorAll("section");
-
-const links =
-document.querySelectorAll(".navlinks a");
-
-window.addEventListener("scroll",()=>{
-
-    let current="";
-
-    sections.forEach(section=>{
-
-        const top =
-            section.offsetTop - 150;
-
-        if(window.scrollY >= top){
-
-            current =
-                section.getAttribute("id");
-
-        }
-
-    });
-
-    links.forEach(link=>{
-
-        link.style.color="#aaa";
-
-        if(
-            link.getAttribute("href")
-            === "#"+current
-        ){
-
-            link.style.color="#168cff";
-
-        }
-
-    });
-
-});
-
-
-/* ================= SCROLL PROGRESS + NAV STATE ================= */
-
-const progressBar = document.getElementById("scroll-progress");
-const navEl = document.querySelector(".nav");
-
-window.addEventListener("scroll", () => {
-
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-
-    if(progressBar){
-        progressBar.style.width = pct + "%";
-    }
-
-    if(navEl){
-        navEl.classList.toggle("scrolled", scrollTop > 40);
-    }
-
-},{ passive:true });
-
-
-/* ================= HERO HUD COUNTERS ================= */
-
-function animateHeroStats(){
-
-    const values = document.querySelectorAll(".hero-stat-value");
-
-    values.forEach(el => {
-
-        // These hero values are descriptive labels (READY, AVAILABLE, etc.)
-        // unless an explicit numeric data-count is provided. Never animate
-        // missing/non-numeric values, which would otherwise render as "NaN".
-        const rawCount = el.dataset.count;
-        if (rawCount === undefined || rawCount.trim() === "") return;
-
-        const target = Number(rawCount);
-        if (!Number.isFinite(target)) return;
-
-        const suffix = el.dataset.suffix || "";
-        const isDecimal = rawCount.includes(".");
-        const suffixEl = el.querySelector("span");
-        const duration = 1400;
-        const start = performance.now();
-
-        function frame(now){
-
-            const progress = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            const current = target * eased;
-
-            const display = isDecimal ? current.toFixed(1) : Math.round(current).toLocaleString();
-
-            el.childNodes[0].nodeValue = display;
-
-            if(suffixEl){
-                suffixEl.textContent = suffix;
-            }
-
-            if(progress < 1){
-                requestAnimationFrame(frame);
-            }
-
-        }
-
-        requestAnimationFrame(frame);
-
-    });
-
-    const barFill = document.getElementById("hero-bar-fill");
-
-    if(barFill){
-        requestAnimationFrame(() => {
-            barFill.style.width = "97%";
-        });
-    }
-
-}
-
-const heroPanel = document.getElementById("hero-panel");
-
-if(heroPanel){
-
-    const heroObserver = new IntersectionObserver(entries => {
-
-        entries.forEach(entry => {
-
-            if(entry.isIntersecting){
-                animateHeroStats();
-                heroObserver.disconnect();
-            }
-
-        });
-
-    },{ threshold:.4 });
-
-    heroObserver.observe(heroPanel);
-
-    /* subtle 3D tilt following the cursor, desktop only */
-    if(window.matchMedia("(pointer:fine)").matches){
-
-        heroPanel.addEventListener("mousemove", e => {
-
-            const rect = heroPanel.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - .5;
-            const y = (e.clientY - rect.top) / rect.height - .5;
-
-            heroPanel.style.transform =
-                `perspective(700px) rotateY(${x * 8}deg) rotateX(${y * -8}deg)`;
-
-        });
-
-        heroPanel.addEventListener("mouseleave", () => {
-            heroPanel.style.transform = "perspective(700px) rotateY(0deg) rotateX(0deg)";
-        });
-
-    }
-
-}
-
-</script>
-
-
-<script>
-(function(){
-const terminal=document.getElementById('jarvis-terminal');
-if(!terminal)return;
-const demos=[
-['Astron, open YouTube','Opening YouTube...','✓ COMMAND EXECUTED'],
-['Astron, search latest Python news','Searching the web...','✓ RESULTS READY'],
-['Astron, remember my project is ASTRON','Updating neural memory...','✓ MEMORY UPDATED'],
-['Astron, system status','Scanning modules...','✓ ALL SYSTEMS ONLINE']
-];
-let timer;
-function run(i){
- clearTimeout(timer);
- terminal.innerHTML='';
- const [cmd,work,done]=demos[i];
- const lines=[{t:'> '+cmd,c:'prompt'},{t:work,c:'muted'},{t:done,c:'ok'}];
- let n=0;
- function next(){
-   if(n>=lines.length)return;
-   const row=document.createElement('div'); row.className='jarvis-terminal-line '+lines[n].c;
-   terminal.appendChild(row);
-   const text=lines[n].t; let k=0;
-   const type=()=>{row.textContent=text.slice(0,k++);if(k<=text.length)timer=setTimeout(type,18);else{n++;timer=setTimeout(next,520)}};
-   type();
- }
- next();
-}
-document.querySelectorAll('.jarvis-live-btn').forEach(b=>b.addEventListener('click',()=>run(Number(b.dataset.demo))));
-run(0);
-})();
-</script>
-
-
-<script>
-/* ================= ASTRON PRO LAUNCH LOCK ================= */
-(function(){
-  'use strict';
-  const TARGET = Date.UTC(2026,9,18,18,30,0); // 19 Oct 2026 00:00 IST
-  const START  = Date.UTC(2026,8,20,18,30,0);
-  const pad = n => String(Math.max(0,n)).padStart(2,'0');
-
-  function initProLaunchLock(){
-    const lock = document.getElementById('pro-launch-lock');
-    if(!lock) return;
-
-    document.documentElement.classList.add('jarvis-pro-lock-active');
-    document.body.classList.add('jarvis-pro-lock-active');
-
-    const els = {
-      mo: document.getElementById('launch-months'),
-      d: document.getElementById('launch-days'),
-      h: document.getElementById('launch-hours'),
-      m: document.getElementById('launch-minutes'),
-      s: document.getElementById('launch-seconds'),
-      bar: document.getElementById('launch-progress'),
-      msg: document.getElementById('launch-message'),
-      clock: document.getElementById('pro-lock-clock')
-    };
-
-    let launched = false;
-    let timer = null;
-
-    function unlock(){
-      if(launched) return;
-      launched = true;
-      if(timer) window.clearInterval(timer);
-
-      if(els.mo) els.mo.textContent='00';
-      if(els.d) els.d.textContent='00';
-      if(els.h) els.h.textContent='00';
-      if(els.m) els.m.textContent='00';
-      if(els.s) els.s.textContent='00';
-      if(els.bar) els.bar.style.width='100%';
-      if(els.clock) els.clock.textContent='LAUNCHING';
-      if(els.msg) els.msg.textContent='ASTRON PRO ONLINE // LAUNCH COMPLETE';
-
-      document.documentElement.classList.remove('jarvis-pro-lock-active');
-      document.body.classList.remove('jarvis-pro-lock-active');
-      document.documentElement.classList.add('jarvis-pro-launched');
-      document.title='ASTRON PRO // ONLINE';
-      lock.setAttribute('aria-hidden','true');
-      lock.classList.add('unlocked');
-
-      // Let the HUD burst play before removing the overlay completely.
-      window.setTimeout(()=>lock.remove(), 1050);
-    }
-
-    function tick(){
-      const now = Date.now();
-      const diff = TARGET - now;
-
-      if(diff <= 0){
-        unlock();
-        return;
-      }
-
-      const total = Math.floor(diff/1000);
-      const nowDate = new Date(now);
-      const targetDate = new Date(TARGET);
-      let months = (targetDate.getUTCFullYear()-nowDate.getUTCFullYear())*12 + (targetDate.getUTCMonth()-nowDate.getUTCMonth());
-      if (targetDate.getUTCDate() < nowDate.getUTCDate()) months = Math.max(0, months-1);
-      const anchor = new Date(Date.UTC(nowDate.getUTCFullYear(), nowDate.getUTCMonth()+months, nowDate.getUTCDate(), nowDate.getUTCHours(), nowDate.getUTCMinutes(), nowDate.getUTCSeconds()));
-      const remainingAfterMonths = Math.max(0, Math.floor((TARGET-anchor.getTime())/1000));
-      const days = Math.floor(remainingAfterMonths/86400);
-      if(els.mo) els.mo.textContent = pad(months);
-      if(els.d) els.d.textContent = pad(days);
-      if(els.h) els.h.textContent = pad(Math.floor((total%86400)/3600));
-      if(els.m) els.m.textContent = pad(Math.floor((total%3600)/60));
-      if(els.s) els.s.textContent = pad(total%60);
-      if(els.clock) els.clock.textContent = 'PRE-LAUNCH';
-
-      if(els.bar){
-        const progress = Math.max(0,Math.min(100,((now-START)/(TARGET-START))*100));
-        els.bar.style.width = progress+'%';
-      }
-    }
-
-    tick();
-    timer = window.setInterval(tick,1000);
-  }
-
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initProLaunchLock,{once:true});
-  else initProLaunchLock();
-})();
-</script>
-<script src="script.js" defer></script>
-
-
-<script id="starter-preview-script">
-(function(){
-  const p = new URLSearchParams(window.location.search);
-  if (p.get("preview") !== "starter") return;
-
-  function activateStarterPreview(){
-    // Remove the real launch-lock state from the document for preview only.
-    document.documentElement.classList.remove("jarvis-pro-lock-active");
-    document.body.classList.remove("jarvis-pro-lock-active");
-    document.documentElement.classList.remove("jarvis-pro-launched");
-
-    const lock = document.getElementById("pro-launch-lock");
-    if (lock) {
-      lock.style.display = "none";
-      lock.setAttribute("data-preview-hidden", "true");
-    }
-
-    document.body.classList.add("starter-preview-mode");
-
-    const banner = document.createElement("div");
-    banner.id = "starter-preview-banner";
-    banner.textContent = "STARTER PREVIEW MODE";
-    document.body.appendChild(banner);
-
-    const starter = document.querySelector("#starter, #jarvis-starter, [data-section='starter']");
-    if (starter) {
-      setTimeout(() => starter.scrollIntoView({behavior:"smooth", block:"start"}), 300);
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", activateStarterPreview, {once:true});
-  } else {
-    activateStarterPreview();
-  }
-})();
-</script>
-
-
-<style id="astron-manual-payment-css">
-.pro-manual-form{display:grid;gap:9px;margin-top:25px;text-align:left}.pro-manual-form label{font-size:10px;letter-spacing:.13em;opacity:.8}.pro-manual-form input:not([type=checkbox]){width:100%;box-sizing:border-box;background:rgba(0,0,0,.38);border:1px solid rgba(120,210,255,.28);padding:13px;color:#eaf8ff;font:inherit;outline:none}.pro-manual-form input:focus{border-color:#8fdcff;box-shadow:0 0 0 2px rgba(80,190,255,.12)}.pro-manual-form .pro-checkline{display:flex;gap:10px;align-items:flex-start;letter-spacing:0;font-size:12px;line-height:1.5;margin:5px 0}.pro-status-form{border-top:1px solid rgba(120,210,255,.2);padding-top:22px}.pro-manual-form button{width:100%;margin-top:7px}.pro-payment-note[data-state="error"]{color:#ff9d9d;opacity:1}.pro-payment-note[data-state="success"]{color:#9fffd2;opacity:1}
-</style>
-<script id="astron-manual-payment-client">
-(function(){
- const API=window.ASTRON_PAYMENT_API||'/api';
- const submit=document.getElementById('proPaymentForm'), statusForm=document.getElementById('proOrderStatusForm');
- async function request(path,data){const r=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const j=await r.json().catch(()=>({error:'Unexpected server response'}));if(!r.ok)throw new Error(j.error||'Request failed');return j;}
- function say(el,msg,state){el.textContent=msg;el.dataset.state=state||'';}
- if(submit)submit.addEventListener('submit',async e=>{e.preventDefault();const b=submit.querySelector('button[type=submit]'),s=document.getElementById('proPaymentStatus');b.disabled=true;say(s,'Submitting securely…');const f=new FormData(submit);try{const j=await request('/orders',{buyerName:f.get('buyerName'),email:f.get('email'),payerName:f.get('payerName'),utr:f.get('utr'),amountConfirmed:f.get('amountConfirmed')==='on'});document.getElementById('proOrderId').value=j.orderId;document.getElementById('proStatusEmail').value=f.get('email');say(s,'Submitted. Save order reference '+j.orderId+'. Your download stays locked while payment is reviewed.','success');}catch(err){say(s,err.message,'error')}finally{b.disabled=false;}});
- if(statusForm)statusForm.addEventListener('submit',async e=>{e.preventDefault();const b=statusForm.querySelector('button[type=submit]'),s=document.getElementById('proOrderStatus');b.disabled=true;say(s,'Checking order…');const f=new FormData(statusForm);try{const j=await request('/orders/status',{orderId:f.get('orderId'),email:f.get('email')});if(j.status==='approved'&&j.downloadUrl){say(s,'Payment approved. Your secure download is ready.','success');const a=document.createElement('a');a.href=j.downloadUrl;a.className='pro-copy-upi';a.textContent='DOWNLOAD ASTRON PRO WINDOWS ZIP';a.style.display='block';a.style.textAlign='center';a.style.marginTop='12px';s.insertAdjacentElement('afterend',a);}else if(j.status==='rejected')say(s,'This submission was not approved. Contact support with your order reference.','error');else say(s,'Payment is awaiting manual verification. Download is still locked.');}catch(err){say(s,err.message,'error')}finally{b.disabled=false;}});
-})();
-</script>
-
-
-<!-- ASTRON Website Assistant: isolated floating help widget -->
-<style id="astron-site-assistant-css">
-#astron-site-assistant{position:fixed;right:20px;bottom:22px;z-index:9998;font-family:var(--font-body,Inter,Arial,sans-serif);color:#eaf6ff}
-#astron-assistant-launch{width:62px;height:62px;border:1px solid rgba(99,215,255,.75);border-radius:50%;background:radial-gradient(circle at 35% 28%,#183c59,#07121f 58%,#030609);color:#dff7ff;box-shadow:0 0 0 5px rgba(22,140,255,.08),0 0 28px rgba(22,140,255,.28);cursor:pointer;display:grid;place-items:center;transition:transform .2s ease,box-shadow .2s ease}
-#astron-assistant-launch:hover{transform:translateY(-3px);box-shadow:0 0 0 7px rgba(22,140,255,.1),0 0 36px rgba(22,140,255,.42)}
-#astron-assistant-launch svg{width:31px;height:31px}#astron-assistant-launch .as-orb{animation:asOrbPulse 2.8s ease-in-out infinite;transform-origin:center}
-@keyframes asOrbPulse{0%,100%{opacity:.75;transform:scale(.94)}50%{opacity:1;transform:scale(1.05)}}
-#astron-assistant-panel{position:absolute;right:0;bottom:76px;width:min(370px,calc(100vw - 28px));height:min(520px,calc(100dvh - 130px));min-height:350px;box-sizing:border-box;padding:0;display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(99,215,255,.34);border-radius:16px;background:linear-gradient(160deg,rgba(9,19,30,.98),rgba(3,7,12,.99));box-shadow:0 20px 70px rgba(0,0,0,.65),0 0 35px rgba(22,140,255,.12);backdrop-filter:blur(18px)}
-#astron-assistant-panel[hidden]{display:none}
-.as-assistant-head{position:relative;flex:0 0 auto;display:flex;align-items:center;gap:11px;padding:15px;border-bottom:1px solid rgba(99,215,255,.17);background:linear-gradient(100deg,rgba(22,140,255,.12),transparent)}
-.as-assistant-mark{width:37px;height:37px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#1e5b82,#08101a 70%);border:1px solid rgba(99,215,255,.5);color:#9be8ff;font-weight:800;font-size:12px;box-shadow:0 0 18px rgba(22,140,255,.2)}
-.as-assistant-title{font-size:13px;letter-spacing:.12em;font-weight:700}.as-assistant-status{font-size:10px;color:#8db6ca;margin-top:4px;letter-spacing:.08em}.as-assistant-close{margin-left:auto;background:transparent;border:1px solid rgba(180,220,240,.2);border-radius:7px;color:#d9efff;font-size:21px;line-height:1;width:31px;height:31px;cursor:pointer}
-#astron-assistant-messages{min-height:0;padding:15px;display:flex;flex-direction:column;gap:11px;overflow:auto;flex:1;scroll-behavior:smooth}
-.as-assistant-msg{max-width:91%;white-space:pre-wrap;overflow-wrap:anywhere;padding:11px 12px;border-radius:11px;font-size:13px;line-height:1.55}.as-assistant-msg.bot{align-self:flex-start;background:rgba(125,185,220,.09);border:1px solid rgba(125,185,220,.14);color:#e5f5ff;border-top-left-radius:3px}.as-assistant-msg.user{align-self:flex-end;background:rgba(22,140,255,.2);border:1px solid rgba(99,190,255,.3);color:#f4fbff;border-top-right-radius:3px}.as-assistant-msg small{display:block;margin-top:7px;color:#93b9cc;font-size:10px}
-.as-assistant-suggestions{display:flex;gap:7px;flex-wrap:wrap;padding:0 13px 12px}.as-assistant-suggestions button{font-size:11px;color:#c8eaff;border:1px solid rgba(99,190,255,.25);background:rgba(22,140,255,.07);padding:7px 9px;border-radius:20px;cursor:pointer}.as-assistant-suggestions button:hover{background:rgba(22,140,255,.16)}
-.as-assistant-form{display:flex;gap:8px;padding:12px;border-top:1px solid rgba(99,215,255,.16);background:rgba(0,0,0,.22)}.as-assistant-form input{min-width:0;flex:1;background:#050b11;border:1px solid rgba(120,190,220,.25);border-radius:9px;padding:11px 10px;color:#f1f9ff;font:inherit;font-size:13px;outline:none}.as-assistant-form input:focus{border-color:#63d7ff;box-shadow:0 0 0 2px rgba(22,140,255,.1)}.as-assistant-form button{border:1px solid rgba(99,215,255,.5);border-radius:9px;background:linear-gradient(135deg,#1477c8,#0b416f);color:white;font-size:12px;font-weight:700;padding:0 13px;cursor:pointer}.as-assistant-form button:disabled{opacity:.55;cursor:wait}.as-assistant-note{font-size:9px;line-height:1.4;color:#6f91a4;padding:0 13px 10px;background:rgba(0,0,0,.22)}
-@media(max-width:600px){#astron-site-assistant{right:13px;bottom:15px}#astron-assistant-launch{width:56px;height:56px}#astron-assistant-panel{bottom:67px;width:min(360px,calc(100vw - 26px));height:min(490px,calc(100dvh - 105px));min-height:320px}.as-assistant-msg{font-size:12px}}
-@media(prefers-reduced-motion:reduce){#astron-assistant-launch,.as-assistant-msg,#astron-assistant-messages{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-</style>
+<!-- ================= WEBSITE ASSISTANT ================= -->
 <div id="astron-site-assistant">
   <section id="astron-assistant-panel" role="dialog" aria-label="ASTRON website assistant" aria-modal="false" hidden>
-    <header class="as-assistant-head"><div class="as-assistant-mark" aria-hidden="true">A//</div><div><div class="as-assistant-title">ASTRON ASSISTANT</div><div class="as-assistant-status">WEBSITE GUIDE // ONLINE</div></div><button type="button" id="astron-assistant-voice" class="as-assistant-voice" aria-pressed="true" title="Turn spoken answers on or off">VOICE ON</button><button type="button" id="astron-assistant-close" class="as-assistant-close" aria-label="Close assistant">×</button></header>
-    <div id="astron-assistant-messages" aria-live="polite"><div class="as-assistant-msg bot">Hello! I’m the ASTRON website guide. Ask me about ASTRON, its features, getting started, or the information published on this website.</div></div>
+    <header class="as-assistant-head"><div class="as-assistant-mark" aria-hidden="true">A</div><div><div class="as-assistant-title">ASTRON Assistant</div><div class="as-assistant-status">Website guide · online</div></div><button type="button" id="astron-assistant-voice" class="as-assistant-voice" aria-pressed="false" title="Turn spoken answers on or off">Voice off</button><button type="button" id="astron-assistant-close" class="as-assistant-close" aria-label="Close assistant">×</button></header>
+    <div id="astron-assistant-messages" aria-live="polite"><div class="as-assistant-msg bot">Hello! I’m the ASTRON website guide. Ask me about ASTRON, its features, getting started, or anything published on this site.</div></div>
     <div class="as-assistant-suggestions" id="astron-assistant-suggestions"><button type="button">What is ASTRON?</button><button type="button">What features does it have?</button><button type="button">How do I get started?</button></div>
-    <form class="as-assistant-form" id="astron-assistant-form"><input id="astron-assistant-input" maxlength="500" autocomplete="off" placeholder="Ask ASTRON a question…" aria-label="Your question" required><button type="button" id="astron-assistant-mic" class="as-assistant-mic" aria-label="Ask by voice" title="Ask by voice">🎙</button><button type="submit" id="astron-assistant-send">SEND</button></form>
+    <form class="as-assistant-form" id="astron-assistant-form"><input id="astron-assistant-input" maxlength="500" autocomplete="off" placeholder="Ask ASTRON a question…" aria-label="Your question" required><button type="button" id="astron-assistant-mic" class="as-assistant-mic" aria-label="Ask by voice" title="Ask by voice">🎙</button><button type="submit" id="astron-assistant-send">Send</button></form>
     <div class="as-assistant-note" id="astron-assistant-note">Answers use published website information. Live AI requires server-side AI configuration.</div>
   </section>
-  <button type="button" id="astron-assistant-launch" aria-label="Open ASTRON website assistant" aria-expanded="false" aria-controls="astron-assistant-panel"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle class="as-orb" cx="20" cy="20" r="14" stroke="#8ee9ff" stroke-width="1.5"/><path d="M20 8 23.5 16.5 32 20 23.5 23.5 20 32 16.5 23.5 8 20 16.5 16.5 20 8Z" fill="#c8f6ff"/><circle cx="20" cy="20" r="3" fill="#168cff"/><path d="M6 12 10 10M30 30 34 28M29 8 32 6" stroke="#168cff" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+  <button type="button" id="astron-assistant-launch" aria-label="Open ASTRON website assistant" aria-expanded="false" aria-controls="astron-assistant-panel"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle class="as-orb" cx="20" cy="20" r="14" stroke="#8ee9ff" stroke-width="1.5"/><path d="M20 8 23.5 16.5 32 20 23.5 23.5 20 32 16.5 23.5 8 20 16.5 16.5 20 8Z" fill="#c8f6ff"/><circle cx="20" cy="20" r="3" fill="#2f7bff"/></svg></button>
 </div>
-<script src="astron-assistant.js" defer></script>
 
+<script src="script.js" defer></script>
+<script src="astron-assistant.js" defer></script>
 </body>
 </html>
