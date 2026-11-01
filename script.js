@@ -86,43 +86,217 @@
     let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); if (reduced) draw(0); }, 200); });
   })();
 
-  /* ---------- command lab (simulation only) ---------- */
+
+  /* ---------- interface screenshot viewer ---------- */
+  (function viewer() {
+    const root = $('#viewer'); if (!root) return;
+    const shots = [
+      { src: 'astron-hud.webp', w: 1600, h: 826, title: 'ASTRON — operator core',
+        alt: 'ASTRON operator core: orb, voice and vision controls, system status and resource telemetry',
+        points: [['Talk or type', 'Voice and vision controls on the left, a command bar at the bottom.'], ['Live status', 'Core AI, voice, vision, Ollama and mission mode at a glance.'], ['Real telemetry', 'CPU and RAM load history sampled from your own machine.']] },
+      { src: 'astron-neural-web.webp', w: 1600, h: 900, title: 'ASTRON — neural web',
+        alt: 'ASTRON neural web: a read-only 3D knowledge graph of 126 nodes with search and gesture controls',
+        points: [['Explore your knowledge', 'A 3D graph of your local data — search, filter and re-scan on demand.'], ['Read-only by design', 'The index is for browsing; nothing is changed or sent anywhere.'], ['Hands-free navigation', 'Optional gestures: move to pan, spread thumb and index to zoom.']] }
+    ];
+    const tabs = $$('.viewer-tabs button', root), img = $('#shotImg'), title = $('#shotTitle'), list = $('#shotPoints');
+    let cur = 0;
+    function show(i) {
+      if (i === cur) return; cur = i; const s = shots[i];
+      tabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === i)));
+      img.classList.add('swap');
+      setTimeout(() => { img.src = s.src; img.alt = s.alt; img.width = s.w; img.height = s.h; title.textContent = s.title; img.classList.remove('swap'); }, 180);
+      list.innerHTML = s.points.map(p => '<li><b>' + p[0] + '</b>' + p[1] + '</li>').join('');
+    }
+    tabs.forEach((t, i) => t.addEventListener('click', () => show(i)));
+    const lb = $('#lightbox'), lbImg = $('#lightboxImg');
+    function open() { lbImg.src = img.src; lbImg.alt = img.alt; lb.hidden = false; document.body.style.overflow = 'hidden'; }
+    function close() { lb.hidden = true; document.body.style.overflow = ''; }
+    $('#shotOpen').addEventListener('click', open);
+    lb.addEventListener('click', close);
+    addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) close(); });
+  })();
+
+  /* ---------- translation helper (i18n.js replaces this when loaded) ---------- */
+  const T = (k, v) => (window.ASTRON_T ? window.ASTRON_T(k, v) : String(k).replace(/\{(\w+)\}/g, (_, n) => (v && v[n] != null ? v[n] : '')));
+  const SITE = window.ASTRON_SITE || {};
+
+  /* ---------- sound (WebAudio, nothing to download) ---------- */
+  const Sound = (function () {
+    let ctx = null, on = true;
+    try { on = localStorage.getItem('astron-sound') !== 'off'; } catch (_) {}
+    function get() {
+      if (!ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C(); } catch (_) { return null; } }
+      if (ctx.state === 'suspended') ctx.resume();
+      return ctx;
+    }
+    function tone(freq, start, dur, gain, type) {
+      const c = get(); if (!c || !on) return;
+      const o = c.createOscillator(), g = c.createGain(), t = c.currentTime + start;
+      o.type = type || 'sine'; o.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + dur + 0.02);
+    }
+    return {
+      get on() { return on; },
+      set(v) { on = v; try { localStorage.setItem('astron-sound', v ? 'on' : 'off'); } catch (_) {} },
+      unlock() { get(); },
+      tick() { tone(1500 + Math.random() * 500, 0, 0.03, 0.018, 'square'); },
+      step() { tone(520, 0, 0.09, 0.05, 'triangle'); },
+      chime() { tone(660, 0, 0.16, 0.06, 'sine'); tone(880, 0.1, 0.18, 0.06, 'sine'); tone(1320, 0.2, 0.3, 0.05, 'sine'); },
+      error() { tone(220, 0, 0.18, 0.07, 'sawtooth'); tone(165, 0.14, 0.26, 0.07, 'sawtooth'); }
+    };
+  })();
+
+  /* ---------- command lab (simulation only, typed responses + sound) ---------- */
   (function commandLab() {
     const input = $('#commandLabInput'), run = $('#commandLabRun'), lab = $('.command-lab'), out = $('#commandLabOutput');
+    const sr = $('#commandLabSr'), snd = $('#soundToggle');
     const nodes = $$('#commandPipeline .pipeline-node');
     if (!input || !run || !lab || !out || nodes.length !== 4) return;
     const sleep = ms => new Promise(r => setTimeout(r, ms));
-    const esc = v => v.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    function syncSnd() {
+      if (!snd) return;
+      snd.setAttribute('aria-pressed', String(Sound.on));
+      const l = snd.querySelector('span'); if (l) l.textContent = T(Sound.on ? 'Sound on' : 'Sound off');
+    }
+    if (snd) snd.addEventListener('click', () => { Sound.set(!Sound.on); syncSnd(); if (Sound.on) { Sound.unlock(); Sound.step(); } });
+    syncSnd();
+    document.addEventListener('astron:lang', syncSnd);
+
     function setNode(i, status) {
       nodes.forEach((n, k) => {
         n.classList.toggle('active', k === i);
-        const s = n.querySelector('small'); if (s) s.textContent = k === i ? status : (k < i ? 'COMPLETE' : 'STANDBY');
+        const s = n.querySelector('small'); if (s) s.textContent = T(k === i ? status : (k < i ? 'COMPLETE' : 'STANDBY'));
       });
     }
-    function reply(c) {
-      const x = c.toLowerCase();
-      if (x.includes('youtube')) return 'Opening YouTube…';
-      if (x.includes('search')) return 'Web search intent ready.';
-      if (x.includes('note')) return 'Note action queued.';
-      if (x.includes('remember') || x.includes('memory')) return 'Memory update intent detected.';
-      if (x.includes('status')) return 'All visible ASTRON systems report READY.';
-      if (x.includes('gesture')) return 'Gesture control module enabled.';
-      return 'Command understood. Action pipeline complete.';
+
+    const t0 = { v: 0 };
+    const stamp = () => '[' + ((performance.now() - t0.v) / 1000).toFixed(2) + 's]';
+    function addLine(cls) {
+      const d = document.createElement('div'); d.className = 'log-line' + (cls ? ' ' + cls : '');
+      out.appendChild(d); out.scrollTop = out.scrollHeight; return d;
     }
+    async function type(el, text, speed, withSound) {
+      if (reduced) { el.textContent = text; return; }
+      el.classList.add('type-cursor');
+      let n = 0;
+      for (const ch of text) {
+        el.textContent += ch; n++;
+        if (withSound && n % 3 === 0 && ch.trim()) Sound.tick();
+        out.scrollTop = out.scrollHeight;
+        await sleep(speed + (ch === ' ' ? 4 : 0) + (/[.,—]/.test(ch) ? 90 : 0));
+      }
+      el.classList.remove('type-cursor');
+    }
+    async function logLine(text, cls, speed, withSound) {
+      const d = addLine(cls);
+      const ts = document.createElement('span'); ts.className = 'ts'; ts.textContent = stamp(); d.appendChild(ts);
+      const body = document.createElement('span'); d.appendChild(body);
+      await type(body, text, speed == null ? 12 : speed, withSound);
+      return d;
+    }
+
+    const clean = s => s.replace(/\s+/g, ' ').trim();
+    function intent(raw) {
+      const c = clean(raw), x = c.toLowerCase();
+      let m;
+      if (/\b(time|samay)\b/.test(x)) return { id: 'time', action: 'Reading the system clock', reply: T('It is {t}.', { t: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }) };
+      if (/\b(date|day|today)\b/.test(x)) return { id: 'date', action: 'Reading the system clock', reply: T('Today is {d}.', { d: new Date().toLocaleDateString(document.documentElement.lang === 'hi' ? 'hi-IN' : undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }) };
+      if (x.includes('youtube')) return { id: 'open', action: 'Launching browser → youtube.com', reply: T('Opening YouTube.') };
+      if ((m = x.match(/(?:search|google|look up|find)(?: the web)?(?: for)? (.+)/))) { const q = clean(c.slice(c.toLowerCase().indexOf(m[1]))); return { id: 'search', action: 'Building a search query', reply: T('Searching the web for “{q}”.', { q }) }; }
+      if (/\bnote\b/.test(x)) return { id: 'note', action: 'Creating a new note', reply: T('Note created. What would you like to write?') };
+      if (/\b(remember|memory)\b/.test(x)) return { id: 'memory', action: 'Writing to persistent memory', reply: T('Saved to memory. I will remember this next session.') };
+      if (/\b(status|health|systems?)\b/.test(x)) return { id: 'status', action: 'Polling modules', reply: T('Voice, vision, memory and local AI all report ready.') };
+      if (/\bgestures?\b/.test(x)) return { id: 'gesture', action: 'Starting camera + hand tracking', reply: T('Gesture control enabled. Move your hand to steer the cursor.') };
+      if (/\b(hello|hi|hey|namaste)\b/.test(x)) return { id: 'hello', action: 'Wake word matched', reply: T('Hello. ASTRON is online and listening.') };
+      if (/\b(help|what can you do)\b/.test(x)) return { id: 'help', action: 'Listing capabilities', reply: T('I can open apps, search the web, take notes, remember things and control your PC by voice or gesture.') };
+      if ((m = x.match(/^open (.+)/))) return { id: 'open', action: 'Launching ' + clean(m[1]), reply: T('Opening {app}.', { app: clean(c.slice(5)) }) };
+      return { id: 'unknown', action: 'Asking the local model', reply: T('Understood. Passing “{c}” to the local model for a reply.', { c: c.length > 60 ? c.slice(0, 57) + '…' : c }) };
+    }
+
     let busy = false;
     async function exec(raw) {
-      const cmd = (raw || '').trim(); if (!cmd || busy) return;
+      const cmd = clean(raw || ''); if (!cmd || busy) return;
       busy = true; lab.classList.add('running'); run.disabled = true; input.value = cmd;
-      out.innerHTML = 'ASTRON // PROCESSING<br><span>Command received: ' + esc(cmd) + '</span>';
-      setNode(0, 'RECEIVED'); await sleep(420);
-      setNode(1, 'ANALYSING'); out.innerHTML = 'ASTRON // BRAIN<br><span>Intent detected from command input.</span>'; await sleep(520);
-      setNode(2, 'EXECUTING'); out.innerHTML = 'ASTRON // ACTION<br><span>Simulating the requested action pipeline…</span>'; await sleep(620);
-      setNode(3, 'COMPLETE'); out.innerHTML = 'ASTRON // COMPLETE<br><span>' + esc(reply(cmd)) + '</span>';
+      Sound.unlock(); t0.v = performance.now();
+      out.textContent = ''; if (sr) sr.textContent = '';
+      const it = intent(cmd);
+      try {
+        const head = addLine('head'); head.textContent = 'ASTRON // ' + T('PROCESSING');
+        setNode(0, 'RECEIVED'); Sound.step();
+        await logLine(T('input') + '  › ' + cmd, 'dim', 8, false); await sleep(reduced ? 0 : 220);
+        setNode(1, 'ANALYSING'); Sound.step();
+        await logLine(T('intent') + '  › ' + it.id.toUpperCase() + '  (' + T('confidence') + ' ' + (0.88 + (cmd.length % 9) / 100).toFixed(2) + ')', '', 10, true); await sleep(reduced ? 0 : 260);
+        setNode(2, 'EXECUTING'); Sound.step();
+        await logLine(T('action') + '  › ' + T(it.action), '', 10, true); await sleep(reduced ? 0 : 320);
+        setNode(3, 'COMPLETE');
+        await logLine(T('status') + '  › OK', 'ok', 14, false);
+        const rep = addLine('reply'); await type(rep, it.reply, 22, true);
+        Sound.chime();
+        if (sr) sr.textContent = it.reply;
+      } catch (e) { Sound.error(); console.error(e); }
       lab.classList.remove('running'); run.disabled = false; busy = false;
     }
     run.addEventListener('click', () => exec(input.value));
     input.addEventListener('keydown', e => { if (e.key === 'Enter') exec(input.value); });
     $$('.command-presets button[data-command]').forEach(b => b.addEventListener('click', () => exec(b.dataset.command)));
+  })();
+
+  /* ---------- live proof: GitHub stars + Android downloads (hidden if unavailable) ---------- */
+  (function proof() {
+    const repo = SITE.repo; if (!repo || !window.fetch) return;
+    const stars = $('#proofStars'), dl = $('#proofDl'); if (!stars && !dl) return;
+    const fmt = n => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1) + 'k' : String(n);
+    function apply(d) {
+      if (stars && d.stars > 0) { $('b', stars).textContent = fmt(d.stars); stars.hidden = false; }
+      if (dl && d.downloads > 0) { $('b', dl).textContent = fmt(d.downloads); dl.hidden = false; }
+    }
+    try { const c = JSON.parse(sessionStorage.getItem('astron-proof') || 'null'); if (c && Date.now() - c.t < 600000) { apply(c.d); return; } } catch (_) {}
+    Promise.all([
+      fetch('https://api.github.com/repos/' + repo).then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('https://api.github.com/repos/' + repo + '/releases').then(r => r.ok ? r.json() : null).catch(() => null)
+    ]).then(([r, rel]) => {
+      const d = { stars: r && r.stargazers_count || 0, downloads: 0 };
+      if (Array.isArray(rel)) rel.forEach(x => (x.assets || []).forEach(a => { if (/\.apk$/i.test(a.name)) d.downloads += a.download_count || 0; }));
+      try { sessionStorage.setItem('astron-proof', JSON.stringify({ t: Date.now(), d })); } catch (_) {}
+      apply(d);
+    });
+  })();
+
+  /* ---------- copy SHA-256 ---------- */
+  $$('[data-copy-sha]').forEach(b => b.addEventListener('click', async () => {
+    const code = b.parentElement.querySelector('[data-sha]'); if (!code) return;
+    const label = b.textContent;
+    try { await navigator.clipboard.writeText(code.textContent.trim()); b.textContent = T('Copied ✓'); }
+    catch (_) { const r = document.createRange(); r.selectNodeContents(code); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = T('Press Ctrl+C'); }
+    setTimeout(() => (b.textContent = label), 1800);
+  }));
+
+  /* ---------- android screenshots (swap concept mockups for real images) ---------- */
+  (function phones() {
+    const shots = SITE.androidScreens; if (!Array.isArray(shots) || !shots.length) return;
+    $$('.aphone .screen[data-screen]').forEach((sc, i) => {
+      if (!shots[i]) return;
+      const img = new Image(); img.src = shots[i]; img.alt = 'ASTRON Android app screen ' + (i + 1); img.loading = 'lazy'; img.decoding = 'async';
+      sc.textContent = ''; sc.appendChild(img);
+      sc.closest('.aphone').removeAttribute('aria-hidden');
+    });
+    const cap = $('#phonesCap'); if (cap) cap.textContent = T('Screens from the ASTRON Android app.');
+  })();
+
+  /* ---------- real testimonials (section stays hidden until some exist) ---------- */
+  (function voices() {
+    const list = SITE.testimonials, sec = $('#voices'), grid = $('#voicesGrid');
+    if (!Array.isArray(list) || !list.length || !sec || !grid) return;
+    list.slice(0, 6).forEach(t => {
+      if (!t || !t.quote || !t.name) return;
+      const f = document.createElement('figure'); f.className = 'card reveal visible'; f.style.margin = '0';
+      const q = document.createElement('blockquote'); q.style.cssText = 'margin:0 0 16px;font-size:17px;line-height:1.6'; q.textContent = '“' + t.quote + '”';
+      const c = document.createElement('figcaption'); c.style.cssText = 'color:var(--muted);font-size:14px'; c.textContent = t.name + (t.role ? ' · ' + t.role : '');
+      f.append(q, c); grid.appendChild(f);
+    });
+    if (grid.children.length) sec.hidden = false;
   })();
 
   /* ---------- pre-flight compatibility check ---------- */
@@ -147,7 +321,7 @@
         const pts = (win ? 30 : 10) + (cores >= 4 ? 20 : cores ? 15 : 10) + (mem >= 4 ? 20 : mem ? 15 : 10) + (micApi && secure ? 20 : 10) + (name !== 'Browser' ? 10 : 5);
         const pct = Math.max(0, Math.min(100, pts));
         score.textContent = pct + '%'; ring.style.setProperty('--p', pct);
-        msg.textContent = 'Pre-flight complete — browser readiness checked. ASTRON still needs the PC release dependencies and Ollama.';
+        msg.textContent = T('Pre-flight complete — browser readiness checked. ASTRON still needs the PC release dependencies and Ollama.');
         dbg.textContent = 'Last check ' + new Date().toLocaleTimeString();
       } catch (e) {
         score.textContent = '--'; msg.textContent = 'Check error — please try again.'; console.error(e);

@@ -15,15 +15,55 @@
 <meta property="og:image" content="og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <!-- TODO: set your real domain once deployed -->
 <link rel="canonical" href="https://your-domain-here.com/">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff" href="font-inter-400.woff" crossorigin>
+<link rel="preload" as="font" type="font/woff" href="font-inter-display-700.woff" crossorigin>
 <link rel="stylesheet" href="style.css">
 <link rel="preload" as="image" href="astron-robot.webp" type="image/webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://your-domain-here.com/#website",
+      "url": "https://your-domain-here.com/",
+      "name": "ASTRON",
+      "description": "A personal AI system for voice, vision, automation and local intelligence."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://your-domain-here.com/#app",
+      "name": "ASTRON",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Windows, Android",
+      "softwareVersion": "1.2",
+      "description": "Voice-first personal AI assistant with local AI (Ollama), voice commands, gesture control, vision tools and persistent memory — designed to run on your own machine.",
+      "image": "https://your-domain-here.com/og-image.jpg",
+      "offers": [
+        { "@type": "Offer", "name": "ASTRON Core", "price": "0", "priceCurrency": "INR" },
+        { "@type": "Offer", "name": "ASTRON Starter", "price": "0", "priceCurrency": "INR" },
+        { "@type": "Offer", "name": "ASTRON Pro (Windows PC)", "price": "950", "priceCurrency": "INR" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Does ASTRON send my data to the cloud?", "acceptedAnswer": { "@type": "Answer", "text": "Not by default. ASTRON is built to run against a local model through Ollama, so conversations and commands stay on your machine unless you choose to connect an external service." } },
+        { "@type": "Question", "name": "What operating systems are supported?", "acceptedAnswer": { "@type": "Answer", "text": "The current release targets Windows for gesture control, automation and system-level commands. Voice and local-AI features work more broadly — check the README in the release download for details." } },
+        { "@type": "Question", "name": "Do I need a powerful computer?", "acceptedAnswer": { "@type": "Answer", "text": "It depends on which local model you connect. Smaller models run comfortably on modest hardware; larger ones benefit from a dedicated GPU. ASTRON itself is lightweight." } },
+        { "@type": "Question", "name": "What’s the difference between Core, Starter and Pro?", "acceptedAnswer": { "@type": "Answer", "text": "Core is the free, self-configured community version and Starter is a gentler beginner edition. Pro is the full Windows application with Vision, Voice, the Smart Command Engine, Serious Mode, local AI and OCR. Done-for-you setups are available through the custom build form." } },
+        { "@type": "Question", "name": "Can I request a feature that isn’t listed?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — use the custom build form and describe what you’re trying to do. Most requests are scoped as part of a custom build." } }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 
 <body>
@@ -33,29 +73,35 @@
 
 <!-- ================= NAV ================= -->
 <header class="nav" id="nav">
-  <a class="logo" href="#top" aria-label="ASTRON home"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4 4 27h5.2l2.2-4.6h9.2l2.2 4.6H28L16 4Zm0 9.6 3 6.3h-6l3-6.3Z"/></svg></span>ASTRON</a>
+  <a class="logo" href="#top" aria-label="ASTRON home"><img class="logo-img" src="astron-logo.webp" width="34" height="34" alt="" decoding="async">ASTRON</a>
   <nav class="navlinks" aria-label="Primary">
     <a href="#capabilities">Features</a>
+    <a href="#interface">Interface</a>
     <a href="#architecture">How it works</a>
     <a href="#command-playground">Command lab</a>
     <a href="#setup">Setup</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
-    <a href="#custom">Custom build</a>
+    <a href="docs.html">Docs</a>
   </nav>
-  <a href="JARVIS_PC_RELEASE.zip" class="btn btn-primary btn-sm nav-cta" download>Download</a>
+  <button type="button" class="lang-toggle" id="langToggle" aria-label="Switch language to Hindi" title="हिन्दी / English"><span>हिं</span></button>
+  <a href="#downloads" class="btn btn-primary btn-sm nav-cta">Download</a>
   <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
 </header>
 <div id="mobile-nav" class="mobile-nav" hidden>
   <a href="#capabilities">Features</a>
+  <a href="#interface">Interface</a>
   <a href="#architecture">How it works</a>
   <a href="#command-playground">Command lab</a>
   <a href="#setup">Setup guide</a>
   <a href="#compatibility">System check</a>
   <a href="#pricing">Pricing</a>
+  <a href="#downloads">Downloads</a>
   <a href="#faq">FAQ</a>
+  <a href="docs.html">Docs &amp; release notes</a>
   <a href="#custom">Custom build</a>
-  <a href="JARVIS_PC_RELEASE.zip" class="btn btn-primary" download>Download ASTRON</a>
+  <button type="button" class="lang-toggle wide" id="langToggleM" aria-label="Switch language to Hindi"><span>हिन्दी में देखें</span></button>
+  <a href="#downloads" class="btn btn-primary">Download ASTRON</a>
 </div>
 
 <main id="main">
@@ -148,6 +194,44 @@
   </div>
 </section>
 
+<!-- ================= INTERFACE GALLERY ================= -->
+<section class="section" id="interface">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Inside ASTRON</p>
+      <h2>See the real interface.</h2>
+      <p class="lead">Screenshots from the ASTRON desktop app — the operator core with live system status, and the read-only neural web of your local knowledge.</p>
+    </div>
+
+    <div class="viewer reveal" id="viewer">
+      <div class="viewer-tabs" role="tablist" aria-label="Interface screenshots">
+        <button type="button" role="tab" aria-selected="true" data-shot="0"><b>Operator core</b><span>Voice, vision &amp; system status</span></button>
+        <button type="button" role="tab" aria-selected="false" data-shot="1"><b>Neural web</b><span>Your local knowledge graph</span></button>
+      </div>
+
+      <figure class="shot-frame">
+        <div class="term-bar"><span class="win-dots"><i></i><i></i><i></i></span><b id="shotTitle">ASTRON — operator core</b><em>desktop app</em></div>
+        <button type="button" class="shot-zoom" id="shotOpen" aria-label="View screenshot full size">
+          <img id="shotImg" src="astron-hud.webp" alt="ASTRON operator core: orb, voice and vision controls, system status and resource telemetry" width="1600" height="826">
+          <span class="zoom-hint">Click to enlarge ⤢</span>
+        </button>
+      </figure>
+
+      <ul class="shot-points" id="shotPoints">
+        <li><b>Talk or type</b> Voice and vision controls on the left, a command bar at the bottom.</li>
+        <li><b>Live status</b> Core AI, voice, vision, Ollama and mission mode at a glance.</li>
+        <li><b>Real telemetry</b> CPU and RAM load history sampled from your own machine.</li>
+      </ul>
+      <p class="note">Interface captured from a development build — layout and labels may change in future releases.</p>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Screenshot full size">
+  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+  <img id="lightboxImg" alt="">
+</div>
+
 <!-- ================= CAPABILITIES ================= -->
 <section class="section" id="capabilities">
   <div class="container">
@@ -233,7 +317,7 @@
     </div>
 
     <div class="terminal-window command-lab reveal">
-      <div class="term-bar"><span class="win-dots"><i></i><i></i><i></i></span><b>astron — command lab</b><em><i class="pulse"></i>online</em></div>
+      <div class="term-bar"><span class="win-dots"><i></i><i></i><i></i></span><b>astron — command lab</b><button type="button" class="snd-toggle" id="soundToggle" aria-pressed="true" aria-label="Sound effects"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="spk" d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="wv" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/><path class="x" d="m16 9 5 6m0-6-5 6"/></svg><span>Sound on</span></button><em><i class="pulse"></i>online</em></div>
       <div class="term-body">
         <div class="command-input-row">
           <span class="prompt-mark" aria-hidden="true">›</span>
@@ -257,7 +341,8 @@
           <i class="pipeline-line"></i>
           <div class="pipeline-node"><span>04</span><b>Status</b><small>READY</small></div>
         </div>
-        <div class="command-output" id="commandLabOutput" aria-live="polite">ASTRON // COMMAND LAB READY<br><span>Enter a command to start the simulation.</span></div>
+        <div class="command-output" id="commandLabOutput" aria-live="off"><div class="log-line head">ASTRON // COMMAND LAB READY</div><div class="log-line">Enter a command to start the simulation.</div></div>
+        <p class="sr-only" id="commandLabSr" role="status" aria-live="polite"></p>
       </div>
     </div>
   </div>
@@ -269,14 +354,14 @@
     <div class="section-head reveal">
       <p class="eyebrow"><span class="eyebrow-dot"></span>Get running</p>
       <h2>From zero to ASTRON.</h2>
-      <p class="lead">Four steps from download to your first spoken command. Keep the AI local, connect your model, start issuing commands.</p>
+      <p class="lead">Four steps from download to your first spoken command. Need more detail? See the <a class="inline-link" href="docs.html#quick-start">full setup guide</a>.</p>
     </div>
 
     <ol class="steps" data-stagger>
-      <li class="card reveal"><span class="step-num">01</span><h3>Download</h3><p>Get the current ASTRON PC release and extract it to a folder you control.</p><code>ASTRON_PC_RELEASE.zip</code></li>
-      <li class="card reveal"><span class="step-num">02</span><h3>Python</h3><p>Use a supported Python installation and install the project’s required packages.</p><code>pip install -r requirements.txt</code></li>
-      <li class="card reveal"><span class="step-num">03</span><h3>Ollama</h3><p>Install Ollama and pull the local model configured for your build.</p><code>ollama run &lt;your-model&gt;</code></li>
-      <li class="card reveal"><span class="step-num">04</span><h3>Launch</h3><p>Start ASTRON, allow microphone and camera permissions, then test a command.</p><code>python main.py</code></li>
+      <li class="card reveal"><span class="step-num">01</span><h3>Download</h3><p>Get the ASTRON PC release and extract it to a folder you control.</p><code>JARVIS_PC_RELEASE.zip</code></li>
+      <li class="card reveal"><span class="step-num">02</span><h3>Prerequisites</h3><p>Install Python 3.11+ and Ollama, then pull the local model the release uses.</p><code>ollama pull qwen2.5:1.5b</code></li>
+      <li class="card reveal"><span class="step-num">03</span><h3>Install</h3><p>Double-click the installer to add the required Python packages.</p><code>install.bat</code></li>
+      <li class="card reveal"><span class="step-num">04</span><h3>Launch</h3><p>Start ASTRON, allow microphone and camera permissions, then test a command.</p><code>start_jarvis.bat</code></li>
     </ol>
   </div>
 </section>
@@ -355,19 +440,159 @@
       </article>
     </div>
 
-    <!-- Android -->
-    <article class="android card reveal" id="astron-android-download" aria-labelledby="astron-android-title">
-      <div class="android-icon" aria-hidden="true">A</div>
-      <div class="android-copy">
-        <p class="eyebrow"><span class="eyebrow-dot"></span>Mobile edition</p>
-        <h3 id="astron-android-title">ASTRON for Android</h3>
-        <p>On-device AI app. Download the APK, open it on your phone and follow Android’s installation prompts. This is a debug build — Android may ask you to allow installs from your browser or file manager, so only install it on a device you control.</p>
+    <p class="price-foot reveal">Prices in Indian rupees. Digital products are delivered after payment verification — see the <a class="inline-link" href="refund.html">refund policy</a>.</p>
+  </div>
+</section>
+
+<!-- ================= ANDROID ================= -->
+<section class="section" id="astron-android-download" aria-labelledby="astron-android-title">
+  <div class="container android-grid">
+    <div class="android-copy reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Mobile edition</p>
+      <h2 id="astron-android-title">Take ASTRON <span class="grad">with you.</span></h2>
+      <p class="lead">An on-device AI app for your Android phone. Download the APK, open it and follow Android’s installation prompts.</p>
+      <ul class="check-list compact">
+        <li>On-device AI assistant</li>
+        <li>Separate from the Windows ASTRON Pro purchase</li>
+        <li>Debug build — for early testers</li>
+      </ul>
+      <div class="android-cta">
+        <a class="btn btn-primary btn-lg" href="https://github.com/nexus-ai6767/jarvis-ai/releases/download/v1.0.0/astron-android.apk" download="ASTRON-Android.apk">Download APK <span aria-hidden="true">↗</span></a>
+        <small>v1.0.0 · about 57 MB · Android</small>
       </div>
-      <div class="android-action">
-        <a class="btn btn-primary" href="https://github.com/nexus-ai6767/jarvis-ai/releases/download/v1.0.0/astron-android.apk" download="ASTRON-Android.apk">Download APK <span aria-hidden="true">↗</span></a>
-        <small>APK · 57 MB · Android</small>
+      <p class="note">Android may ask you to allow installs from your browser or file manager. Only install on a device you control, and only from this page or the official GitHub release.</p>
+    </div>
+
+    <div class="phones reveal" id="phones">
+      <div class="aphone ap-1" aria-hidden="true">
+        <span class="notch"></span>
+        <div class="screen" data-screen>
+          <div class="as-bar"><b>ASTRON</b><i class="pulse"></i></div>
+          <div class="bubble me">Open my notes</div>
+          <div class="bubble ai">Done — your notes are open.</div>
+          <div class="bubble me">Remember: demo on Friday</div>
+          <div class="bubble ai">Saved to memory.</div>
+          <div class="as-input">Ask ASTRON… <b>↑</b></div>
+        </div>
       </div>
-    </article>
+      <div class="aphone ap-2" aria-hidden="true">
+        <span class="notch"></span>
+        <div class="screen" data-screen>
+          <div class="as-bar"><b>VOICE</b><i class="pulse c"></i></div>
+          <div class="as-orb"><span>A</span></div>
+          <p class="as-state">Listening…</p>
+          <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="aphone ap-3" aria-hidden="true">
+        <span class="notch"></span>
+        <div class="screen" data-screen>
+          <div class="as-bar"><b>MEMORY</b><i class="pulse v"></i></div>
+          <div class="mem-item"><b>Notes</b><span>Saved on this device</span></div>
+          <div class="mem-item"><b>Preferences</b><span>Wake word, voice</span></div>
+          <div class="mem-item"><b>Reminders</b><span>Coming from your commands</span></div>
+        </div>
+      </div>
+      <p class="phones-cap" id="phonesCap">Concept preview — real app screenshots coming soon.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VERIFIED DOWNLOADS ================= -->
+<section class="section" id="downloads">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Verified downloads</p>
+      <h2>Know exactly what you’re installing.</h2>
+      <p class="lead">Every file on this page, with its size, requirements and SHA-256 checksum, so you can confirm it hasn’t been altered.</p>
+    </div>
+
+    <div class="proof reveal" id="proof">
+      <div class="proof-item"><b>v1.2</b><span>Latest release · Aug 2026</span></div>
+      <div class="proof-item"><b>Local-first</b><span>Runs on your own machine</span></div>
+      <div class="proof-item" id="proofStars" hidden><b>–</b><span>GitHub stars</span></div>
+      <div class="proof-item" id="proofDl" hidden><b>–</b><span>Android downloads</span></div>
+    </div>
+
+    <div class="dl-list" data-stagger>
+      <article class="dl-row reveal">
+        <div class="dl-main">
+          <span class="dl-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 5.5 10.5 4.5v6.8H3V5.5Zm8.7-1.1L21 3v8.3h-9.3V4.4ZM3 12.7h7.5v6.8L3 18.5v-5.8Zm8.7 0H21V21l-9.3-1.3v-7Z"/></svg></span>
+          <div><h3>ASTRON PC release</h3><p>The full Windows desktop app — voice, gestures, memory and local AI.</p></div>
+        </div>
+        <dl class="dl-meta">
+          <div><dt>Updated</dt><dd data-date="JARVIS_PC_RELEASE.zip">6 Sep 2026</dd></div>
+          <div><dt>Size</dt><dd data-size="JARVIS_PC_RELEASE.zip">21.6 KB</dd></div>
+          <div><dt>Requires</dt><dd>64-bit Windows · Python 3.11+ · Ollama</dd></div>
+        </dl>
+        <div class="dl-hash"><span>SHA-256</span><code data-sha="JARVIS_PC_RELEASE.zip">a22d46b820222f35912ad125cdf2e29a8fb4e9e4cbb2889a3936f418f5bf8a79</code><button type="button" class="copy-btn" data-copy-sha>Copy</button></div>
+        <a class="btn btn-primary btn-sm" href="JARVIS_PC_RELEASE.zip" download>Download</a>
+      </article>
+
+      <article class="dl-row reveal">
+        <div class="dl-main">
+          <span class="dl-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span>
+          <div><h3>ASTRON Starter</h3><p>The beginner / source edition for learning the foundations.</p></div>
+        </div>
+        <dl class="dl-meta">
+          <div><dt>Updated</dt><dd data-date="JARVIS_STARTER.zip">25 Sep 2026</dd></div>
+          <div><dt>Size</dt><dd data-size="JARVIS_STARTER.zip">6.3 KB</dd></div>
+          <div><dt>Requires</dt><dd>Python 3.11+ · Ollama (installed separately)</dd></div>
+        </dl>
+        <div class="dl-hash"><span>SHA-256</span><code data-sha="JARVIS_STARTER.zip">b4120c7ec94fadeff12c77869e2076c2f85dc89a353bea7d5048b91c35935726</code><button type="button" class="copy-btn" data-copy-sha>Copy</button></div>
+        <a class="btn btn-ghost btn-sm" href="JARVIS_STARTER.zip" download>Download</a>
+      </article>
+
+      <article class="dl-row reveal">
+        <div class="dl-main">
+          <span class="dl-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span>
+          <div><h3>ASTRON for Android</h3><p>On-device AI app, distributed as an APK (debug build).</p></div>
+        </div>
+        <dl class="dl-meta">
+          <div><dt>Version</dt><dd>v1.0.0</dd></div>
+          <div><dt>Size</dt><dd>about 57 MB</dd></div>
+          <div><dt>Requires</dt><dd>Android phone · installs from unknown sources allowed</dd></div>
+        </dl>
+        <div class="dl-hash"><span>SHA-256</span><em>Not published yet — compare the file on the <a class="inline-link" href="https://github.com/nexus-ai6767/jarvis-ai/releases/tag/v1.0.0" target="_blank" rel="noopener">GitHub release page</a>.</em></div>
+        <a class="btn btn-ghost btn-sm" href="https://github.com/nexus-ai6767/jarvis-ai/releases/download/v1.0.0/astron-android.apk" download="ASTRON-Android.apk">Download</a>
+      </article>
+    </div>
+
+    <div class="verify-grid reveal">
+      <details class="verify" open>
+        <summary>How to verify a download<span class="faq-icon" aria-hidden="true"></span></summary>
+        <div class="verify-body">
+          <p>After downloading, compute the file’s SHA-256 and compare it with the value above. If the two differ, delete the file and download it again from this page.</p>
+          <p class="cmd-label">Windows (PowerShell)</p>
+          <pre><code>Get-FileHash .\JARVIS_PC_RELEASE.zip -Algorithm SHA256</code></pre>
+          <p class="cmd-label">Windows (Command Prompt)</p>
+          <pre><code>certutil -hashfile JARVIS_PC_RELEASE.zip SHA256</code></pre>
+          <p class="cmd-label">macOS / Linux</p>
+          <pre><code>sha256sum JARVIS_PC_RELEASE.zip</code></pre>
+        </div>
+      </details>
+      <div class="safety">
+        <h3>Stay safe</h3>
+        <ul class="ticks">
+          <li>Download only from this page or the official GitHub release.</li>
+          <li>The installers are plain <code>.bat</code> and <code>.py</code> text files — open them in a text editor and read them before you run anything.</li>
+          <li>The scripts aren’t code-signed, so Windows may show a warning. Checking the checksum first is the right move.</li>
+          <li>ASTRON can control your PC, microphone and camera. Enable each module deliberately.</li>
+        </ul>
+        <a class="inline-link" href="docs.html#verify">Read the full guide →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VOICES (filled from site-config.js; hidden until real quotes exist) ================= -->
+<section class="section" id="voices" hidden>
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Early feedback</p>
+      <h2>From people running it.</h2>
+    </div>
+    <div class="grid-3" id="voicesGrid"></div>
   </div>
 </section>
 
@@ -407,6 +632,7 @@
           <label for="proUtr">UPI transaction / UTR ID</label>
           <input id="proUtr" name="utr" required minlength="8" maxlength="80" pattern="[A-Za-z0-9\-]{8,80}" placeholder="Enter transaction reference">
           <label class="checkline"><input type="checkbox" name="amountConfirmed" required> I paid ₹950 to the UPI ID shown above.</label>
+          <p class="note">By submitting, you agree to the <a class="inline-link" href="terms.html">Terms</a> and <a class="inline-link" href="refund.html">Refund policy</a>. See the <a class="inline-link" href="privacy.html">Privacy policy</a> for how your details are used.</p>
           <button class="btn btn-primary" type="submit">Submit for verification</button>
           <p id="proPaymentStatus" class="note" role="status" aria-live="polite">Payments are reviewed manually. Never share your UPI PIN, OTP or banking password.</p>
         </form>
@@ -502,11 +728,12 @@
 <footer class="footer">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 4 4 27h5.2l2.2-4.6h9.2l2.2 4.6H28L16 4Zm0 9.6 3 6.3h-6l3-6.3Z"/></svg></span>ASTRON</a>
+      <a class="logo" href="#top"><img class="logo-img" src="astron-logo.webp" width="34" height="34" alt="" decoding="async">ASTRON</a>
       <p>A personal AI system for voice, vision, automation and local intelligence — built to run on your own machine.</p>
     </div>
     <nav aria-label="Product"><h4>Product</h4><a href="#capabilities">Features</a><a href="#architecture">How it works</a><a href="#command-playground">Command lab</a><a href="#pricing">Pricing</a></nav>
-    <nav aria-label="Get started"><h4>Get started</h4><a href="#setup">Setup guide</a><a href="#compatibility">System check</a><a href="JARVIS_PC_RELEASE.zip" download>Latest release</a><a href="#custom">Custom build</a></nav>
+    <nav aria-label="Get started"><h4>Get started</h4><a href="#setup">Setup guide</a><a href="#compatibility">System check</a><a href="#downloads">Downloads</a><a href="#custom">Custom build</a></nav>
+    <nav aria-label="Legal and docs"><h4>Docs &amp; legal</h4><a href="docs.html">Documentation</a><a href="docs.html#changelog">Release notes</a><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms of use</a><a href="refund.html">Refund policy</a></nav>
   </div>
   <div class="container footer-bottom"><span>© <span id="year">2026</span> ASTRON · Personal AI system</span><span class="footer-status"><i class="pulse"></i>All systems online</span></div>
 </footer>
@@ -523,6 +750,8 @@
   <button type="button" id="astron-assistant-launch" aria-label="Open ASTRON website assistant" aria-expanded="false" aria-controls="astron-assistant-panel"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle class="as-orb" cx="20" cy="20" r="14" stroke="#8ee9ff" stroke-width="1.5"/><path d="M20 8 23.5 16.5 32 20 23.5 23.5 20 32 16.5 23.5 8 20 16.5 16.5 20 8Z" fill="#c8f6ff"/><circle cx="20" cy="20" r="3" fill="#2f7bff"/></svg></button>
 </div>
 
+<script src="site-config.js" defer></script>
+<script src="i18n.js" defer></script>
 <script src="script.js" defer></script>
 <script src="astron-assistant.js" defer></script>
 </body>
