@@ -20,3 +20,9 @@
 
 ## Rollback
 Restore `index.html`, `style.css`, and `script.js` from the original `ASTRON_Website_Android_Link_Fixed.zip`.
+
+## Motion layer (fx.css, fx.js, fx2.js)
+- `fx.css` + `fx.js`: boot sequence, interactive neural background, cursor glow, sliding nav pill, word-by-word hero headline, typed voice demo, marquee, 3D card tilt with animated borders, magnetic buttons, price count-up, back-to-top ring. Loaded on all pages.
+- `fx2.js`: 3D particle core over the hero art (plain canvas, no libraries) and the pinned scroll-driven "How it works" section. Home page only.
+- All motion respects prefers-reduced-motion; cursor effects are off on touch devices.
+- Rollback: delete the `fx*` <link>/<script> lines from the HTML pages.

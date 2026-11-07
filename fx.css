@@ -1,0 +1,191 @@
+/* ==========================================================
+   ASTRON — motion & polish layer (loads after style.css)
+   Remove this file + fx.js and the site returns to normal.
+   ========================================================== */
+
+/* ---------- boot sequence ---------- */
+#fx-boot{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:radial-gradient(60% 60% at 50% 45%,#0b1d44 0%,#040913 70%);
+  transition:opacity .7s ease,visibility .7s,transform .9s cubic-bezier(.7,0,.2,1);}
+#fx-boot.done{opacity:0;visibility:hidden;transform:scale(1.08)}
+.boot-core{position:relative;width:min(240px,56vw);aspect-ratio:1;display:grid;place-items:center}
+.boot-core i{position:absolute;inset:0;border-radius:50%;border:1.5px solid transparent;border-top-color:var(--cyan);border-right-color:rgba(90,162,255,.4);animation:spin 1.6s linear infinite}
+.boot-core i:nth-child(2){inset:14%;border-top-color:var(--violet);border-right-color:transparent;border-left-color:rgba(139,123,255,.35);animation-duration:2.4s;animation-direction:reverse}
+.boot-core i:nth-child(3){inset:28%;border-top-color:var(--blue-2);animation-duration:1.1s}
+.boot-core b{width:26%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff 0%,var(--cyan) 35%,var(--blue) 70%,transparent 72%);box-shadow:0 0 60px 14px rgba(79,209,255,.55);animation:bootPulse 1.2s ease-in-out infinite}
+.boot-word{position:absolute;bottom:calc(50% - 190px);font:700 clamp(22px,4vw,30px) var(--display);letter-spacing:.5em;padding-left:.5em;color:var(--text)}
+.boot-line{position:absolute;bottom:calc(50% - 232px);width:min(260px,60vw);height:2px;background:rgba(140,180,255,.16);border-radius:2px;overflow:hidden}
+.boot-line::after{content:"";position:absolute;inset:0;background:var(--grad);transform:scaleX(0);transform-origin:left;animation:bootBar 1.5s cubic-bezier(.6,0,.2,1) forwards}
+.boot-status{position:absolute;bottom:calc(50% - 262px);font:500 11px var(--mono);letter-spacing:.22em;color:var(--dim)}
+@keyframes bootPulse{50%{transform:scale(1.25);box-shadow:0 0 90px 24px rgba(79,209,255,.7)}}
+@keyframes bootBar{to{transform:scaleX(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- neural canvas + cursor ---------- */
+#neural{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
+.fx-cursor,.fx-cursor-dot{position:fixed;left:0;top:0;pointer-events:none;z-index:9000;opacity:0;transition:opacity .3s}
+.fx-cursor{width:420px;height:420px;margin:-210px 0 0 -210px;border-radius:50%;
+  background:radial-gradient(circle,rgba(79,209,255,.13) 0%,rgba(47,123,255,.06) 35%,transparent 68%);mix-blend-mode:screen;will-change:transform}
+.fx-cursor-dot{width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan);transition:width .25s,height .25s,margin .25s,opacity .3s,background .25s}
+.fx-on .fx-cursor,.fx-on .fx-cursor-dot{opacity:1}
+.fx-cursor-dot.hot{width:46px;height:46px;margin:-23px 0 0 -23px;background:rgba(79,209,255,.14);border:1px solid var(--cyan);box-shadow:0 0 24px rgba(79,209,255,.5)}
+@media (hover:none),(pointer:coarse){.fx-cursor,.fx-cursor-dot{display:none}}
+
+/* ---------- nav ---------- */
+.nav{transition:background .4s,border-color .4s,box-shadow .4s,backdrop-filter .4s}
+.navlinks{position:relative}
+.navlinks a.active{background:transparent;position:relative}
+.nav-pill{position:absolute;top:0;left:0;height:100%;border-radius:999px;background:rgba(47,123,255,.2);box-shadow:inset 0 0 0 1px rgba(90,162,255,.35),0 0 24px -4px rgba(47,123,255,.6);
+  transition:transform .45s cubic-bezier(.3,1.3,.4,1),width .45s cubic-bezier(.3,1.3,.4,1),opacity .3s;opacity:0;pointer-events:none;z-index:-1}
+.navlinks a{position:relative;z-index:1}
+
+/* ---------- hero ---------- */
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(.55em) rotateX(-50deg);filter:blur(10px);transform-origin:50% 100%;
+  animation:wordIn .9s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--wi) * .07s + var(--boot-delay,0s))}
+@keyframes wordIn{to{opacity:1;transform:none;filter:blur(0)}}
+.hero .grad,.showcase .grad,h2 .grad,.cta-section .grad{background-size:220% 100%;animation:gradFlow 6s ease-in-out infinite alternate}
+@keyframes gradFlow{from{background-position:0% 50%}to{background-position:100% 50%}}
+
+.hero-art{perspective:1100px}
+.hero-art img{transform:translate3d(var(--px,0),var(--py,0),0) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));transition:transform .25s ease-out;
+  animation:robotFloat 7s ease-in-out infinite;will-change:transform}
+@keyframes robotFloat{50%{translate:0 -14px}}
+.hero-glow{animation:glowBreath 5s ease-in-out infinite}
+@keyframes glowBreath{50%{transform:scale(1.12);opacity:.85}}
+.chip{backdrop-filter:blur(10px);animation:chipBob 6s ease-in-out infinite}
+@keyframes chipBob{50%{transform:translateY(-12px)}}
+.hero-art::after{content:"";position:absolute;inset:8% 14%;border-radius:50%;pointer-events:none;
+  background:conic-gradient(from 0deg,transparent 0 80%,rgba(79,209,255,.28) 92%,transparent);filter:blur(22px);animation:spin 9s linear infinite;mix-blend-mode:screen}
+
+.hero-type{margin-top:26px;display:flex;align-items:center;gap:12px;font:500 14.5px var(--mono);color:var(--muted);min-height:44px;
+  padding:10px 16px;border:1px solid var(--line);border-radius:14px;background:rgba(90,140,255,.05);backdrop-filter:blur(8px);width:fit-content;max-width:100%}
+.hero-type .mic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(47,123,255,.2);flex:none;position:relative}
+.hero-type .mic::before{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--cyan);animation:ping 1.8s ease-out infinite}
+.hero-type .mic svg{width:13px;height:13px;stroke:var(--cyan);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hero-type q{quotes:none;color:var(--text)}
+.hero-type q::after{content:"";display:inline-block;width:2px;height:1.05em;margin-left:3px;background:var(--cyan);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+.hero-type em{font-style:normal;color:var(--green);font-size:12px;opacity:0;transition:opacity .3s;white-space:nowrap}
+.hero-type em.on{opacity:1}
+@keyframes ping{to{transform:scale(1.9);opacity:0}}
+@keyframes blink{50%{opacity:0}}
+
+.scroll-cue{position:absolute;left:50%;bottom:10px;translate:-50% 0;width:24px;height:38px;border:1.5px solid var(--line-2);border-radius:14px;opacity:.7}
+.scroll-cue::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;margin-left:-1.5px;border-radius:3px;background:var(--cyan);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(14px)}}
+@media (max-width:700px){.scroll-cue{display:none}}
+
+/* ---------- marquee ---------- */
+.marquee{position:relative;overflow:hidden;padding:26px 0;border-block:1px solid var(--line);background:linear-gradient(90deg,rgba(47,123,255,.05),rgba(139,123,255,.05));
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marquee-track{display:flex;width:max-content;gap:56px;animation:marq 38s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee span{display:inline-flex;align-items:center;gap:56px;font:600 clamp(18px,2.4vw,26px) var(--display);letter-spacing:-.01em;color:rgba(190,215,255,.5);white-space:nowrap;transition:color .3s}
+.marquee span:hover{color:var(--text)}
+.marquee span::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ---------- stat strip ---------- */
+.stat-strip>div{position:relative;overflow:hidden}
+.stat-strip>div::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .8s .4s cubic-bezier(.2,.8,.2,1)}
+.stat-strip>div.visible::after{transform:scaleX(1)}
+
+/* ---------- section headings ---------- */
+.section-head h2,.showcase-copy h2{background:linear-gradient(180deg,#fff 20%,#a9c4f5 120%);-webkit-background-clip:text;background-clip:text}
+.section-head h2:not(:has(.grad)),.section-head h2 .grad{ }
+.section+.section::before{content:"";display:block;height:1px;width:min(1200px,100% - 48px);margin:0 auto;position:relative;top:calc(var(--sec-pad,0px) * -1);
+  background:linear-gradient(90deg,transparent,rgba(79,209,255,.35),transparent);opacity:.5}
+
+/* ---------- cards: tilt + animated rim ---------- */
+.js .reveal.visible.tilting{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-6px) scale(1.012);
+  transition:transform .12s linear,border-color .3s,box-shadow .3s;transition-delay:0s}
+.card,.price-card,.flow-node{position:relative;transform-style:preserve-3d}
+.card::after,.price-card::after,.flow-node::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:conic-gradient(from var(--ang,0deg),transparent 0 55%,rgba(79,209,255,.95) 75%,rgba(139,123,255,.8) 88%,transparent 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.card:hover::after,.price-card:hover::after,.flow-node:hover::after,.price-card.featured::after{opacity:1}
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+.card:hover::after,.price-card::after,.flow-node:hover::after{animation:rim 3.5s linear infinite}
+@keyframes rim{to{--ang:360deg}}
+.card .icon{transition:transform .5s cubic-bezier(.3,1.6,.4,1),box-shadow .4s}
+.card:hover .icon{transform:translateY(-3px) rotate(-8deg) scale(1.12);box-shadow:0 0 30px -4px rgba(79,209,255,.7)}
+.price-card.featured{animation:featPulse 4s ease-in-out infinite}
+@keyframes featPulse{50%{box-shadow:0 0 70px -18px rgba(79,209,255,.55)}}
+.ticks li{transition:transform .25s,color .25s}
+.price-card:hover .ticks li{color:var(--text)}
+
+/* ---------- showcase stage ---------- */
+.stage{perspective:1400px}
+.laptop{transform:rotateY(var(--sry,-6deg)) rotateX(var(--srx,2deg));transition:transform .3s ease-out}
+.float-card{animation:chipBob 7s ease-in-out infinite}
+.fc-memory{animation-delay:-3s}
+.phone{animation:chipBob 8s ease-in-out infinite;animation-delay:-1.5s}
+.wave i{animation-duration:calc(.8s + var(--k,0) * .07s)!important}
+
+/* ---------- screenshot scan ---------- */
+.shot-frame{position:relative;overflow:hidden}
+.shot-frame::after{content:"";position:absolute;left:0;right:0;height:90px;top:-100px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(79,209,255,.18),transparent);animation:scan 6s ease-in-out infinite}
+@keyframes scan{0%{top:-100px}60%,100%{top:110%}}
+
+/* ---------- buttons ---------- */
+.btn{will-change:transform}
+.btn-primary{position:relative;overflow:hidden;isolation:isolate}
+.btn-primary::before{content:"";position:absolute;inset:0;z-index:-1;transform:translateX(-120%) skewX(-20deg);width:50%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);animation:sheen 4.5s ease-in-out infinite}
+@keyframes sheen{0%,55%{transform:translateX(-120%) skewX(-20deg)}100%{transform:translateX(320%) skewX(-20deg)}}
+.btn-ghost{transition:background .3s,border-color .3s,box-shadow .3s,transform .2s}
+.btn-ghost:hover{box-shadow:0 0 30px -6px rgba(79,209,255,.5);border-color:var(--cyan)}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.45);transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:scale(3.4);opacity:0}}
+
+/* ---------- command lab ---------- */
+.command-lab{box-shadow:0 0 0 1px rgba(79,209,255,.08),0 40px 100px -40px rgba(47,123,255,.55)}
+.pipeline-node{transition:transform .4s cubic-bezier(.3,1.5,.4,1),box-shadow .4s,border-color .4s}
+.pipeline-node.active{transform:translateY(-4px) scale(1.04);box-shadow:0 0 34px -6px rgba(79,209,255,.7)}
+.command-presets button{transition:transform .2s,background .25s,border-color .25s,box-shadow .25s}
+.command-presets button:hover{transform:translateY(-2px);box-shadow:0 0 22px -6px rgba(79,209,255,.6)}
+
+/* ---------- to-top ---------- */
+.to-top{position:fixed;right:22px;bottom:96px;z-index:90;width:46px;height:46px;border-radius:50%;border:1px solid var(--line-2);background:rgba(7,15,31,.8);backdrop-filter:blur(10px);
+  display:grid;place-items:center;cursor:pointer;opacity:0;transform:translateY(14px) scale(.8);pointer-events:none;transition:all .4s cubic-bezier(.3,1.4,.4,1)}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{border-color:var(--cyan);box-shadow:0 0 26px -4px rgba(79,209,255,.7);transform:translateY(-3px)}
+.to-top svg{width:18px;height:18px;stroke:var(--cyan);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;position:relative}
+.to-top .ring{position:absolute;inset:0;transform:rotate(-90deg)}
+.to-top .ring circle{fill:none;stroke:var(--cyan);stroke-width:2;stroke-dasharray:132;stroke-dashoffset:calc(132 - 132 * var(--sp,0));transition:stroke-dashoffset .1s}
+
+/* ---------- richer reveals (direction variants) ---------- */
+.js .reveal{filter:blur(6px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1),filter .9s}
+.js .reveal.visible{filter:none}
+
+@media (prefers-reduced-motion:reduce){
+  #fx-boot{display:none}
+  .hero h1 .w{opacity:1;transform:none;filter:none;animation:none}
+  .js .reveal{filter:none}
+  .marquee-track,.hero-art img,.chip,.float-card,.phone,.shot-frame::after,.hero-art::after,.btn-primary::before,.scroll-cue::after{animation:none!important}
+  .fx-cursor,.fx-cursor-dot{display:none}
+}
+
+/* ================= v2: 3D core + pinned "How it works" ================= */
+.hero-core{position:absolute;left:-10%;top:-6%;width:120%;height:112%;pointer-events:none;mix-blend-mode:screen;opacity:.85;z-index:2}
+
+/* pinned flow (desktop only; JS adds .pin) */
+#architecture.pin{height:290vh;padding:0}
+#architecture.pin>.container{position:sticky;top:0;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:calc(var(--nav-h) + 30px);padding-bottom:40px}
+#architecture.pin .flow-node{transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1),border-color .5s,box-shadow .5s,background .5s}
+#architecture.pin .flow-node.dim{opacity:.38;transform:scale(.96)}
+#architecture.pin .flow-node.live{opacity:1;transform:translateY(-8px) scale(1.03);border-color:var(--cyan);
+  box-shadow:0 0 0 1px rgba(79,209,255,.4),0 30px 80px -24px rgba(47,123,255,.8),0 0 60px -10px rgba(79,209,255,.5);
+  background:linear-gradient(180deg,rgba(79,209,255,.16),rgba(47,123,255,.06))}
+#architecture.pin .flow-node.live small{color:var(--cyan)}
+#architecture.pin .flow-arrow i{opacity:.25;transition:opacity .5s}
+#architecture.pin .flow-arrow.lit i{opacity:1}
+.pin-hud{margin-top:42px;display:grid;gap:14px;max-width:720px;margin-inline:auto;width:100%;text-align:center}
+.pin-bar{height:3px;border-radius:3px;background:rgba(140,180,255,.16);overflow:hidden}
+.pin-bar b{display:block;height:100%;width:100%;transform:scaleX(var(--pp,0));transform-origin:left;background:var(--grad);box-shadow:0 0 14px var(--cyan)}
+.pin-cap{min-height:3.2em;font:500 15px/1.6 var(--font);color:var(--muted);transition:opacity .3s}
+.pin-cap strong{color:var(--text);font-weight:600}
+.pin-hint{font:500 11.5px var(--mono);letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
+@media (max-width:900px){#architecture.pin{height:auto}.pin-hud{display:none}}
+
+/* sub-pages: same atmosphere, gentler */
+.simple-nav{backdrop-filter:blur(14px)}
