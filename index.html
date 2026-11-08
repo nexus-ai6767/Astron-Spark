@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script>document.documentElement.classList.add('js')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>document.documentElement.classList.add('js');(function(){var u=navigator.userAgent||'',o='other';if(/Android/i.test(u))o='android';else if(/iPhone|iPad|iPod/i.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1))o='ios';else if(/Windows/i.test(u))o='windows';else if(/Mac OS X|Macintosh/.test(u))o='mac';else if(/Linux|X11|CrOS/.test(u))o='linux';document.documentElement.setAttribute('data-os',o)})()</script>
 
 <title>ASTRON — Voice-first personal AI that runs on your machine</title>
 <meta name="description" content="ASTRON is a personal AI system for voice, vision, automation and local intelligence — designed to run privately on your own machine.">
@@ -25,7 +25,8 @@
 <link rel="preload" as="font" type="font/woff" href="font-inter-display-700.woff" crossorigin>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="fx.css">
-<link rel="preload" as="image" href="astron-robot.webp" type="image/webp">
+<link rel="stylesheet" href="fx3.css">
+<link rel="stylesheet" href="fx4.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -116,7 +117,6 @@
       <ellipse cx="300" cy="300" rx="235" ry="70" transform="rotate(-24 300 300)" class="dash"/>
       <circle cx="82" cy="394" r="5" class="dot"/>
     </svg>
-    <img src="astron-robot.webp" alt="" width="720" height="784" fetchpriority="high">
     <div class="chip chip-a"><i class="pulse"></i>Voice · listening</div>
     <div class="chip chip-b"><i class="pulse c"></i>Local AI · Ollama</div>
     <div class="chip chip-c"><i class="pulse v"></i>Memory · connected</div>
@@ -234,6 +234,18 @@
 </div>
 
 <!-- ================= CAPABILITIES ================= -->
+<!-- fx4: demo video (hidden until site-config.js has a demoVideo) -->
+<section class="section" id="demo" hidden>
+  <div class="container">
+    <div class="section-head reveal center">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>See it in action</p>
+      <h2>ASTRON, <span class="grad">running.</span></h2>
+      <p class="lead" id="demoCaption">A short screen recording of the app.</p>
+    </div>
+    <figure class="demo-frame reveal" id="demoFrame"></figure>
+  </div>
+</section>
+
 <section class="section" id="capabilities">
   <div class="container">
     <div class="section-head reveal">
@@ -278,6 +290,69 @@
 </section>
 
 <!-- ================= ARCHITECTURE ================= -->
+<section class="section" id="in-motion">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>In motion</p>
+      <h2>Built to feel alive.</h2>
+      <p class="lead">Illustrations of how ASTRON's modules work together. These animations are decorative, not live data from your machine.</p>
+    </div>
+    <div class="bento" data-stagger>
+      <article class="bento-card b-voice reveal">
+        <span class="b-tag">Voice</span>
+        <div class="b-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p class="b-say" id="bSay" aria-live="off">“Hey Astron, open my notes.”</p>
+        <p class="b-do" id="bDo">✓ Notes opened</p>
+        <h3>Say it. It happens.</h3>
+        <p>Wake word, natural phrasing, and a spoken answer back.</p>
+      </article>
+      <article class="bento-card b-local reveal">
+        <span class="b-tag">Local-first</span>
+        <svg viewBox="0 0 220 200" class="b-svg" aria-hidden="true">
+          <rect x="62" y="56" width="96" height="88" rx="16" class="b-box"/>
+          <text x="110" y="104" text-anchor="middle" class="b-lbl">ASTRON</text>
+          <text x="110" y="122" text-anchor="middle" class="b-sub">your PC</text>
+          <circle cx="110" cy="100" r="62" class="b-ring"/>
+          <circle cx="110" cy="100" r="82" class="b-ring r2"/>
+          <path d="M96 22h28a10 10 0 0 1 0 20H96a10 10 0 0 1 0-20Z" class="b-cloud"/>
+          <path d="M84 16 136 48" class="b-cross"/>
+          <circle cx="62" cy="100" r="4" class="b-node"/><circle cx="158" cy="100" r="4" class="b-node n2"/><circle cx="110" cy="144" r="4" class="b-node n3"/>
+        </svg>
+        <h3>Stays on your machine.</h3>
+        <p>Runs with a local Ollama model, so everyday conversations don't need a cloud round-trip.</p>
+      </article>
+      <article class="bento-card b-gesture reveal">
+        <span class="b-tag">Vision</span>
+        <svg viewBox="0 0 160 140" class="b-svg small" aria-hidden="true">
+          <g class="b-hand">
+            <path d="M80 118V84M80 84 50 64M50 64 38 40M80 84 62 52M62 52 58 22M80 84 82 48M82 48 84 18M80 84 100 54M100 54 108 28M80 84 116 82"/>
+            <circle cx="80" cy="118" r="4"/><circle cx="80" cy="84" r="4"/><circle cx="50" cy="64" r="3.5"/><circle cx="38" cy="40" r="3.5" class="tip"/>
+            <circle cx="62" cy="52" r="3.5"/><circle cx="58" cy="22" r="3.5" class="tip"/><circle cx="82" cy="48" r="3.5"/><circle cx="84" cy="18" r="3.5" class="tip"/>
+            <circle cx="100" cy="54" r="3.5"/><circle cx="108" cy="28" r="3.5" class="tip"/><circle cx="116" cy="82" r="3.5" class="tip"/>
+          </g>
+        </svg>
+        <h3>Point. Pinch. Done.</h3>
+        <p>Camera-based gesture control for the Windows cursor.</p>
+      </article>
+      <article class="bento-card b-memory reveal">
+        <span class="b-tag">Memory</span>
+        <svg viewBox="0 0 360 120" class="b-svg wide" aria-hidden="true">
+          <g class="b-edges"><path d="M40 60 120 24M120 24 200 70M200 70 280 30M280 30 330 80M120 24 150 98M150 98 200 70M200 70 250 100M250 100 330 80M40 60 150 98"/></g>
+          <g class="b-nodes"><circle cx="40" cy="60" r="6"/><circle cx="120" cy="24" r="7"/><circle cx="200" cy="70" r="9" class="hub"/><circle cx="280" cy="30" r="6"/><circle cx="330" cy="80" r="6"/><circle cx="150" cy="98" r="5"/><circle cx="250" cy="100" r="5"/></g>
+        </svg>
+        <h3>A local knowledge web.</h3>
+        <p>Notes and preferences connect on your device between sessions.</p>
+      </article>
+      <article class="bento-card b-flow reveal">
+        <span class="b-tag">Automation</span>
+        <ol class="b-chain" aria-label="Command pipeline"><li>Intent</li><li>Plan</li><li>Action</li><li>Result</li></ol>
+        <h3>From words to actions.</h3>
+        <p>Commands route through a pipeline you can follow.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="architecture">
   <div class="container">
     <div class="section-head reveal">
@@ -441,6 +516,68 @@
       </article>
     </div>
 
+
+    <!-- fx4: which edition? -->
+    <div class="picker reveal" id="picker">
+      <div class="picker-head">
+        <h3>Which one should I pick?</h3>
+        <p>Choose what sounds like you and we’ll point you to the right edition.</p>
+      </div>
+      <div class="picker-opts" role="radiogroup" aria-label="What do you want to do?">
+        <button type="button" role="radio" aria-checked="false" data-pick="starter">I’m new and want to learn</button>
+        <button type="button" role="radio" aria-checked="false" data-pick="core">I want to try it free on Windows</button>
+        <button type="button" role="radio" aria-checked="false" data-pick="pro">I want vision, OCR and automation</button>
+        <button type="button" role="radio" aria-checked="false" data-pick="android">I want it on my phone</button>
+      </div>
+      <div class="picker-results" aria-live="polite">
+        <div class="pick-card" data-result="starter" hidden>
+          <p class="tier">Starter · ₹0</p>
+          <p>The beginner edition. Learn the foundations of a personal AI assistant: voice, local AI through Ollama, notes and memory, and basic PC commands. Needs Python 3.11+ and Ollama.</p>
+          <a class="btn btn-primary" href="JARVIS_STARTER.zip" download>Download Starter</a>
+        </div>
+        <div class="pick-card" data-result="core" hidden>
+          <p class="tier">Core · ₹0</p>
+          <p>The community version for experimenting with your own AI assistant on a 64-bit Windows PC with Python 3.11+ and Ollama.</p>
+          <a class="btn btn-primary" href="JARVIS_PC_RELEASE.zip" download>Start free</a>
+        </div>
+        <div class="pick-card" data-result="pro" hidden>
+          <p class="tier">ASTRON Pro · ₹950 one-time</p>
+          <p>The full Windows application: Vision, Voice, Smart Command Engine, Serious Mode, local AI and OCR, with advanced workflows and device automation.</p>
+          <a class="btn btn-primary" href="#jarvis-pro-payment">Buy ASTRON Pro</a>
+        </div>
+        <div class="pick-card" data-result="android" hidden>
+          <p class="tier">ASTRON for Android</p>
+          <p>An on-device AI app for your Android phone. It is a separate download from the Windows editions, and the current build is a debug build for early testers.</p>
+          <a class="btn btn-primary" href="#astron-android-download">See the Android app</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cmp reveal">
+      <p class="cmp-swipe">Swipe sideways to compare →</p>
+      <div class="cmp-scroll" tabindex="0" role="region" aria-label="Edition comparison table, scrolls sideways on small screens">
+        <table class="cmp-table">
+          <caption class="sr-only">Core, Starter and Pro compared</caption>
+          <thead><tr><th scope="col">Compare</th><th scope="col" data-col="core">Core</th><th scope="col" data-col="starter">Starter</th><th scope="col" data-col="pro">Pro</th></tr></thead>
+          <tbody>
+            <tr class="price-row"><th scope="row">Price</th><td data-col="core">₹0</td><td data-col="starter">₹0</td><td data-col="pro">₹950 one-time</td></tr>
+            <tr><th scope="row">Best for</th><td data-col="core">Experimenting with your own assistant</td><td data-col="starter">Learning the foundations</td><td data-col="pro">The full application</td></tr>
+            <tr><th scope="row">Voice</th><td data-col="core"><span class="yes" aria-label="Included">✓</span></td><td data-col="starter"><span class="yes" aria-label="Included">✓</span></td><td data-col="pro"><span class="yes" aria-label="Included">✓</span></td></tr>
+            <tr><th scope="row">Local AI / Ollama</th><td data-col="core"><span class="yes" aria-label="Included">✓</span></td><td data-col="starter"><span class="yes" aria-label="Included">✓</span></td><td data-col="pro"><span class="yes" aria-label="Included">✓</span></td></tr>
+            <tr><th scope="row">Memory</th><td data-col="core">Basic</td><td data-col="starter">Notes + memory</td><td data-col="pro"><span class="no" aria-label="Not listed">—</span></td></tr>
+            <tr><th scope="row">Interface</th><td data-col="core">Desktop interface</td><td data-col="starter">Futuristic desktop HUD</td><td data-col="pro">Advanced HUD</td></tr>
+            <tr><th scope="row">PC commands</th><td data-col="core"><span class="no" aria-label="Not listed">—</span></td><td data-col="starter">Basic PC commands</td><td data-col="pro">Smart Command Engine</td></tr>
+            <tr><th scope="row">Vision &amp; OCR</th><td data-col="core"><span class="no" aria-label="Not listed">—</span></td><td data-col="starter"><span class="no" aria-label="Not listed">—</span></td><td data-col="pro"><span class="yes" aria-label="Included">✓</span></td></tr>
+            <tr><th scope="row">Serious Mode</th><td data-col="core"><span class="no" aria-label="Not listed">—</span></td><td data-col="starter"><span class="no" aria-label="Not listed">—</span></td><td data-col="pro"><span class="yes" aria-label="Included">✓</span></td></tr>
+            <tr><th scope="row">Advanced workflows &amp; custom integrations</th><td data-col="core"><span class="no" aria-label="Not listed">—</span></td><td data-col="starter"><span class="no" aria-label="Not listed">—</span></td><td data-col="pro"><span class="yes" aria-label="Included">✓</span></td></tr>
+            <tr><th scope="row">Device automation</th><td data-col="core"><span class="no" aria-label="Not listed">—</span></td><td data-col="starter"><span class="no" aria-label="Not listed">—</span></td><td data-col="pro"><span class="yes" aria-label="Included">✓</span></td></tr>
+            <tr><th scope="row">Support</th><td data-col="core">Community</td><td data-col="starter"><span class="no" aria-label="Not listed">—</span></td><td data-col="pro">Priority configuration</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="cmp-note">A dash means the feature isn’t listed for that edition. The Android app is a separate download — see the mobile edition below.</p>
+    </div>
+
     <p class="price-foot reveal">Prices in Indian rupees. Digital products are delivered after payment verification — see the <a class="inline-link" href="refund.html">refund policy</a>.</p>
   </div>
 </section>
@@ -458,6 +595,7 @@
         <li>Debug build — for early testers</li>
       </ul>
       <div class="android-cta">
+        <span class="rec-badge rec-android">Recommended for your device</span>
         <a class="btn btn-primary btn-lg" href="https://github.com/nexus-ai6767/jarvis-ai/releases/download/v1.0.0/astron-android.apk" download="ASTRON-Android.apk">Download APK <span aria-hidden="true">↗</span></a>
         <small>v1.0.0 · about 57 MB · Android</small>
       </div>
@@ -515,11 +653,15 @@
       <div class="proof-item" id="proofDl" hidden><b>–</b><span>Android downloads</span></div>
     </div>
 
+    <p class="os-note n-win"><b>Windows detected.</b> The ASTRON PC release below is the one for this device.</p>
+    <p class="os-note n-android"><b>Android detected.</b> The ASTRON for Android app below is the one for this device.</p>
+    <p class="os-note n-other">ASTRON currently ships for Windows and Android, and this device looks like neither. Download it on a Windows PC or Android phone, and read the <a href="docs.html">documentation</a> any time.</p>
+
     <div class="dl-list" data-stagger>
-      <article class="dl-row reveal">
+      <article class="dl-row m-win reveal">
         <div class="dl-main">
           <span class="dl-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 5.5 10.5 4.5v6.8H3V5.5Zm8.7-1.1L21 3v8.3h-9.3V4.4ZM3 12.7h7.5v6.8L3 18.5v-5.8Zm8.7 0H21V21l-9.3-1.3v-7Z"/></svg></span>
-          <div><h3>ASTRON PC release</h3><p>The full Windows desktop app — voice, gestures, memory and local AI.</p></div>
+          <div><span class="rec-badge rec-win">Recommended for your device</span><h3>ASTRON PC release</h3><p>The full Windows desktop app — voice, gestures, memory and local AI.</p></div>
         </div>
         <dl class="dl-meta">
           <div><dt>Updated</dt><dd data-date="JARVIS_PC_RELEASE.zip">6 Sep 2026</dd></div>
@@ -544,10 +686,10 @@
         <a class="btn btn-ghost btn-sm" href="JARVIS_STARTER.zip" download>Download</a>
       </article>
 
-      <article class="dl-row reveal">
+      <article class="dl-row m-android reveal">
         <div class="dl-main">
           <span class="dl-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span>
-          <div><h3>ASTRON for Android</h3><p>On-device AI app, distributed as an APK (debug build).</p></div>
+          <div><span class="rec-badge rec-android">Recommended for your device</span><h3>ASTRON for Android</h3><p>On-device AI app, distributed as an APK (debug build).</p></div>
         </div>
         <dl class="dl-meta">
           <div><dt>Version</dt><dd>v1.0.0</dd></div>
@@ -716,7 +858,8 @@
       <h2>Ready to activate?</h2>
       <p class="lead">Get the current ASTRON build and start creating your own personal AI system.</p>
       <div class="hero-actions center">
-        <a href="JARVIS_PC_RELEASE.zip" class="btn btn-primary btn-lg" download>Download ASTRON build</a>
+        <a href="JARVIS_PC_RELEASE.zip" class="btn btn-primary btn-lg hide-android" download>Download ASTRON build</a>
+        <a href="https://github.com/nexus-ai6767/jarvis-ai/releases/download/v1.0.0/astron-android.apk" class="btn btn-primary btn-lg only-android" download="ASTRON-Android.apk">Download Android app</a>
         <a href="#pricing" class="btn btn-ghost btn-lg">Compare editions</a>
       </div>
     </div>
@@ -736,8 +879,15 @@
     <nav aria-label="Get started"><h4>Get started</h4><a href="#setup">Setup guide</a><a href="#compatibility">System check</a><a href="#downloads">Downloads</a><a href="#custom">Custom build</a></nav>
     <nav aria-label="Legal and docs"><h4>Docs &amp; legal</h4><a href="docs.html">Documentation</a><a href="docs.html#changelog">Release notes</a><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms of use</a><a href="refund.html">Refund policy</a></nav>
   </div>
-  <div class="container footer-bottom"><span>© <span id="year">2026</span> ASTRON · Personal AI system</span><span class="footer-status"><i class="pulse"></i>All systems online</span></div>
+  <div class="container footer-bottom"><span>© <span id="year">2026</span> ASTRON · Personal AI system</span><span class="footer-status"><i class="dot-static" aria-hidden="true"></i>Local-first · Windows &amp; Android</span></div>
 </footer>
+
+<!-- fx4: sticky mobile download bar -->
+<div class="getbar" id="getbar" role="region" aria-label="Get ASTRON" aria-hidden="true">
+  <div class="getbar-txt"><b>ASTRON Spark</b><span>Free to start</span></div>
+  <a class="btn btn-primary" id="getbarBtn" href="#pricing"><span class="lbl-def">Get ASTRON</span><span class="lbl-win">Get for Windows</span><span class="lbl-android">Get for Android</span></a>
+  <button type="button" class="getbar-x" aria-label="Dismiss">×</button>
+</div>
 
 <!-- ================= WEBSITE ASSISTANT ================= -->
 <div id="astron-site-assistant">
@@ -755,6 +905,8 @@
 <script src="i18n.js" defer></script>
 <script src="script.js" defer></script>
 <script src="fx.js" defer></script>
+<script src="fx3.js" defer></script>
+<script src="fx4.js" defer></script>
 <script src="fx2.js" defer></script>
 <script src="astron-assistant.js" defer></script>
 </body>

@@ -1,0 +1,239 @@
+/* ==========================================================
+   ASTRON fx3 — premium layer (additive; delete the fx3 <link>/<script> lines to roll back)
+   Aurora backdrop, film grain, cursor-lit card borders, border-beam frames, blur-in headings,
+   section dock, command palette, accent themes, footer wordmark, custom scrollbar.
+   ========================================================== */
+@property --fx3-ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+
+/* ---- accent themes (set by fx3.js on <html data-accent>) ---- */
+:root[data-accent="violet"]{--blue:#7c5cff;--blue-2:#a08bff;--cyan:#c4a8ff;--violet:#ff7ad9;--grad:linear-gradient(100deg,#a08bff 0%,#c4a8ff 45%,#ff7ad9 100%)}
+:root[data-accent="emerald"]{--blue:#10b981;--blue-2:#34d399;--cyan:#6ee7b7;--violet:#22d3ee;--grad:linear-gradient(100deg,#34d399 0%,#6ee7b7 45%,#22d3ee 100%)}
+:root[data-accent="amber"]{--blue:#f59e0b;--blue-2:#fbbf24;--cyan:#fde68a;--violet:#fb7185;--grad:linear-gradient(100deg,#fbbf24 0%,#fde68a 45%,#fb7185 100%)}
+
+/* ---- aurora backdrop (two slow gradient blobs; transform-only animation) ---- */
+.fx3-aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.fx3-aurora i{position:absolute;width:62vmax;height:62vmax;border-radius:50%;filter:blur(90px);opacity:.34;will-change:transform}
+.fx3-aurora i:nth-child(1){left:-18vmax;top:-22vmax;background:radial-gradient(closest-side,var(--blue),transparent);animation:fx3-drift-a 38s ease-in-out infinite alternate}
+.fx3-aurora i:nth-child(2){right:-24vmax;top:28vh;background:radial-gradient(closest-side,var(--violet),transparent);opacity:.22;animation:fx3-drift-b 46s ease-in-out infinite alternate}
+.fx3-aurora i:nth-child(3){left:20vw;bottom:-34vmax;background:radial-gradient(closest-side,var(--cyan),transparent);opacity:.12;animation:fx3-drift-a 52s ease-in-out infinite alternate-reverse}
+@keyframes fx3-drift-a{to{transform:translate3d(14vw,10vh,0) scale(1.15)}}
+@keyframes fx3-drift-b{to{transform:translate3d(-16vw,-12vh,0) scale(1.1)}}
+
+/* ---- film grain (static, very light) ---- */
+.fx3-grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* ---- cursor-lit card borders ---- */
+.card,.price-card,.viewer .shot-frame{--gx:50%;--gy:50%}
+.card::after,.price-card::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:radial-gradient(260px circle at var(--gx) var(--gy),var(--cyan),transparent 65%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.card:hover::after,.price-card:hover::after{opacity:.9}
+.card .icon{transition:transform .4s cubic-bezier(.3,1.4,.4,1),box-shadow .4s}
+.card:hover .icon{transform:translateY(-3px) scale(1.06);box-shadow:0 12px 30px -10px var(--blue)}
+
+/* ---- border beam on key frames ---- */
+.viewer .shot-frame,.price-card.featured{position:relative}
+.viewer .shot-frame::before,.price-card.featured::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;z-index:3;
+  background:conic-gradient(from var(--fx3-ang),transparent 0 70%,var(--cyan) 85%,var(--blue-2) 92%,transparent 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  animation:fx3-spin 7s linear infinite;opacity:.85}
+@keyframes fx3-spin{to{--fx3-ang:360deg}}
+
+/* ---- headings: blur-in + gradient shimmer ---- */
+.js .section-head.reveal h2{filter:blur(10px);letter-spacing:.01em;transition:filter .9s .1s,letter-spacing .9s .1s}
+.js .section-head.reveal.visible h2{filter:none;letter-spacing:-.025em}
+.grad{background-size:220% 100%;animation:fx3-shimmer 8s ease-in-out infinite alternate}
+@keyframes fx3-shimmer{to{background-position:100% 0}}
+.eyebrow{position:relative}
+.section-head .eyebrow::after{content:"";display:inline-block;vertical-align:middle;margin-left:14px;width:0;height:1px;background:linear-gradient(90deg,var(--cyan),transparent);transition:width 1s .3s}
+.section-head.visible .eyebrow::after{width:90px}
+
+/* ---- buttons: soft glow ---- */
+.btn-primary{box-shadow:0 10px 34px -10px var(--blue),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn-primary:hover{box-shadow:0 16px 44px -8px var(--blue),inset 0 1px 0 rgba(255,255,255,.3)}
+
+/* ---- section dock (right edge, wide screens) ---- */
+.fx3-dock{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:80;display:none;flex-direction:column;gap:6px;padding:10px 8px;border-radius:999px;
+  background:rgba(7,15,31,.55);border:1px solid var(--line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+@media (min-width:1280px){.fx3-dock{display:flex}}
+.fx3-dock a{position:relative;width:12px;height:12px;display:grid;place-items:center;border-radius:50%}
+.fx3-dock a::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--dim);transition:transform .3s,background .3s,box-shadow .3s}
+.fx3-dock a:hover::before{background:var(--cyan);transform:scale(1.4)}
+.fx3-dock a.on::before{background:var(--cyan);transform:scale(1.7);box-shadow:0 0 12px var(--cyan)}
+.fx3-dock a span{position:absolute;right:26px;top:50%;transform:translate(6px,-50%);white-space:nowrap;padding:5px 10px;border-radius:8px;font:500 12px var(--font);color:var(--text);
+  background:rgba(7,15,31,.92);border:1px solid var(--line-2);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.fx3-dock a:hover span,.fx3-dock a:focus-visible span{opacity:1;transform:translate(0,-50%)}
+
+/* ---- command palette ---- */
+.fx3-pal{position:fixed;inset:0;z-index:10001;display:none;align-items:flex-start;justify-content:center;padding-top:14vh;background:rgba(2,6,14,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.fx3-pal.open{display:flex;animation:fx3-fade .18s ease-out}
+@keyframes fx3-fade{from{opacity:0}}
+.fx3-pal-box{width:min(600px,calc(100% - 32px));border-radius:20px;background:linear-gradient(180deg,#0b1730,#070f1f);border:1px solid var(--line-2);box-shadow:0 40px 100px -20px #000,0 0 0 1px rgba(79,209,255,.08);overflow:hidden;animation:fx3-pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes fx3-pop{from{transform:translateY(12px) scale(.97);opacity:0}}
+.fx3-pal input{width:100%;padding:18px 22px;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--text);font:500 16px var(--font);outline:none}
+.fx3-pal ul{max-height:min(46vh,380px);overflow:auto;padding:8px}
+.fx3-pal li{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;cursor:pointer;color:var(--muted);font-size:15px}
+.fx3-pal li small{margin-left:auto;font:500 11px var(--mono);letter-spacing:.1em;color:var(--dim);text-transform:uppercase}
+.fx3-pal li.sel{background:rgba(79,150,255,.16);color:var(--text)}
+.fx3-pal li i{width:8px;height:8px;border-radius:50%;background:var(--cyan);opacity:.7;flex:none}
+.fx3-pal footer{display:flex;gap:16px;padding:10px 18px;border-top:1px solid var(--line);font:500 11px var(--mono);color:var(--dim);letter-spacing:.06em}
+.fx3-hint{position:fixed;left:22px;bottom:22px;z-index:90;display:none;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font:500 12px var(--font);color:var(--muted);background:rgba(7,15,31,.7);border:1px solid var(--line);backdrop-filter:blur(10px);cursor:pointer;transition:border-color .3s,color .3s}
+.fx3-hint:hover{border-color:var(--line-2);color:var(--text)}
+.fx3-hint kbd{font:600 11px var(--mono);padding:2px 6px;border-radius:6px;border:1px solid var(--line-2);background:rgba(255,255,255,.04)}
+@media (min-width:900px) and (hover:hover){.fx3-hint{display:inline-flex}}
+
+/* ---- footer wordmark ---- */
+.footer{position:relative;overflow:hidden}
+.fx3-mark{position:absolute;left:50%;bottom:-.18em;transform:translateX(-50%);font:700 clamp(90px,22vw,300px)/1 var(--display);letter-spacing:.06em;white-space:nowrap;pointer-events:none;user-select:none;
+  background:linear-gradient(180deg,rgba(90,162,255,.22),rgba(90,162,255,0) 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.footer .container{position:relative;z-index:1}
+
+/* ---- scrollbar + selection ---- */
+html{scrollbar-width:thin;scrollbar-color:#27406f #040913}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:#040913}
+::-webkit-scrollbar-thumb{background:linear-gradient(#27406f,#1b2d55);border-radius:10px;border:2px solid #040913}
+
+/* ---- reduced motion / touch ---- */
+@media (prefers-reduced-motion:reduce){
+  .fx3-aurora i,.grad,.viewer .shot-frame::before,.price-card.featured::before{animation:none}
+  .js .section-head.reveal h2{filter:none;letter-spacing:-.025em}
+}
+@media (max-width:760px){.fx3-aurora i{filter:blur(60px)}.fx3-grain{display:none}}
+
+/* ==================== "In motion" bento ==================== */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(250px,auto);gap:20px}
+.bento-card{position:relative;overflow:hidden;border-radius:var(--radius);padding:26px;border:1px solid var(--line);display:flex;flex-direction:column;
+  background:radial-gradient(120% 90% at 0% 0%,rgba(79,150,255,.16),transparent 60%),linear-gradient(180deg,rgba(70,120,255,.08),rgba(30,60,160,.03));
+  transition:transform .4s,border-color .4s,box-shadow .4s}
+.bento-card:hover{transform:translateY(-4px);border-color:var(--line-2);box-shadow:0 26px 60px -30px var(--blue)}
+.bento-card h3{font-size:20px;margin:auto 0 6px}
+.bento-card p{color:var(--muted);font-size:14.5px}
+.b-tag{align-self:flex-start;font:600 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);padding:5px 10px;border-radius:999px;border:1px solid var(--line-2);background:rgba(79,209,255,.07)}
+.b-voice{grid-column:span 2}.b-local{grid-row:span 2}.b-memory{grid-column:span 2}
+.b-svg{width:100%;max-height:200px;margin:14px auto 6px;overflow:visible}
+.b-svg.small{max-height:130px}.b-svg.wide{max-height:120px}
+/* voice */
+.b-wave{display:flex;align-items:center;justify-content:center;gap:4px;height:72px;margin:16px 0 6px}
+.b-wave i{display:block;width:4px;height:12px;border-radius:4px;background:linear-gradient(var(--cyan),var(--blue));animation:fx3-bar 1.3s ease-in-out infinite;animation-delay:calc(var(--n,0)*-.09s);opacity:.9}
+.b-wave i:nth-child(3n){animation-duration:1.7s}.b-wave i:nth-child(4n){animation-duration:1.1s}
+@keyframes fx3-bar{0%,100%{height:10px}50%{height:62px}}
+.b-say{font:500 17px var(--font);color:var(--text)!important;min-height:1.5em;text-align:center}
+.b-do{font:500 13px var(--mono);color:var(--green)!important;text-align:center;opacity:0;transition:opacity .4s;margin-bottom:10px}
+.b-do.on{opacity:1}
+/* local-first */
+.b-box{fill:rgba(47,123,255,.14);stroke:var(--blue-2);stroke-width:1.4}
+.b-lbl{fill:var(--text);font:700 15px var(--display);letter-spacing:.12em}.b-sub{fill:var(--dim);font:500 10px var(--mono);letter-spacing:.1em}
+.b-ring{fill:none;stroke:var(--cyan);stroke-width:1;stroke-dasharray:3 7;opacity:.5;transform-origin:110px 100px;animation:fx3-rot 40s linear infinite}
+.b-ring.r2{opacity:.25;animation-duration:64s;animation-direction:reverse}
+@keyframes fx3-rot{to{transform:rotate(360deg)}}
+.b-cloud{fill:none;stroke:var(--dim);stroke-width:1.4;opacity:.6}.b-cross{stroke:var(--red);stroke-width:2;stroke-linecap:round;opacity:.9}
+.b-node{fill:var(--cyan);animation:fx3-pulse 2.4s ease-in-out infinite}.b-node.n2{animation-delay:-.8s}.b-node.n3{animation-delay:-1.6s}
+@keyframes fx3-pulse{50%{opacity:.25;r:6}}
+/* gesture */
+.b-hand path{fill:none;stroke:var(--blue-2);stroke-width:2;stroke-linecap:round;opacity:.7}
+.b-hand circle{fill:var(--bg);stroke:var(--cyan);stroke-width:1.6}
+.b-hand .tip{fill:var(--cyan);animation:fx3-pulse 2s ease-in-out infinite}
+.b-hand{transform-origin:80px 118px;animation:fx3-sway 6s ease-in-out infinite alternate}
+@keyframes fx3-sway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+/* memory */
+.b-edges path{fill:none;stroke:var(--blue-2);stroke-width:1;opacity:.35;stroke-dasharray:4 6;animation:fx3-dash 14s linear infinite}
+@keyframes fx3-dash{to{stroke-dashoffset:-200}}
+.b-nodes circle{fill:var(--bg);stroke:var(--cyan);stroke-width:1.8;animation:fx3-pulse 3s ease-in-out infinite}
+.b-nodes circle:nth-child(2n){animation-delay:-1s}.b-nodes circle:nth-child(3n){animation-delay:-2s}
+.b-nodes .hub{fill:var(--blue);stroke:var(--cyan);filter:drop-shadow(0 0 8px var(--cyan))}
+/* automation chain */
+.b-chain{display:flex;flex-direction:column;gap:8px;margin:16px 0 6px;position:relative}
+.b-chain li{position:relative;padding:9px 14px 9px 38px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);font:500 13px var(--mono);color:var(--muted);animation:fx3-step 6s infinite;animation-delay:calc(var(--i,0)*1.5s)}
+.b-chain li::before{content:"";position:absolute;left:14px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:var(--dim)}
+.b-chain li:nth-child(1){--i:0}.b-chain li:nth-child(2){--i:1}.b-chain li:nth-child(3){--i:2}.b-chain li:nth-child(4){--i:3}
+@keyframes fx3-step{0%,30%{border-color:var(--cyan);color:var(--text);background:rgba(79,209,255,.1)}40%,100%{border-color:var(--line);color:var(--muted);background:rgba(255,255,255,.03)}}
+@media (max-width:1000px){.bento{grid-template-columns:repeat(2,1fr)}.b-voice,.b-memory{grid-column:span 2}.b-local{grid-row:auto}}
+@media (max-width:640px){.bento{grid-template-columns:1fr}.b-voice,.b-memory{grid-column:auto}}
+@media (prefers-reduced-motion:reduce){.b-wave i,.b-ring,.b-node,.b-hand,.b-hand .tip,.b-edges path,.b-nodes circle,.b-chain li{animation:none}}
+.b-local .b-svg{max-height:none;flex:1;min-height:200px}
+.b-local .b-svg{transform:scale(1.28)}
+
+/* ==========================================================
+   MOBILE / TOUCH OPTIMISATION
+   ========================================================== */
+html{-webkit-tap-highlight-color:transparent;text-size-adjust:100%}
+a,button,.btn,[role="tab"],summary,label{touch-action:manipulation}
+
+/* off-screen animation pause (all sizes): fx3.js adds .live to visible bento cards */
+.bento-card:not(.live) *{animation-play-state:paused!important}
+
+/* safe areas (notch / home indicator). Needs viewport-fit=cover, added to every page's meta viewport */
+.nav{top:calc(env(safe-area-inset-top,0px) + 14px)}
+#astron-site-assistant{right:calc(env(safe-area-inset-right,0px) + 22px);bottom:calc(env(safe-area-inset-bottom,0px) + 22px)}
+.to-top{right:calc(env(safe-area-inset-right,0px) + 22px);bottom:calc(env(safe-area-inset-bottom,0px) + 96px)}
+.footer-bottom{padding-bottom:env(safe-area-inset-bottom,0px)}
+.container{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+
+/* ---- touch devices: comfortable tap targets, no sticky hover, no iOS focus-zoom ---- */
+@media (pointer:coarse){
+  .btn-sm,.copy-btn,.snd-toggle,.lang-toggle,.command-presets button,.viewer-tabs button,.faq summary,.as-assistant-suggestions button{min-height:44px}
+  .copy-btn,.snd-toggle,.lang-toggle{min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+  .command-presets button{padding:11px 18px;font-size:14px}
+  .nav-toggle{width:46px;height:46px;flex:none}
+  .to-top{width:46px!important;height:46px!important}
+  input:not([type="checkbox"]):not([type="radio"]),textarea,select,.as-assistant-form input{font-size:16px!important;min-height:46px}
+  textarea{min-height:120px}
+  .form-card .checkline{min-height:44px;align-items:center}
+  .form-card .checkline input{width:24px;height:24px;margin-top:0;flex:none}
+  .navlinks a{min-height:48px;display:flex;align-items:center}
+}
+@media (hover:none){
+  .card:hover,.bento-card:hover,.price-card:hover{transform:none;box-shadow:none}
+  .card::after,.price-card::after{display:none}
+  .btn-primary:hover{box-shadow:0 10px 34px -10px var(--blue),inset 0 1px 0 rgba(255,255,255,.25)}
+}
+
+/* ---- phones: lighter effects (battery + scroll smoothness), tighter rhythm ---- */
+@media (max-width:760px){
+  .fx3-aurora i{animation:none;filter:none;will-change:auto}
+  .fx3-aurora i:nth-child(1){opacity:.28}.fx3-aurora i:nth-child(2){opacity:.18}.fx3-aurora i:nth-child(3){display:none}
+  .js .section-head.reveal h2{filter:none;letter-spacing:-.025em;transition:none}
+  .js .reveal{transform:translateY(14px);transition-duration:.55s}
+  .grad{animation:none}
+  .viewer .shot-frame::before,.price-card.featured::before{animation:none;opacity:.5}
+  .section{padding-top:clamp(48px,12vw,64px);padding-bottom:clamp(48px,12vw,64px)}
+  .section-head{margin-bottom:28px}
+  .section-head .eyebrow::after{display:none}
+  .section-head h2{font-size:clamp(30px,9vw,40px)}
+  .section-head .lead{font-size:16px}
+  .hero-actions .btn{width:100%;justify-content:center}
+  .hero-points{gap:8px 16px}
+  .stat-strip dt{font-size:12px}
+  .b-tag{font-size:12px}
+  .bento{gap:14px;grid-auto-rows:auto}
+  .bento-card{padding:22px;min-height:0}
+  .b-local .b-svg{transform:none;flex:none;min-height:0;max-height:180px}
+  .fx3-mark{font-size:30vw;opacity:.8}
+  .steps code,.price-card ul{overflow-wrap:anywhere}
+  pre,code{overflow-x:auto;max-width:100%}
+  table{display:block;overflow-x:auto;max-width:100%}
+  #astron-assistant-panel{width:calc(100vw - 20px);height:min(70dvh,560px);right:-2px}
+}
+/* very small phones */
+@media (max-width:380px){
+  .container{width:calc(100% - 32px)}
+  .btn-lg{padding-left:18px;padding-right:18px}
+  .price{font-size:46px}
+  .command-presets button{padding:10px 14px}
+}
+/* landscape phones: don't force full-height pinned/hero blocks */
+@media (max-height:520px) and (orientation:landscape){
+  .hero{min-height:0;padding-top:calc(var(--nav-h) + 40px)}
+  #architecture.pin{height:auto}
+  #architecture.pin>.container{position:static;min-height:0}
+}
+
+/* bug fix: command-lab grid column was sized by its widest child, pushing the Run button and pipeline outside the card on phones */
+.term-body{grid-template-columns:minmax(0,1fr)}
+.term-body>*{min-width:0}
+@media (max-width:560px){.pipeline-node{min-width:0;overflow-wrap:anywhere}}
+
+/* mobile menu: dynamic viewport height, safe-area padding, tighter on short phones */
+.mobile-nav{height:100dvh;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));overscroll-behavior:contain}
+@media (max-height:760px){.mobile-nav a:not(.btn){padding:10px 6px;font-size:20px}.mobile-nav .btn{margin-top:14px}}

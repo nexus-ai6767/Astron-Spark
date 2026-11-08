@@ -166,7 +166,7 @@
 }
 
 /* ================= v2: 3D core + pinned "How it works" ================= */
-.hero-core{position:absolute;left:-10%;top:-6%;width:120%;height:112%;pointer-events:none;mix-blend-mode:screen;opacity:.85;z-index:2}
+.hero-core{position:absolute;left:-8%;top:-4%;width:116%;height:108%;pointer-events:none;z-index:2;filter:drop-shadow(0 0 40px rgba(47,123,255,.35))}
 
 /* pinned flow (desktop only; JS adds .pin) */
 #architecture.pin{height:290vh;padding:0}

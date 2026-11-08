@@ -12,5 +12,10 @@ window.ASTRON_SITE = {
   // Real Android screenshots. Put the image files next to index.html (flat folder) and list their names here,
   // in this order: chat screen, voice screen, memory screen. The concept mockups are replaced automatically.
   // Example: ['android-chat.webp', 'android-voice.webp', 'android-memory.webp']
-  androidScreens: []
+  androidScreens: [],
+
+  // Short screen recording (muted, looping, lazy-loaded). Put the files next to index.html.
+  // Leave empty and the "See it in action" section stays hidden. Keep it under ~4 MB; mp4 (H.264) alone is fine.
+  // Example: { mp4: 'astron-demo.mp4', webm: 'astron-demo.webm', poster: 'astron-demo-poster.webp', caption: 'Opening apps and saving a note by voice.' }
+  demoVideo: null
 };
