@@ -17,5 +17,8 @@ window.ASTRON_SITE = {
   // Short screen recording (muted, looping, lazy-loaded). Put the files next to index.html.
   // Leave empty and the "See it in action" section stays hidden. Keep it under ~4 MB; mp4 (H.264) alone is fine.
   // Example: { mp4: 'astron-demo.mp4', webm: 'astron-demo.webm', poster: 'astron-demo-poster.webp', caption: 'Opening apps and saving a note by voice.' }
-  demoVideo: null
+  demoVideo: null,
+
+  // Optional cinematic intro screen (adds about 1 second before the hero is visible). Off by default so the page and 3D core appear instantly.
+  bootScreen: false
 };

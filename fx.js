@@ -11,17 +11,17 @@
   let seen = false;
   try { seen = sessionStorage.getItem('astron-boot') === '1'; } catch (e) {}
   let bootDelay = 0;
-  if (!reduced && !seen && $('.hero')) {
+  if (!reduced && !seen && $('.hero') && (window.ASTRON_SITE || {}).bootScreen === true) {   // opt-in: set bootScreen: true in site-config.js
     const b = document.createElement('div');
     b.id = 'fx-boot'; b.setAttribute('aria-hidden', 'true');
     b.innerHTML = '<div class="boot-core"><i></i><i></i><i></i><b></b></div><div class="boot-word">ASTRON</div><div class="boot-line"></div><div class="boot-status">INITIALISING CORE</div>';
     document.body.appendChild(b);
     const st = $('.boot-status', b);
     const msgs = ['LOADING VOICE MODULE', 'LINKING LOCAL AI', 'SYSTEM ONLINE'];
-    msgs.forEach((m, i) => setTimeout(() => { st.textContent = m; }, 450 + i * 420));
-    bootDelay = 1.75;
-    setTimeout(() => b.classList.add('done'), 1700);
-    setTimeout(() => b.remove(), 2700);
+    msgs.forEach((m, i) => setTimeout(() => { st.textContent = m; }, 180 + i * 230));
+    bootDelay = 1.0;
+    setTimeout(() => b.classList.add('done'), 900);
+    setTimeout(() => b.remove(), 1700);
     b.addEventListener('click', () => { b.classList.add('done'); });
     try { sessionStorage.setItem('astron-boot', '1'); } catch (e) {}
   }

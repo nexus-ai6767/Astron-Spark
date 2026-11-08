@@ -5,7 +5,7 @@
 
 /* ---------- boot sequence ---------- */
 #fx-boot{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:radial-gradient(60% 60% at 50% 45%,#0b1d44 0%,#040913 70%);
-  transition:opacity .7s ease,visibility .7s,transform .9s cubic-bezier(.7,0,.2,1);}
+  transition:opacity .45s ease,visibility .45s,transform .6s cubic-bezier(.7,0,.2,1);}
 #fx-boot.done{opacity:0;visibility:hidden;transform:scale(1.08)}
 .boot-core{position:relative;width:min(240px,56vw);aspect-ratio:1;display:grid;place-items:center}
 .boot-core i{position:absolute;inset:0;border-radius:50%;border:1.5px solid transparent;border-top-color:var(--cyan);border-right-color:rgba(90,162,255,.4);animation:spin 1.6s linear infinite}
@@ -14,7 +14,7 @@
 .boot-core b{width:26%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff 0%,var(--cyan) 35%,var(--blue) 70%,transparent 72%);box-shadow:0 0 60px 14px rgba(79,209,255,.55);animation:bootPulse 1.2s ease-in-out infinite}
 .boot-word{position:absolute;bottom:calc(50% - 190px);font:700 clamp(22px,4vw,30px) var(--display);letter-spacing:.5em;padding-left:.5em;color:var(--text)}
 .boot-line{position:absolute;bottom:calc(50% - 232px);width:min(260px,60vw);height:2px;background:rgba(140,180,255,.16);border-radius:2px;overflow:hidden}
-.boot-line::after{content:"";position:absolute;inset:0;background:var(--grad);transform:scaleX(0);transform-origin:left;animation:bootBar 1.5s cubic-bezier(.6,0,.2,1) forwards}
+.boot-line::after{content:"";position:absolute;inset:0;background:var(--grad);transform:scaleX(0);transform-origin:left;animation:bootBar .85s cubic-bezier(.6,0,.2,1) forwards}
 .boot-status{position:absolute;bottom:calc(50% - 262px);font:500 11px var(--mono);letter-spacing:.22em;color:var(--dim)}
 @keyframes bootPulse{50%{transform:scale(1.25);box-shadow:0 0 90px 24px rgba(79,209,255,.7)}}
 @keyframes bootBar{to{transform:scaleX(1)}}
@@ -189,3 +189,7 @@
 
 /* sub-pages: same atmosphere, gentler */
 .simple-nav{backdrop-filter:blur(14px)}
+
+/* hero core: fades/scales in as soon as its first frame is painted */
+.hero-core{opacity:0;transform:scale(.9);transition:opacity .8s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.hero-core.on{opacity:1;transform:none}

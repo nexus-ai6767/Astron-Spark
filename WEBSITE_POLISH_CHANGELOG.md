@@ -68,3 +68,9 @@ Restore `index.html`, `style.css`, and `script.js` from the original `ASTRON_Web
 - Reacts to the hero's typed voice demo: typing raises the waveform ring, the "✓ …" reply fires a burst.
 - Colours follow the accent switcher (blue / violet / emerald / amber) via the --cyan, --blue, --violet variables.
 - Glows are pre-rendered sprites (rebuilt only when the accent changes); pauses off-screen; still frame under reduced-motion; fewer points on phones.
+
+## Core loads faster (core.js)
+- The hero core moved out of `fx2.js` into its own `core.js`, preloaded and loaded before every other script. It paints its first frame immediately and fades in; it hooks the typed voice demo later, once that exists.
+- The intro/boot screen is now **off by default** (it held the page for about 1 s before the hero was visible). Set `bootScreen: true` in `site-config.js` to bring it back. When on, it is also shorter (about 0.9 s).
+- Measured in headless Chromium (software rendering, no GPU): core visible to the user at roughly 2.4 s before, roughly 0.8 s after. Real devices will differ.
+- Deploy note: upload `core.js` next to the other files.
