@@ -380,7 +380,7 @@
         const j = await request('/orders/status', { orderId: f.get('orderId'), email: f.get('email') });
         if (j.status === 'approved' && j.downloadUrl) {
           say(s, 'Payment approved. Your secure download is ready.', 'success');
-          const a = document.createElement('a'); a.href = j.downloadUrl; a.className = 'btn btn-primary dl-link'; a.textContent = 'Download ASTRON Pro (Windows ZIP)';
+          const a = document.createElement('a'); a.href = j.downloadUrl; a.className = 'btn btn-primary dl-link'; a.textContent = 'Download Astro Prime (Windows ZIP)';
           s.insertAdjacentElement('afterend', a);
         } else if (j.status === 'rejected') say(s, 'This submission was not approved. Contact support with your order reference.', 'error');
         else say(s, 'Payment is awaiting manual verification. Download is still locked.');

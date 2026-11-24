@@ -66,7 +66,7 @@ app.get('/api/download/:token',(req,res)=>{
  const orders=load(),o=orders.find(x=>x.status==='approved'&&x.downloadToken===token&&x.downloadTokenExpiresAt&&Date.parse(x.downloadTokenExpiresAt)>Date.now());
  if(!o)return res.status(404).send('Download link is invalid or expired. Check your order status to request a fresh link.');
  if(!fs.existsSync(PRODUCT_ZIP))return res.status(503).send('Product ZIP is not configured on the server.');
- res.download(PRODUCT_ZIP,'ASTRON-Pro-Windows.zip',err=>{if(err&&!res.headersSent)res.status(500).end('Download failed.');});
+ res.download(PRODUCT_ZIP,'Astro-Prime-Windows.zip',err=>{if(err&&!res.headersSent)res.status(500).end('Download failed.');});
 });
 app.get('/api/admin/orders',admin,(req,res)=>{res.json(load().map(({downloadToken,...o})=>o));});
 app.post('/api/admin/orders/:id/approve',admin,(req,res)=>{

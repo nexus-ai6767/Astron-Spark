@@ -49,9 +49,9 @@
       "description": "Voice-first personal AI assistant with local AI (Ollama), voice commands, gesture control, vision tools and persistent memory — designed to run on your own machine.",
       "image": "https://your-domain-here.com/og-image.jpg",
       "offers": [
-        { "@type": "Offer", "name": "ASTRON Core", "price": "0", "priceCurrency": "INR" },
-        { "@type": "Offer", "name": "ASTRON Starter", "price": "0", "priceCurrency": "INR" },
-        { "@type": "Offer", "name": "ASTRON Pro (Windows PC)", "price": "950", "priceCurrency": "INR" }
+        { "@type": "Offer", "name": "Astro Nova", "price": "0", "priceCurrency": "INR" },
+        { "@type": "Offer", "name": "Astro", "price": "0", "priceCurrency": "INR" },
+        { "@type": "Offer", "name": "Astro Prime (Windows PC)", "price": "950", "priceCurrency": "INR" }
       ]
     },
     {
@@ -60,7 +60,7 @@
         { "@type": "Question", "name": "Does ASTRON send my data to the cloud?", "acceptedAnswer": { "@type": "Answer", "text": "Not by default. ASTRON is built to run against a local model through Ollama, so conversations and commands stay on your machine unless you choose to connect an external service." } },
         { "@type": "Question", "name": "What operating systems are supported?", "acceptedAnswer": { "@type": "Answer", "text": "The current release targets Windows for gesture control, automation and system-level commands. Voice and local-AI features work more broadly — check the README in the release download for details." } },
         { "@type": "Question", "name": "Do I need a powerful computer?", "acceptedAnswer": { "@type": "Answer", "text": "It depends on which local model you connect. Smaller models run comfortably on modest hardware; larger ones benefit from a dedicated GPU. ASTRON itself is lightweight." } },
-        { "@type": "Question", "name": "What’s the difference between Core, Starter and Pro?", "acceptedAnswer": { "@type": "Answer", "text": "Core is the free, self-configured community version and Starter is a gentler beginner edition. Pro is the full Windows application with Vision, Voice, the Smart Command Engine, Serious Mode, local AI and OCR. Done-for-you setups are available through the custom build form." } },
+        { "@type": "Question", "name": "What’s the difference between Astro Nova, Astro and Astro Prime?", "acceptedAnswer": { "@type": "Answer", "text": "Astro Nova is the free, self-configured community version and Astro is a gentler beginner edition. Astro Prime is the full Windows application with Vision, Voice, the Smart Command Engine, Serious Mode, local AI and OCR. Done-for-you setups are available through the custom build form." } },
         { "@type": "Question", "name": "Can I request a feature that isn’t listed?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — use the custom build form and describe what you’re trying to do. Most requests are scoped as part of a custom build." } }
       ]
     }
@@ -133,7 +133,7 @@
         <a href="#command-playground" class="btn btn-ghost btn-lg"><span class="play" aria-hidden="true">▶</span> Try the command lab</a>
       </div>
       <ul class="hero-points">
-        <li>Runs locally</li><li>Windows &amp; Android</li><li>Free core version</li>
+        <li>Runs locally</li><li>Windows &amp; Android</li><li>Free Astro Nova version</li>
       </ul>
     </div>
   </div>
@@ -481,12 +481,12 @@
     <div class="section-head reveal center">
       <p class="eyebrow"><span class="eyebrow-dot"></span>Pricing</p>
       <h2>Choose your system.</h2>
-      <p class="lead">Start free with the community version, or unlock the full ASTRON Pro Windows application with a one-time purchase.</p>
+      <p class="lead">Start free with the community version, or unlock the full Astro Prime Windows application with a one-time purchase.</p>
     </div>
 
     <div class="pricing-grid" data-stagger>
       <article class="price-card reveal">
-        <p class="tier">Core</p>
+        <p class="tier">Astro Nova</p>
         <p class="price">₹0</p>
         <p class="price-note">Community version for experimenting with your own AI assistant.</p>
         <ul class="ticks">
@@ -497,23 +497,23 @@
 
       <article class="price-card featured reveal" id="starter">
         <span class="ribbon">Beginner friendly</span>
-        <p class="tier">Starter</p>
+        <p class="tier">Astro</p>
         <p class="price">₹0</p>
         <p class="price-note">Learn the foundations of a personal AI assistant before jumping into the advanced architecture.</p>
         <ul class="ticks">
           <li>Voice assistant</li><li>Local AI / Ollama</li><li>Notes + memory</li><li>Basic PC commands</li><li>Futuristic desktop HUD</li>
         </ul>
-        <a href="JARVIS_STARTER.zip" class="btn btn-primary" download>Download Starter</a>
+        <a href="JARVIS_STARTER.zip" class="btn btn-primary" download>Download Astro</a>
       </article>
 
       <article class="price-card pro reveal">
-        <p class="tier">ASTRON Pro · Windows PC</p>
+        <p class="tier">Astro Prime · Windows PC</p>
         <p class="price">₹950 <small>one-time</small></p>
         <p class="price-note">The full application — Vision, Voice, Smart Command Engine, Serious Mode, local AI and OCR.</p>
         <ul class="ticks">
           <li>Advanced workflows</li><li>Custom integrations</li><li>Advanced HUD</li><li>Device automation</li><li>Priority configuration</li>
         </ul>
-        <a href="#jarvis-pro-payment" class="btn btn-ghost">Buy ASTRON Pro</a>
+        <a href="#jarvis-pro-payment" class="btn btn-ghost">Buy Astro Prime</a>
       </article>
     </div>
 
@@ -532,19 +532,19 @@
       </div>
       <div class="picker-results" aria-live="polite">
         <div class="pick-card" data-result="starter" hidden>
-          <p class="tier">Starter · ₹0</p>
+          <p class="tier">Astro · ₹0</p>
           <p>The beginner edition. Learn the foundations of a personal AI assistant: voice, local AI through Ollama, notes and memory, and basic PC commands. Needs Python 3.11+ and Ollama.</p>
-          <a class="btn btn-primary" href="JARVIS_STARTER.zip" download>Download Starter</a>
+          <a class="btn btn-primary" href="JARVIS_STARTER.zip" download>Download Astro</a>
         </div>
         <div class="pick-card" data-result="core" hidden>
-          <p class="tier">Core · ₹0</p>
+          <p class="tier">Astro Nova · ₹0</p>
           <p>The community version for experimenting with your own AI assistant on a 64-bit Windows PC with Python 3.11+ and Ollama.</p>
           <a class="btn btn-primary" href="JARVIS_PC_RELEASE.zip" download>Start free</a>
         </div>
         <div class="pick-card" data-result="pro" hidden>
-          <p class="tier">ASTRON Pro · ₹950 one-time</p>
+          <p class="tier">Astro Prime · ₹950 one-time</p>
           <p>The full Windows application: Vision, Voice, Smart Command Engine, Serious Mode, local AI and OCR, with advanced workflows and device automation.</p>
-          <a class="btn btn-primary" href="#jarvis-pro-payment">Buy ASTRON Pro</a>
+          <a class="btn btn-primary" href="#jarvis-pro-payment">Buy Astro Prime</a>
         </div>
         <div class="pick-card" data-result="android" hidden>
           <p class="tier">ASTRON for Android</p>
@@ -558,8 +558,8 @@
       <p class="cmp-swipe">Swipe sideways to compare →</p>
       <div class="cmp-scroll" tabindex="0" role="region" aria-label="Edition comparison table, scrolls sideways on small screens">
         <table class="cmp-table">
-          <caption class="sr-only">Core, Starter and Pro compared</caption>
-          <thead><tr><th scope="col">Compare</th><th scope="col" data-col="core">Core</th><th scope="col" data-col="starter">Starter</th><th scope="col" data-col="pro">Pro</th></tr></thead>
+          <caption class="sr-only">Astro Nova, Astro and Astro Prime compared</caption>
+          <thead><tr><th scope="col">Compare</th><th scope="col" data-col="core">Astro Nova</th><th scope="col" data-col="starter">Astro</th><th scope="col" data-col="pro">Astro Prime</th></tr></thead>
           <tbody>
             <tr class="price-row"><th scope="row">Price</th><td data-col="core">₹0</td><td data-col="starter">₹0</td><td data-col="pro">₹950 one-time</td></tr>
             <tr><th scope="row">Best for</th><td data-col="core">Experimenting with your own assistant</td><td data-col="starter">Learning the foundations</td><td data-col="pro">The full application</td></tr>
@@ -592,7 +592,7 @@
       <p class="lead">An on-device AI app for your Android phone. Download the APK, open it and follow Android’s installation prompts.</p>
       <ul class="check-list compact">
         <li>On-device AI assistant</li>
-        <li>Separate from the Windows ASTRON Pro purchase</li>
+        <li>Separate from the Windows Astro Prime purchase</li>
         <li>Debug build — for early testers</li>
       </ul>
       <div class="android-cta">
@@ -676,14 +676,14 @@
       <article class="dl-row reveal">
         <div class="dl-main">
           <span class="dl-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg></span>
-          <div><h3>ASTRON Starter</h3><p>The beginner / source edition for learning the foundations.</p></div>
+          <div><h3>Astro</h3><p>The beginner / source edition for learning the foundations.</p></div>
         </div>
         <dl class="dl-meta">
-          <div><dt>Updated</dt><dd data-date="JARVIS_STARTER.zip">25 Sep 2026</dd></div>
-          <div><dt>Size</dt><dd data-size="JARVIS_STARTER.zip">6.3 KB</dd></div>
+          <div><dt>Updated</dt><dd data-date="JARVIS_STARTER.zip">22 Nov 2026</dd></div>
+          <div><dt>Size</dt><dd data-size="JARVIS_STARTER.zip">30.0 KB</dd></div>
           <div><dt>Requires</dt><dd>Python 3.11+ · Ollama (installed separately)</dd></div>
         </dl>
-        <div class="dl-hash"><span>SHA-256</span><code data-sha="JARVIS_STARTER.zip">b4120c7ec94fadeff12c77869e2076c2f85dc89a353bea7d5048b91c35935726</code><button type="button" class="copy-btn" data-copy-sha>Copy</button></div>
+        <div class="dl-hash"><span>SHA-256</span><code data-sha="JARVIS_STARTER.zip">6a2a71e448d66a3ccc7c152fbcf24f7cf3ed783fd305b40109dabdb0c73dc682</code><button type="button" class="copy-btn" data-copy-sha>Copy</button></div>
         <a class="btn btn-ghost btn-sm" href="JARVIS_STARTER.zip" download>Download</a>
       </article>
 
@@ -744,15 +744,15 @@
 <section class="section" id="jarvis-pro-payment">
   <div class="container">
     <div class="section-head reveal">
-      <p class="eyebrow"><span class="eyebrow-dot"></span>ASTRON Pro checkout</p>
-      <h2>Activate <span class="grad">ASTRON Pro.</span></h2>
+      <p class="eyebrow"><span class="eyebrow-dot"></span>Astro Prime checkout</p>
+      <h2>Activate <span class="grad">Astro Prime.</span></h2>
       <p class="lead">One-time purchase of ₹950. Scan the QR code with any UPI app, then submit your reference for manual verification.</p>
     </div>
 
     <div class="pay-grid reveal">
       <div class="pay-card">
         <p class="tier">UPI · fixed amount</p>
-        <div class="qr"><img src="jarvis-pro-qr.png" alt="UPI QR code for ASTRON Pro, ₹950" width="410" height="410" loading="lazy"></div>
+        <div class="qr"><img src="jarvis-pro-qr.png" alt="UPI QR code for Astro Prime, ₹950" width="410" height="410" loading="lazy"></div>
         <p class="pay-amount">₹950</p>
         <p class="pay-upi" id="upiId">7387947607@ibl</p>
         <button class="btn btn-ghost btn-sm" type="button" id="copyUpi">Copy UPI ID</button>
@@ -817,8 +817,8 @@
         <div class="faq-answer"><p>It depends on which local model you connect. Smaller models run comfortably on modest hardware; larger ones benefit from a dedicated GPU. ASTRON itself is lightweight.</p></div>
       </details>
       <details class="faq-item">
-        <summary>What’s the difference between Core, Starter and Pro?<span class="faq-icon" aria-hidden="true"></span></summary>
-        <div class="faq-answer"><p>Core is the free, self-configured community version and Starter is a gentler beginner edition. Pro is the full Windows application with Vision, Voice, the Smart Command Engine, Serious Mode, local AI and OCR. Done-for-you setups are available through the custom build form.</p></div>
+        <summary>What’s the difference between Astro Nova, Astro and Astro Prime?<span class="faq-icon" aria-hidden="true"></span></summary>
+        <div class="faq-answer"><p>Astro Nova is the free, self-configured community version and Astro is a gentler beginner edition. Astro Prime is the full Windows application with Vision, Voice, the Smart Command Engine, Serious Mode, local AI and OCR. Done-for-you setups are available through the custom build form.</p></div>
       </details>
       <details class="faq-item">
         <summary>Can I request a feature that isn’t listed?<span class="faq-icon" aria-hidden="true"></span></summary>

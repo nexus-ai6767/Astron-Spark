@@ -74,3 +74,9 @@ Restore `index.html`, `style.css`, and `script.js` from the original `ASTRON_Web
 - The intro/boot screen is now **off by default** (it held the page for about 1 s before the hero was visible). Set `bootScreen: true` in `site-config.js` to bring it back. When on, it is also shorter (about 0.9 s).
 - Measured in headless Chromium (software rendering, no GPU): core visible to the user at roughly 2.4 s before, roughly 0.8 s after. Real devices will differ.
 - Deploy note: upload `core.js` next to the other files.
+
+## Edition renames + new Starter package
+- Edition names: Starter -> **Astro**, Core -> **Astro Nova**, Pro -> **Astro Prime** (pricing cards, picker, comparison table, downloads, checkout, FAQ, docs, terms, privacy, refund, structured data, Hindi dictionary). The brand "ASTRON" is unchanged.
+- Internal names were left alone so nothing breaks: element ids/anchors (`#starter`, `#jarvis-pro-payment`), data attributes, and the zip filenames `JARVIS_STARTER.zip` / `JARVIS_PC_RELEASE.zip`.
+- `JARVIS_STARTER.zip` replaced with JARVIS_STARTER_PROFESSIONAL_ONE_CLICK.zip. Ran `update-site.py`: size 30.0 KB, SHA-256 6a2a71e4...c682, date 22 Nov 2026 (from the newest file inside the zip). `checksums.txt` rewritten.
+- `server.js`: the file name a paying customer receives is now `Astro-Prime-Windows.zip` (the on-disk path / PRODUCT_ZIP is unchanged).
